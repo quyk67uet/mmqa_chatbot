@@ -1,0 +1,1589 @@
+# Sách Giáo Khoa Toán 9 - Tập 1 (Cánh Diều)
+
+**ĐỖ ĐỨC THÁI** (Tổng Chủ biên kiêm Chủ biên)
+LÊ TUẤN ANH - ĐỖ TIẾN ĐẠT - NGUYỄN SƠN HÀ
+NGUYỄN THỊ PHƯƠNG LOAN - PHẠM SỸ NAM - PHẠM ĐỨC QUANG
+
+---
+
+### Lời nói đầu
+
+Các em học sinh lớp 9 yêu quý!
+
+Năm học này, chúng ta lại vui mừng gặp nhau qua cuốn sách Toán 9. Sách Toán 9 tiếp tục giúp các em có thêm nhiều hiểu biết về phương trình và hệ phương trình bậc nhất, bất đẳng thức và bất phương trình bậc nhất một ẩn, căn thức, hàm số bậc hai và đồ thị (dạng đơn giản), phương trình bậc hai, một số hình khối trong thực tiễn (hình trụ, hình nón, hình cầu). Các em cũng được tìm hiểu hệ thức lượng trong tam giác vuông, đường tròn, đa giác đều, từ đó các em có thể tìm hiểu sâu sắc hơn đặc điểm của những hình phẳng quen thuộc. Ngoài ra, các em cũng được tiếp tục làm quen với thống kê và xác suất; tiến hành những hoạt động thực hành và trải nghiệm; đặc biệt về những hoạt động tài chính đơn giản; sử dụng phần mềm toán học trong thực hành tính toán và vẽ hình hình học. Qua đó giúp các em hiểu biết thêm những công cụ quan trọng của toán học trong việc giải quyết các vấn đề thực tiễn.
+
+Năm học này cũng là năm học cuối cùng của các em cấp trung học cơ sở, sách Toán 9 sẽ giúp các em nhìn nhận lại những học vấn toán học cốt lõi những lớp trước, chuẩn bị tốt nhất cho các em bước vào cấp trung học phổ thông.
+
+Toàn bộ những điều trên được thể hiện qua những tranh ảnh, hình vẽ, bài tập độc đáo và hấp dẫn; qua những câu chuyện lí thú về khoa học tự nhiên, về văn hóa và nghệ thuật, kiến trúc, thể thao và du lịch. Từ đó, các em được tiến thêm một bước trên con đường khám phá thế giới bí ẩn và đẹp đẽ của toán học, đặc biệt là được "làm giàu" về vốn văn hóa chung và có cơ hội "Mang cuộc sống vào bài học - Đưa bài học vào cuộc sống".
+
+Chịu khó suy nghĩ, trao đổi với các thầy cô giáo và bạn bè, nhất định các em sẽ ngày càng tiến bộ và cảm thấy vui sướng khi nhận ra ý nghĩa: Học Toán rất có ích cho cuộc sống hằng ngày.
+
+Chúc các em học tập thật tốt, say mê học Toán và có thêm nhiều niềm vui.
+
+*Các tác giả*
+
+---
+
+# MỤC LỤC
+
+| Chương | Nội dung | Trang |
+| :--- | :--- | :--- |
+| **I** | **PHƯƠง TRÌNH VÀ HỆ PHƯƠNG TRÌNH BẬC NHẤT** | |
+| | §1. Phương trình quy về phương trình bậc nhất một ẩn | 5 |
+| | §2. Phương trình bậc nhất hai ẩn. Hệ hai phương trình bậc nhất hai ẩn | 12 |
+| | §3. Giải hệ hai phương trình bậc nhất hai ẩn | 19 |
+| | Bài tập cuối chương I | 26 |
+| **II** | **BẤT ĐẲNG THỨC. BẤT PHƯƠNG TRÌNH BẬC NHẤT MỘT ẨN** | |
+| | §1. Bất đẳng thức | 28 |
+| | §2. Bất phương trình bậc nhất một ẩn | 35 |
+| | Bài tập cuối chương II | 42 |
+| | **HOẠT ĐỘNG THỰC HÀNH VÀ TRẢI NGHIỆM** (Chủ đề 1. Làm quen với bảo hiểm) | |
+| **III** | **CĂN THỨC** | |
+| | §1. Căn bậc hai và căn bậc ba của số thực | 48 |
+| | §2. Một số phép tính về căn bậc hai của số thực | 55 |
+| | §3. Căn thức bậc hai và căn thức bậc ba của biểu thức đại số | 61 |
+| | §4. Một số phép biến đổi căn thức bậc hai của biểu thức đại số | 67 |
+| | Bài tập cuối chương III | 72 |
+| **IV** | **HỆ THỨC LƯỢNG TRONG TAM GIÁC VUÔNG** | |
+| | §1. Tỉ số lượng giác của góc nhọn | 74 |
+| | §2. Một số hệ thức về cạnh và góc trong tam giác vuông | 82 |
+| | §3. Ứng dụng của tỉ số lượng giác của góc nhọn | 88 |
+| | Bài tập cuối chương IV | 92 |
+| **V** | **ĐƯỜNG TRÒN** | |
+| | §1. Đường tròn. Vị trí tương đối của hai đường tròn | 93 |
+| | §2. Vị trí tương đối của đường thẳng và đường tròn | 101 |
+| | §3. Tiếp tuyến của đường tròn | 106 |
+| | §4. Góc ở tâm. Góc nội tiếp | 111 |
+| | §5. Độ dài cung tròn, diện tích hình quạt tròn, diện tích hình vành khuyên | 118 |
+| | Bài tập cuối chương V | 124 |
+| | **BẢNG GIẢI THÍCH THUẬT NGỮ** | 126 |
+| | **BẢNG TRA CỨU TỪ NGỮ** | 127 |
+
+---
+
+# CHƯƠNG I: PHƯƠNG TRÌNH VÀ HỆ PHƯƠNG TRÌNH BẬC NHẤT
+
+Trong chương này, chúng ta sẽ tìm hiểu những nội dung sau: phương trình quy về phương trình bậc nhất một ẩn; phương trình và hệ hai phương trình bậc nhất hai ẩn; giải hệ hai phương trình bậc nhất hai ẩn.
+
+## §1. PHƯƠNG TRÌNH QUY VỀ PHƯƠNG TRÌNH BẬC NHẤT MỘT ẨN
+
+Trong một khu đất có dạng hình vuông, người ta dành một mảnh đất có dạng hình chữ nhật ở góc khu đất để làm bể bơi (Hình 1). Biết diện tích của bể bơi bằng $1250 \text{ m}^2$.
+
+### I. PHƯƠNG TRÌNH TÍCH CÓ DẠNG $(ax+b)(cx+d) = 0$ ($a \neq 0, c \neq 0$)
+
+a) Cho hai số thực $u, v$ có tích $uv = 0$. Có nhận xét gì về giá trị của $u, v$?
+b) Cho phương trình $(x-3)(2x+1) = 0$. Hãy giải mỗi phương trình bậc nhất sau: $x-3=0$ và $2x+1=0$.
+
+Chứng tỏ rằng nghiệm của phương trình $x-3=0$ và nghiệm của phương trình $2x+1=0$ đều là nghiệm của phương trình $(x-3)(2x+1)=0$. Giả sử $x = x_0$ là nghiệm của phương trình $(x-3)(2x+1)=0$. Giá trị $x=x_0$ có phải là nghiệm của phương trình $x-3=0$ hoặc phương trình $2x+1=0$ hay không?
+
+Để giải phương trình tích $(ax+b)(cx+d)=0$ với $a \neq 0$ và $c \neq 0$ ta có thể làm như sau:
+*   **Bước 1.** Giải hai phương trình bậc nhất: $ax+b=0$ và $cx+d=0$.
+*   **Bước 2.** Kết luận nghiệm: Lấy tất cả các nghiệm của hai phương trình bậc nhất vừa giải được ở Bước 1.
+
+**Ví dụ 1** Giải phương trình: $(x+5)(3x-9)=0$.
+
+> **Giải**
+>
+> Để giải phương trình đã cho, ta giải hai phương trình sau:
+>
+> *) $x+5=0 \implies x = -5$
+>
+> *) $3x-9=0 \implies 3x=9 \implies x=3$
+>
+> Vậy phương trình đã cho có hai nghiệm là $x=-5$ và $x=3$.
+
+**Ví dụ 2** Giải các phương trình:
+a) $(2x-3)^2 = (x+7)^2$
+b) $x^2-9 = 3(x+3)$
+
+> **Giải**
+>
+> a) Ta có:
+> $$
+> (2x-3)^2 = (x+7)^2 \\
+> (2x-3)^2 - (x+7)^2 = 0 \\
+> [(2x-3) - (x+7)][(2x-3) + (x+7)] = 0 \\
+> (x-10)(3x+4) = 0
+> $$
+> Để giải phương trình trên, ta giải hai phương trình sau:
+> *) $x-10=0 \implies x=10$
+> *) $3x+4=0 \implies x = -\frac{4}{3}$
+>
+> Vậy phương trình đã cho có hai nghiệm là $x=10$ và $x=-\frac{4}{3}$.
+>
+> b) Ta có:
+> $$
+> x^2-9 = 3(x+3) \\
+> (x-3)(x+3) - 3(x+3) = 0 \\
+> (x+3)[(x-3)-3] = 0 \\
+> (x+3)(x-6) = 0
+> $$
+> Để giải phương trình trên, ta giải hai phương trình sau:
+> *) $x+3=0 \implies x=-3$
+> *) $x-6=0 \implies x=6$
+>
+> Vậy phương trình đã cho có hai nghiệm là $x=-3$ và $x=6$.
+
+**Bài tập 2** Giải các phương trình:
+a) $x^2 - 10x + 25 = 5(x-5)$
+b) $4x^2 - 16 = 5(x+2)$
+
+**Ví dụ 3** Giải bài toán nêu trong phần mở đầu.
+
+> **Giải**
+>
+> Gọi độ dài cạnh của khu đất có dạng hình vuông là $x$ (m) với $x>50$.
+> Khi đó, mảnh đất dạng hình chữ nhật để làm bể bơi có các kích thước lần lượt là $(x-50)$ (m) và $(x-25)$ (m).
+> Do đó, diện tích của mảnh đất đó là: $(x-50)(x-25) \text{ (m}^2\text{)}$.
+>
+> Vì vậy, ta có phương trình: $(x-50)(x-25) = 1250$.
+>
+> Giải phương trình:
+> $$
+> (x-50)(x-25) = 1250 \\
+> x^2 - 25x - 50x + 1250 = 1250 \\
+> x^2 - 75x = 0 \\
+> x(x-75) = 0
+> $$
+> Suy ra $x=0$ hoặc $x=75$.
+>
+> Do $x>50$ nên $x=75$.
+> Vậy độ dài cạnh của khu đất là $75 \text{ m}$.
+
+### II. PHƯƠNG TRÌNH CHỨA ẨN Ở MẪU
+
+Cho phương trình: $\frac{x+2}{x} = \frac{x-3}{x-2}$ (1)
+
+Tìm điều kiện của $x$ để cả hai mẫu thức có trong phương trình (1) là khác 0.
+
+Phương trình (1) được gọi là **phương trình chứa ẩn ở mẫu**. Điều kiện $x \neq 0$ và $x \neq 2$ được gọi là **điều kiện xác định** của phương trình (1).
+
+Trong phương trình chứa ẩn ở mẫu, điều kiện của ẩn để tất cả các mẫu thức trong phương trình đều khác 0 được gọi là **điều kiện xác định** của phương trình.
+
+**Ví dụ 4** Tìm điều kiện xác định của mỗi phương trình sau:
+a) $\frac{2x+1}{x-2} = 5$
+b) $\frac{2}{5x-3} = 1 + \frac{1}{x+2}$
+
+> **Giải**
+>
+> a) Điều kiện xác định của phương trình $\frac{2x+1}{x-2} = 5$ là $x-2 \neq 0$ hay $x \neq 2$.
+>
+> b) Điều kiện xác định của phương trình $\frac{2}{5x-3} = 1 + \frac{1}{x+2}$ là $5x-3 \neq 0$ và $x+2 \neq 0$, hay $x \neq \frac{3}{5}$ và $x \neq -2$.
+
+**Bài tập 3** Tìm điều kiện xác định của phương trình sau: $\frac{x-8}{x-7} = 8 + \frac{1}{1-x}$.
+
+Cho phương trình: $\frac{2x+1}{2x} = 1 - \frac{2}{x-3}$ (2)
+
+Hãy giải phương trình (2) theo các bước sau:
+a) Tìm điều kiện xác định của phương trình (2).
+b) Tìm mẫu thức chung, quy đồng mẫu thức các phân thức hai vế của phương trình (2) và khử mẫu.
+c) Giải phương trình vừa tìm được.
+d) Kiểm tra điều kiện xác định của phương trình (2) đối với các giá trị của ẩn vừa tìm được rồi kết luận.
+
+Để giải phương trình chứa ẩn ở mẫu, ta có thể làm như sau:
+*   **Bước 1.** Tìm điều kiện xác định của phương trình.
+*   **Bước 2.** Quy đồng mẫu thức hai vế của phương trình rồi khử mẫu.
+*   **Bước 3.** Giải phương trình vừa tìm được.
+*   **Bước 4.** Kết luận nghiệm: Trong các giá trị của ẩn tìm được ở Bước 3, các giá trị thoả mãn điều kiện xác định chính là các nghiệm của phương trình đã cho.
+
+**Ví dụ 5** Giải các phương trình:
+a) $\frac{x^2}{2-x} + \frac{3x-1}{3} = \frac{5}{3}$
+b) $\frac{4}{x(x-1)} + \frac{3}{x} = \frac{4}{x-1}$
+
+> **Giải**
+>
+> a) Điều kiện xác định: $2-x \neq 0$ hay $x \neq 2$.
+> $$
+> \frac{x^2}{2-x} + \frac{3x-1}{3} = \frac{5}{3} \\
+> \frac{3x^2}{3(2-x)} + \frac{(3x-1)(2-x)}{3(2-x)} = \frac{5(2-x)}{3(2-x)}
+> $$
+> Khử mẫu ta được:
+> $$
+> 3x^2 + (6x - 3x^2 - 2 + x) = 10 - 5x \\
+> 7x - 2 = 10 - 5x \\
+> 12x = 12 \\
+> x = 1
+> $$
+> Ta thấy $x=1$ thoả mãn điều kiện xác định của phương trình.
+> Vậy phương trình đã cho có nghiệm $x=1$.
+>
+> b) Điều kiện xác định: $x \neq 0$ và $x \neq 1$.
+> $$
+> \frac{4}{x(x-1)} + \frac{3(x-1)}{x(x-1)} = \frac{4x}{x(x-1)}
+> $$
+> Khử mẫu ta được:
+> $$
+> 4 + 3(x-1) = 4x \\
+> 4 + 3x - 3 = 4x \\
+> 3x + 1 = 4x \\
+> x = 1
+> $$
+> Ta thấy $x=1$ không thoả mãn điều kiện xác định của phương trình.
+> Vậy phương trình đã cho vô nghiệm.
+
+**Ví dụ 6** Hai bạn Phong và Khang cùng hẹn nhau đạp xe đến một địa điểm cách vị trí bạn Phong $6 \text{ km}$ và cách vị trí bạn Khang $7 \text{ km}$. Hai bạn cùng xuất phát và đến địa điểm đã hẹn cùng một lúc. Tính tốc độ của mỗi bạn, biết tốc độ của bạn Khang hơn tốc độ của bạn Phong là $2 \text{ km/h}$.
+
+> **Giải**
+>
+> Gọi tốc độ của bạn Phong là $x (\text{km/h}) (x > 0)$.
+> Khi đó, tốc độ của bạn Khang là $x+2 (\text{km/h})$.
+> Thời gian đi của bạn Phong là $\frac{6}{x}$ (giờ).
+> Thời gian đi của bạn Khang là $\frac{7}{x+2}$ (giờ).
+>
+> Do hai bạn cùng xuất phát và đến địa điểm đã hẹn cùng một lúc nên thời gian đi của hai bạn là như nhau. Ta có phương trình:
+> $$
+> \frac{6}{x} = \frac{7}{x+2}
+> $$
+> Giải phương trình:
+> $$
+> \frac{6(x+2)}{x(x+2)} = \frac{7x}{x(x+2)} \\
+> 6(x+2) = 7x \\
+> 6x + 12 = 7x \\
+> x = 12
+> $$
+> Vậy tốc độ của bạn Phong là $12 \text{ km/h}$, tốc độ của bạn Khang là $14 \text{ km/h}$.
+
+**Ví dụ 7** Biết nồng độ muối của nước biển là $3,5\%$ và khối lượng riêng của nước biển là $1020 \text{ g/l}$. Từ 2 lít nước biển như thế, người ta hòa thêm muối để được một dung dịch có nồng độ muối là $20\%$. Tính lượng muối cần hòa thêm.
+
+> **Giải**
+>
+> Khối lượng của 2 lít nước biển là: $1020 \cdot 2 = 2040 \text{ (g)}$.
+> Khối lượng muối trong 2 lít nước biển là: $2040 \cdot 3,5\% = 71,4 \text{ (g)}$.
+>
+> Gọi lượng muối cần hòa thêm vào 2 lít nước biển để được một dung dịch có nồng độ muối là $20\%$ là $x \text{ (g)} (x>0)$.
+> Ta có phương trình:
+> $$
+> \frac{71,4 + x}{2040 + x} = \frac{20}{100}
+> $$
+> Giải phương trình:
+> $$
+> 100 \cdot (71,4 + x) = 20 \cdot (2040 + x) \\
+> 7140 + 100x = 40800 + 20x \\
+> 80x = 33660 \\
+> x = 420,75
+> $$
+> Vậy cần hòa thêm $420,75 \text{ g}$ muối vào 2 lít nước biển ban đầu để được một dung dịch có nồng độ muối là $20\%$.
+
+### BÀI TẬP
+
+1.  Giải các phương trình:
+    a) $(9x-4)(2x+5)=0$
+    b) $(1,3x+0,26)(0,2x-4)=0$
+    c) $2x(x+3) - 5(x+3) = 0$
+    d) $x^2 - 4 + (x+2)(2x-1) = 0$
+
+2.  Giải các phương trình:
+    a) $\frac{1}{x} = \frac{5}{3(x+2)}$
+    b) $\frac{x}{2x-1} = \frac{x-2}{2x+5}$
+    c) $\frac{5x}{x-2} = 7 + \frac{10}{x-2}$
+    d) $\frac{x^2-6}{x} = x + \frac{3}{2}$
+
+3.  Một ca nô đi xuôi dòng từ địa điểm A đến địa điểm B rồi lại đi ngược dòng từ địa điểm B trở về địa điểm A. Thời gian cả đi và về là 3 giờ. Tính tốc độ của dòng nước. Biết tốc độ của ca nô khi nước yên lặng là $27 \text{ km/h}$ và độ dài quãng đường AB là $40 \text{ km}$.
+
+4.  Một doanh nghiệp sử dụng than để sản xuất sản phẩm. Doanh nghiệp đó lập kế hoạch tài chính cho việc loại bỏ chất ô nhiễm trong khí thải theo dự kiến sau: Để loại bỏ $p\%$ chất ô nhiễm trong khí thải thì chi phí $C$ (triệu đồng) được tính theo công thức: $C = \frac{80}{100-p}$ với $0 \le p < 100$.
+    a) Với chi phí là 20 triệu đồng thì có thể loại bỏ được bao nhiêu phần trăm chất ô nhiễm?
+    b) Để loại bỏ được $95\%$ chất ô nhiễm thì cần chi phí là bao nhiêu?
+
+---
+
+## §2. PHƯƠNG TRÌNH BẬC NHẤT HAI ẨN. HỆ HAI PHƯƠNG TRÌNH BẬC NHẤT HAI ẨN
+
+### I. PHƯƠNG TRÌNH BẬC NHẤT HAI ẨN
+
+**Phương trình bậc nhất hai ẩn** $x, y$ là hệ thức có dạng $ax+by=c$, trong đó $a, b, c$ là những số đã cho, $a \neq 0$ hoặc $b \neq 0$.
+
+Nếu với cặp số $(x_0; y_0)$, giá trị của biểu thức $ax+by$ tại $x=x_0, y=y_0$ bằng $c$ thì cặp số $(x_0; y_0)$ được gọi là một **nghiệm** của phương trình $ax+by=c$.
+
+**Ví dụ 1** Trong các phương trình sau, phương trình nào là phương trình bậc nhất hai ẩn?
+a) $2x-3y=5$
+b) $0x+4y=8$
+c) $x^2+y=1$
+d) $x+y-z=0$
+
+> **Giải**
+>
+> Các phương trình ở câu a, b là phương trình bậc nhất hai ẩn.
+> Phương trình ở câu c không phải là phương trình bậc nhất hai ẩn vì có chứa $x^2$.
+> Phương trình ở câu d không phải là phương trình bậc nhất hai ẩn vì có ba ẩn là $x, y, z$.
+
+**Ví dụ 2** Cho phương trình $2x-3y=5$.
+a) Cặp số $(1; -1)$ có phải là một nghiệm của phương trình trên không?
+b) Tìm thêm hai nghiệm khác của phương trình trên.
+
+> **Giải**
+>
+> a) Thay $x=1, y=-1$ vào vế trái của phương trình, ta có: $2 \cdot 1 - 3 \cdot (-1) = 5$. Vế trái bằng vế phải nên cặp số $(1; -1)$ là một nghiệm của phương trình.
+> b) Hai nghiệm khác của phương trình là $(4; 1)$ và $(-2; -3)$.
+
+**Ví dụ 3** Cô Hạnh đầu tư hai khoản tiền với tổng số vốn là 200 triệu đồng.
+a) Viết phương trình bậc nhất hai ẩn $x, y$ cho hai khoản đầu tư của cô Hạnh.
+b) Tìm ba nghiệm của phương trình đó.
+
+> **Giải**
+>
+> a) Gọi $x$ (triệu đồng) là khoản đầu tư thứ nhất ($x>0$).
+> Gọi $y$ (triệu đồng) là khoản đầu tư thứ hai ($y>0$).
+> Ta có phương trình bậc nhất hai ẩn $x, y$ là: $x+y=200$.
+>
+> b) Ba nghiệm của phương trình trên là: $(100; 100)$, $(50; 150)$, $(120; 80)$.
+
+### II. HỆ HAI PHƯƠNG TRÌNH BẬC NHẤT HAI ẨN
+
+Hai bạn Dung, Huy vào siêu thị mua vở và bút bi để ủng hộ các bạn học sinh vùng lũ lụt. Bạn Dung mua 5 quyển vở và 3 chiếc bút bi với tổng số tiền phải trả là 39 000 đồng. Bạn Huy mua 6 quyển vở và 2 chiếc bút bi với tổng số tiền phải trả là 42 000 đồng. Giả sử giá của mỗi quyển vở là $x$ đồng ($x>0$), giá của mỗi chiếc bút bi là $y$ đồng ($y>0$).
+
+a) Viết hai phương trình bậc nhất hai ẩn $x, y$ lần lượt biểu thị tổng số tiền phải trả của bạn Dung, bạn Huy.
+b) Cặp số $(x; y) = (6000; 3000)$ có phải là nghiệm của từng phương trình bậc nhất đó hay không? Vì sao?
+
+Ta nói rằng cặp số $(x; y) = (6000; 3000)$ là một nghiệm của **hệ hai phương trình bậc nhất hai ẩn**:
+$$
+\begin{cases}
+5x + 3y = 39000 \\
+6x + 2y = 42000
+\end{cases}
+$$
+
+**Hệ hai phương trình bậc nhất hai ẩn** có dạng:
+$$
+\begin{cases}
+ax + by = c \\
+a'x + b'y = c'
+\end{cases} \quad (I)
+$$
+trong đó mỗi phương trình $ax+by=c$ và $a'x+b'y=c'$ đều là phương trình bậc nhất hai ẩn.
+
+Nếu cặp số $(x_0; y_0)$ là nghiệm của từng phương trình trong hệ (I) thì cặp số $(x_0; y_0)$ được gọi là **nghiệm** của hệ (I).
+**Giải hệ phương trình** là tìm tất cả các nghiệm của hệ phương trình đó.
+
+**Ví dụ 7** Trong những trường hợp sau, hãy chỉ ra các hệ hai phương trình bậc nhất hai ẩn:
+a) $\begin{cases} 2x-3y=5 \\ x+3y=-11 \end{cases}$
+b) $\begin{cases} x-y=1 \\ x+y=3 \end{cases}$
+c) $\begin{cases} 4x=8 \\ 2x-y=1 \end{cases}$
+d) $\begin{cases} x^2+y=1 \\ x-y=2 \end{cases}$
+
+> **Giải**
+>
+> Hệ phương trình ở các câu a, b, c là hệ hai phương trình bậc nhất hai ẩn.
+> Trường hợp câu d không phải là hệ hai phương trình bậc nhất hai ẩn.
+
+**Ví dụ 8** Cho hệ phương trình: $\begin{cases} 2x-3y=5 \\ x+3y=-11 \end{cases}$.
+Trong các cặp số sau, cặp số nào là nghiệm của hệ phương trình đã cho?
+a) $(-2; -3)$
+b) $(1; -1)$
+
+> **Giải**
+>
+> a) Thay giá trị $x=-2, y=-3$ vào mỗi phương trình trong hệ, ta có:
+> $2 \cdot (-2) - 3 \cdot (-3) = -4 + 9 = 5$ (đúng)
+> $-2 + 3 \cdot (-3) = -2 - 9 = -11$ (đúng)
+> Suy ra cặp số $(-2; -3)$ là nghiệm của từng phương trình trong hệ. Do đó cặp số $(-2; -3)$ là nghiệm của hệ phương trình đã cho.
+>
+> b) Thay giá trị $x=1, y=-1$ vào mỗi phương trình trong hệ, ta có:
+> $2 \cdot 1 - 3 \cdot (-1) = 2 + 3 = 5$ (đúng)
+> $1 + 3 \cdot (-1) = 1 - 3 = -2 \neq -11$ (sai)
+> Do đó, cặp số $(1; -1)$ không là nghiệm của phương trình thứ hai trong hệ.
+> Vậy cặp số $(1; -1)$ không là nghiệm của hệ phương trình đã cho.
+
+### BÀI TẬP
+
+1.  Trong các cặp số $(8; 1), (-3; 6), (4; -1), (0; 2)$, cho biết cặp số nào là nghiệm của mỗi phương trình sau:
+    a) $x - 2y = 6$
+    b) $x + y = 3$
+
+2.  Cho hệ phương trình: $\begin{cases} x+2y=1 \\ 3x-2y=3 \end{cases}$.
+    Trong các cặp số sau, cặp số nào là nghiệm của hệ phương trình đã cho?
+    a) $(3; -1)$
+    b) $(1; 0)$
+
+3.  Nhân dịp tết Trung thu, một doanh nghiệp dự định sản xuất hai loại bánh: bánh nướng và bánh dẻo. Lượng đường cần cho mỗi chiếc bánh nướng, bánh dẻo lần lượt là $60 \text{ g}$ và $50 \text{ g}$. Gọi $x$ và $y$ lần lượt là số lượng bánh nướng và bánh dẻo mà doanh nghiệp dự định sản xuất để lượng đường sản xuất bánh là $500 \text{ kg}$. Viết phương trình bậc nhất hai ẩn $x, y$ và chỉ ra ba nghiệm của phương trình đó.
+
+4.  Năm bạn Châu, Hà, Khang, Minh, Phong cùng đi mua sticker để trang trí vở. Có hai loại sticker: loại I giá 2 nghìn đồng/chiếc và loại II giá 3 nghìn đồng/chiếc. Mỗi bạn mua 1 chiếc và tổng số tiền năm bạn phải trả là 12 nghìn đồng. Gọi $x$ và $y$ lần lượt là số sticker loại I và loại II mà năm bạn đã mua.
+    a) Viết hệ phương trình bậc nhất hai ẩn $x, y$.
+    b) Cặp số $(3; 2)$ có phải là nghiệm của hệ phương trình câu a hay không? Vì sao?
+
+5.  Để chuẩn bị cho buổi liên hoan của gia đình, bác Ngọc mua hai loại thực phẩm là thịt lợn và cá chép. Giá tiền thịt lợn là 130 nghìn đồng/kg, giá tiền cá chép là 50 nghìn đồng/kg. Bác Ngọc đã chi 295 nghìn để mua $3,5 \text{ kg}$ hai loại thực phẩm trên. Gọi $x$ và $y$ lần lượt là số kilôgam thịt lợn và cá chép mà bác Ngọc đã mua.
+    a) Viết hệ phương trình bậc nhất hai ẩn $x, y$.
+    b) Cặp số $(1,5; 2)$ có phải là nghiệm của hệ phương trình ở câu a hay không? Vì sao?
+
+6.  Người ta cần sơn hai loại sản phẩm A, B bằng hai loại sơn: sơn xanh, sơn vàng. Lượng sơn để sơn mỗi loại sản phẩm đó được cho ở Bảng 1 (đơn vị: kg/1 sản phẩm).
+    **Bảng 1**
+| Loại sơn \ Loại sản phẩm | Sơn xanh | Sơn vàng |
+| :--- | :--- | :--- |
+| Sản phẩm loại A | 0,6 | 0,3 |
+| Sản phẩm loại B | 0,5 | 0,4 |
+    Người ta dự định sử dụng $85 \text{ kg}$ sơn xanh và $50 \text{ kg}$ sơn vàng để sơn tất cả các sản phẩm của hai loại đó. Gọi $x$ và $y$ lần lượt là số sản phẩm loại A, số sản phẩm loại B được sơn.
+    a) Viết hệ phương trình bậc nhất hai ẩn $x, y$.
+    b) Cặp số $(100; 50)$ có phải là nghiệm của hệ phương trình ở câu a hay không? Vì sao?
+
+---
+
+## §3. GIẢI HỆ HAI PHƯƠNG TRÌNH BẬC NHẤT HAI ẨN
+
+Một nhóm khách vào cửa hàng bán trà sữa. Nhóm khách đó đã mua 6 cốc trà sữa gồm trà sữa trân châu và trà sữa phô mai. Giá mỗi cốc trà sữa trân châu, trà sữa phô mai lần lượt là 33 000 đồng, 28 000 đồng. Tổng số tiền nhóm khách thanh toán cho cửa hàng là 188 000 đồng. Hỏi nhóm khách đó mua bao nhiêu cốc trà sữa mỗi loại?
+
+### I. GIẢI HỆ PHƯƠNG TRÌNH BẰNG PHƯƠNG PHÁP THẾ
+
+Cho hệ phương trình: $\begin{cases} -x+y=3 \quad (1) \\ 3x+2y=11 \quad (2) \end{cases} \quad (I)$
+
+Hãy giải hệ phương trình (I) theo các bước sau:
+a) Từ phương trình (1), ta biểu diễn $y$ theo $x$ rồi thế vào phương trình (2) để được phương trình ẩn $x$.
+b) Giải phương trình (ẩn $x$) vừa nhận được để tìm giá trị của $x$.
+c) Thế giá trị vừa tìm được của $x$ vào biểu thức biểu diễn $y$ theo $x$ ở câu a để tìm giá trị của $y$. Từ đó, kết luận nghiệm của hệ phương trình (I).
+
+Ta có thể giải hệ phương trình bậc nhất hai ẩn bằng **phương pháp thế** theo các bước sau:
+*   **Bước 1 (Thế).** Từ một phương trình của hệ đã cho, ta biểu diễn một ẩn theo ẩn kia rồi thế vào phương trình còn lại của hệ để được phương trình một ẩn.
+*   **Bước 2 (Giải phương trình một ẩn).** Giải phương trình (một ẩn) nhận được ở Bước 1 để tìm giá trị của ẩn đó.
+*   **Bước 3 (Tìm ẩn còn lại và kết luận).** Thế giá trị vừa tìm được của ẩn đó ở Bước 2 vào biểu thức biểu diễn một ẩn theo ẩn kia ở Bước 1 để tìm giá trị của ẩn còn lại. Từ đó, ta tìm được nghiệm của hệ phương trình đã cho.
+
+**Ví dụ 1** Giải hệ phương trình: $\begin{cases} 2x+y=5 \quad (1) \\ 3x-2y=11 \quad (2) \end{cases}$
+
+> **Giải**
+>
+> Từ phương trình (1), ta có: $y = 5-2x \quad (3)$.
+>
+> Thay vào phương trình (2), ta được: $3x - 2(5-2x) = 11 \quad (4)$.
+>
+> Giải phương trình (4):
+> $$
+> 3x - 10 + 4x = 11 \\
+> 7x = 21 \\
+> x = 3
+> $$
+> Thay giá trị $x=3$ vào phương trình (3), ta có: $y = 5 - 2 \cdot 3 = -1$.
+>
+> Vậy hệ phương trình đã cho có nghiệm $(x; y) = (3; -1)$.
+
+**Ví dụ 2** Giải hệ phương trình: $\begin{cases} 3x+12y=-5 \quad (1) \\ x+4y=3 \quad (2) \end{cases}$
+
+> **Giải**
+>
+> Từ phương trình (2), ta có: $x = 3-4y \quad (3)$.
+>
+> Thay vào phương trình (1), ta được: $3(3-4y) + 12y = -5 \quad (4)$.
+>
+> Giải phương trình (4):
+> $$
+> 9 - 12y + 12y = -5 \\
+> 0y = -14
+> $$
+> Do đó, phương trình (4) vô nghiệm. Vậy hệ phương trình đã cho vô nghiệm.
+
+**Ví dụ 3** Giải hệ phương trình: $\begin{cases} 12x-4y=-16 \quad (1) \\ 3x-y=-4 \quad (2) \end{cases}$
+
+> **Giải**
+>
+> Từ phương trình (2), ta có: $y = 3x+4 \quad (3)$.
+>
+> Thay vào phương trình (1), ta được: $12x - 4(3x+4) = -16 \quad (4)$.
+>
+> Giải phương trình (4):
+> $$
+> 12x - 12x - 16 = -16 \\
+> 0x = 0
+> $$
+> Do đó, phương trình (4) có vô số nghiệm. Vậy hệ phương trình đã cho có vô số nghiệm.
+>
+> *Nhận xét:* Ta có thể viết phương trình (1) về dạng: $3x-y=-4$. Do đó, hệ phương trình đã cho có thể viết về dạng: $\begin{cases} 3x-y=-4 \\ 3x-y=-4 \end{cases}$.
+> Vì vậy, nghiệm của hệ phương trình đã cho cũng là nghiệm của phương trình $3x-y=-4$.
+> Vậy hệ phương trình đã cho có vô số nghiệm $(x; y)$ với $x \in \mathbb{R}$ và $y=3x+4$.
+
+**Chú ý:** Hệ phương trình bậc nhất hai ẩn có thể có nghiệm duy nhất, hoặc vô nghiệm, hoặc vô số nghiệm.
+
+### II. GIẢI HỆ PHƯƠNG TRÌNH BẰNG PHƯƠNG PHÁP CỘNG ĐẠI SỐ
+
+Cho hệ phương trình: $\begin{cases} x+y=7 \quad (1) \\ x-y=1 \quad (2) \end{cases} \quad (II)$
+
+a) Các hệ số của $y$ trong hai phương trình (1) và (2) có đặc điểm gì?
+b) Cộng từng vế hai phương trình của hệ (II), ta nhận được phương trình nào?
+c) Giải phương trình nhận được ở câu b. Từ đó, ta tìm được nghiệm của hệ phương trình (II).
+
+Cách giải hệ phương trình như trên được gọi là giải hệ phương trình bằng **phương pháp cộng đại số**.
+
+Ta có thể giải hệ phương trình bậc nhất hai ẩn bằng phương pháp cộng đại số theo các bước sau:
+*   **Bước 1 (Làm cho hai hệ số của một ẩn nào đó bằng nhau hoặc đối nhau).** Nhân hai vế của mỗi phương trình với một số thích hợp (nếu cần) sao cho các hệ số của một ẩn nào đó trong hai phương trình của hệ bằng nhau hoặc đối nhau.
+*   **Bước 2 (Đưa về phương trình một ẩn).** Cộng (hay trừ) từng vế hai phương trình của hệ phương trình nhận được ở Bước 1 để nhận được một phương trình mà hệ số của một trong hai ẩn bằng 0, tức là nhận được phương trình một ẩn. Giải phương trình một ẩn đó.
+*   **Bước 3 (Tìm ẩn còn lại và kết luận).** Thế giá trị vừa tìm được ở Bước 2 vào một trong hai phương trình của hệ đã cho để tìm giá trị của ẩn còn lại. Từ đó, ta tìm được nghiệm của hệ phương trình đã cho.
+
+**Ví dụ 5** Giải hệ phương trình: $\begin{cases} 3x+2y=4 \quad (1) \\ -2x+3y=-7 \quad (2) \end{cases}$
+
+> **Giải**
+>
+> Nhân hai vế của phương trình (1) với 2 và nhân hai vế của phương trình (2) với 3, ta được hệ phương trình sau:
+> $\begin{cases} 6x+4y=8 \quad (3) \\ -6x+9y=-21 \quad (4) \end{cases}$
+>
+> Cộng từng vế hai phương trình (3) và (4), ta nhận được phương trình: $13y = -13 \implies y = -1$.
+>
+> Thế giá trị $y=-1$ vào phương trình (1), ta được phương trình: $3x + 2(-1) = 4$.
+> Giải phương trình: $3x - 2 = 4 \implies 3x = 6 \implies x = 2$.
+>
+> Vậy hệ phương trình đã cho có nghiệm $(x; y) = (2; -1)$.
+
+**Ví dụ 6** Một trường trung học cơ sở mua 500 quyển vở để làm phần thưởng cho học sinh. Giá bán của mỗi quyển vở loại thứ nhất, loại thứ hai lần lượt là 8 000 đồng, 9 000 đồng. Hỏi nhà trường đã mua mỗi loại bao nhiêu quyển vở? Biết rằng số tiền nhà trường đã dùng để mua 500 quyển vở đó là 4 200 000 đồng.
+
+> **Giải**
+>
+> Gọi số quyển vở loại thứ nhất, loại thứ hai lần lượt là $x, y$ ($x, y \in \mathbb{N}^*$).
+>
+> Theo giả thiết, ta có phương trình: $x+y=500$.
+>
+> Mặt khác, ta có phương trình: $8000x + 9000y = 4200000$, tức là $8x+9y=4200$.
+>
+> Ta có hệ phương trình: $\begin{cases} x+y=500 \quad (1) \\ 8x+9y=4200 \quad (2) \end{cases}$.
+>
+> Ta giải hệ phương trình trên:
+> Từ phương trình (1), ta có: $y = 500-x$.
+> Thay vào phương trình (2), ta được: $8x + 9(500-x) = 4200$.
+> Giải phương trình:
+> $$
+> 8x + 4500 - 9x = 4200 \\
+> -x + 4500 = 4200 \\
+> x = 300
+> $$
+> Thay giá trị $x=300$ vào phương trình $y=500-x$, ta có: $y = 500-300 = 200$.
+>
+> Do đó, hệ phương trình đã cho có nghiệm $(x; y) = (300; 200)$.
+> Vậy nhà trường đã mua 300 quyển vở loại thứ nhất và 200 quyển vở loại thứ hai.
+
+### III. SỬ DỤNG MÁY TÍNH CẦM TAY ĐỂ TÌM NGHIỆM CỦA HỆ HAI PHƯƠNG TRÌNH BẬC NHẤT HAI ẨN
+
+Ta có thể tìm nghiệm (đúng hoặc gần đúng) của hệ hai phương trình bậc nhất hai ẩn bằng cách sử dụng máy tính cầm tay. Mỗi loại máy tính khác nhau có thể có các phím khác nhau. Tuy nhiên, đều có quy tắc chung là phải mở chương trình giải hệ phương trình bậc nhất hai ẩn rồi mới nhập dữ liệu. Chẳng hạn, ấn liên tiếp các phím `MODE` `5` `1`.
+
+### BÀI TẬP
+
+1.  Giải các hệ phương trình sau bằng phương pháp thế:
+    a) $\begin{cases} x-2y=0 \\ 3x+2y=8 \end{cases}$
+    b) $\begin{cases} -\frac{3}{4}x + \frac{1}{2}y = -2 \\ \frac{3}{2}x - y = 4 \end{cases}$
+    c) $\begin{cases} 4x-2y=1 \\ -2x+y=0 \end{cases}$
+
+2.  Giải các hệ phương trình sau bằng phương pháp cộng đại số:
+    a) $\begin{cases} 2x+y=4 \\ x-y=2 \end{cases}$
+    b) $\begin{cases} 4x+5y=11 \\ 2x-3y=0 \end{cases}$
+    c) $\begin{cases} 12x+18y=-24 \\ -2x-3y=4 \end{cases}$
+    d) $\begin{cases} x-3y=5 \\ -2x+6y=10 \end{cases}$
+
+3.  Xác định $a$ và $b$ để đồ thị của hàm số $y=ax+b$ đi qua hai điểm $A, B$ trong mỗi trường hợp sau:
+    a) $A(1; -2)$ và $B(-2; -11)$
+    b) $A(2; 8)$ và $B(-4; 5)$
+
+4.  Một ca nô đi xuôi dòng một quãng đường $42 \text{ km}$ hết 1 giờ 30 phút và ngược dòng quãng đường đó hết 2 giờ 6 phút. Tính tốc độ của ca nô khi nước yên lặng và tốc độ của dòng nước. Biết rằng tốc độ của ca nô khi nước yên lặng không đổi trên suốt quãng đường và tốc độ của dòng nước cũng không đổi khi ca nô chuyển động.
+
+5.  Bác Phương chia số tiền 800 triệu đồng của mình cho hai khoản đầu tư. Sau một năm, tổng số tiền lãi thu được là 54 triệu đồng. Lãi suất cho khoản đầu tư thứ nhất là $6\%/\text{năm}$ và khoản đầu tư thứ hai là $8\%/\text{năm}$. Tính số tiền bác Phương đầu tư cho mỗi khoản.
+
+6.  Nhân dịp ngày Giỗ Tổ Hùng Vương, một siêu thị điện máy đã giảm giá nhiều mặt hàng để kích cầu mua sắm. Giá niêm yết của một chiếc tủ lạnh và một chiếc máy giặt có tổng số tiền là 25,4 triệu đồng. Tuy nhiên, trong dịp này tủ lạnh giảm $40\%$ giá niêm yết và máy giặt giảm $25\%$ giá niêm yết. Vì thế, cô Liên đã mua hai mặt hàng trên với tổng số tiền là 16,77 triệu đồng. Hỏi giá niêm yết của mỗi mặt hàng trên là bao nhiêu?
+
+7.  Tìm các hệ số $x, y$ để cân bằng mỗi phương trình phản ứng hoá học sau:
+    a) $2\text{Fe} + y\text{Cl}_2 \to x\text{FeCl}_3$
+    b) $x\text{FeCl}_3 + \text{Fe} \to y\text{FeCl}_2$
+
+---
+# BÀI TẬP CUỐI CHƯƠNG I
+
+1.  Nghiệm của phương trình $\frac{1}{x} - \frac{3}{2x} = \frac{1}{6}$ là:
+    A. $x=3$
+    B. $x=-3$
+    C. $x=6$
+    D. $x=-6$
+
+2.  Nghiệm của hệ phương trình $\begin{cases} x+y=9 \\ x-y=-1 \end{cases}$ là:
+    A. $(x; y) = (4; 5)$
+    B. $(x; y) = (5; 4)$
+    C. $(x; y) = (-5; -4)$
+    D. $(x; y) = (-4; -5)$
+
+3.  Giải các phương trình:
+    a) $(3x+7)(4x-9)=0$
+    b) $(5x-0,2)(0,3x+6)=0$
+    c) $x(2x-1) + 5(2x-1) = 0$
+    d) $x^2-9 - (x+3)(3x+1) = 0$
+    e) $x^2-10x+25 = 5(5-x)$
+    g) $4x^2 = (x-12)^2$
+
+4.  Giải các phương trình:
+    a) $\frac{-6}{x+3} = \frac{2}{3}$
+    b) $\frac{x-2}{2} + \frac{1}{2x} = 0$
+    c) $\frac{8}{3x-4} = \frac{1}{x+2}$
+    d) $\frac{x}{x-2} + \frac{2}{(x-2)^2} = 1$
+    e) $\frac{3x-2}{x+1} = 4 - \frac{x+2}{x-1}$
+    g) $\frac{x^2}{(x-1)(x-2)} = 1 - \frac{1}{x-1}$
+
+5.  Giải các hệ phương trình:
+    a) $\begin{cases} x+3y=-2 \\ 5x-4y=11 \end{cases}$
+    b) $\begin{cases} 2x+3y=-2 \\ 3x-2y=-3 \end{cases}$
+    c) $\begin{cases} 2x-4y=-1 \\ -3x+6y=2 \end{cases}$
+
+6.  Một nhóm bạn trẻ cùng tham gia khởi nghiệp và dự định góp vốn là 240 triệu đồng, số tiền góp mỗi người là như nhau. Nếu có thêm 2 người tham gia cùng thì số tiền mỗi người góp giảm đi 4 triệu đồng. Hỏi nhóm bạn trẻ đó có bao nhiêu người?
+
+7.  Một nhóm công nhân cần phải cắt cỏ một số mặt sân cỏ. Nếu nhóm công nhân đó sử dụng 3 máy cắt có người lái và 2 máy cắt đẩy tay trong 10 phút thì cắt được $2990 \text{ m}^2$ cỏ. Nếu nhóm công nhân đó sử dụng 4 máy cắt có người lái và 3 máy cắt đẩy tay trong 10 phút thì cắt được $4060 \text{ m}^2$ cỏ. Hỏi trong 10 phút, mỗi loại máy trên sẽ cắt được bao nhiêu mét vuông cỏ?
+
+8.  Tại một buổi biểu diễn nhằm gây quỹ từ thiện, ban tổ chức đã bán được 500 vé. Trong đó có hai loại vé: vé loại I giá 100 000 đồng; vé loại II giá 75 000 đồng. Tổng số tiền thu được từ bán vé là 44 500 000 đồng. Tính số vé bán ra của mỗi loại.
+
+9.  Trong một đợt khuyến mãi, siêu thị giảm giá cho mặt hàng A là $20\%$ và mặt hàng B là $15\%$ so với giá niêm yết. Một khách hàng mua 2 món hàng A và 1 món hàng B thì phải trả số tiền là 362 000 đồng. Nhưng nếu mua trong khung giờ vàng thì mặt hàng A được giảm giá $30\%$ và mặt hàng B được giảm giá $25\%$ so với giá niêm yết. Một khách hàng mua 3 món hàng A và 2 món hàng B trong khung giờ vàng nên phải trả số tiền là 552 000 đồng. Tính giá niêm yết của mỗi mặt hàng A và B.
+
+10. Trong phòng thí nghiệm, cô Linh muốn tạo ra $500 \text{ g}$ dung dịch HCl $19\%$ từ hai loại dung dịch HCl $10\%$ và HCl $25\%$. Hỏi cô Linh cần dùng bao nhiêu gam cho mỗi loại dung dịch đó?
+
+11. Một ca nô đi xuôi dòng từ địa điểm A đến địa điểm B và lại ngược dòng từ địa điểm B về địa điểm A mất 9 giờ, tốc độ của ca nô khi nước yên lặng không đổi trên suốt quãng đường đó và tốc độ của dòng nước cũng không đổi khi ca nô chuyển động. Biết thời gian ca nô đi xuôi dòng $5 \text{ km}$ bằng thời gian ca nô đi ngược dòng $4 \text{ km}$ và quãng đường AB là $160 \text{ km}$. Tính tốc độ của ca nô khi nước yên lặng và tốc độ của dòng nước.
+
+---
+# CHƯƠNG II: BẤT ĐẲNG THỨC. BẤT PHƯƠNG TRÌNH BẬC NHẤT MỘT ẨN
+
+Trong chương này, chúng ta sẽ tìm hiểu những nội dung sau: bất đẳng thức; bất phương trình bậc nhất một ẩn.
+
+## §1. BẤT ĐẲNG THỨC
+
+Tìm hiểu trên Internet, bạn Châu được biết một con voi nặng khoảng $5000 \text{ kg}$, một con hổ nặng khoảng $200 \text{ kg}$, một con tê giác đen nặng khoảng $450 \text{ kg}$.
+
+Để biểu thị con voi nặng hơn cả con hổ và con tê giác đen, bạn Châu đã viết:
+$5000 > 200 + 450$.
+
+### I. NHẮC LẠI VỀ THỨ TỰ TRONG TẬP HỢP SỐ THỰC
+
+Như ta đã biết, trong hai số thực khác nhau luôn có một số nhỏ hơn số kia.
+*   Nếu số thực $a$ nhỏ hơn số thực $b$ thì ta viết $a < b$.
+*   Nếu số thực $a$ lớn hơn số thực $b$ thì ta viết $a > b$.
+*   Số thực lớn hơn 0 gọi là số thực dương.
+*   Số thực nhỏ hơn 0 gọi là số thực âm.
+
+Trên trục số nằm ngang, nếu số thực $a$ nằm bên trái số thực $b$ thì $a < b$.
+
+Với hai số thực $a, b$, ta có:
+*   Nếu $ab > 0$ thì $a$ và $b$ cùng dương hoặc cùng âm (hay $a$ và $b$ cùng dấu) và ngược lại.
+*   Nếu $ab < 0$ thì $a$ và $b$ trái dấu và ngược lại.
+
+Với hai số thực không âm $a, b$, ta có:
+*   Nếu $a > b$ thì $\sqrt{a} > \sqrt{b}$.
+
+**Ví dụ 1** So sánh:
+a) $3\frac{1}{7}$ và $3,14$
+b) $4$ và $\sqrt{17}$
+
+> **Giải**
+>
+> a) Do $3\frac{1}{7} = 3,1428...$ nên $3\frac{1}{7} > 3,14$.
+> b) Ta có: $4 = \sqrt{16}$. Do $16 < 17$ nên $\sqrt{16} < \sqrt{17}$ hay $4 < \sqrt{17}$.
+
+### II. BẤT ĐẲNG THỨC
+
+Hệ thức có dạng $a < b$ (hay $a > b, a \leq b, a \geq b$) là **bất đẳng thức** và gọi $a$ là vế trái, $b$ là vế phải của bất đẳng thức.
+
+**Chú ý:**
+*   Hai bất đẳng thức $a < b$ và $c < d$ được gọi là hai bất đẳng thức **cùng chiều**.
+*   Hai bất đẳng thức $a < b$ và $c > d$ được gọi là hai bất đẳng thức **ngược chiều**.
+
+**Ví dụ 2** Cho $a > b$. Chứng minh:
+a) $a+b > 2b$
+b) $5a-b > 4a$
+
+> **Giải**
+>
+> a) Xét hiệu: $(a+b) - 2b = a-b$. Do $a>b$ nên $a-b>0$. Vậy $(a+b) > 2b$.
+> b) Xét hiệu: $(5a-b) - 4a = a-b$. Do $a>b$ nên $a-b>0$. Vậy $5a-b > 4a$.
+
+### III. TÍNH CHẤT CỦA BẤT ĐẲNG THỨC
+
+**1. Liên hệ giữa thứ tự và phép cộng**
+
+Khi cộng cùng một số vào cả hai vế của một bất đẳng thức, ta được bất đẳng thức mới **cùng chiều** với bất đẳng thức đã cho.
+*   Nếu $a > b$ thì $a+c > b+c$ với mọi số thực $c$.
+*   Nếu $a \geq b$ thì $a+c \geq b+c$ với mọi số thực $c$.
+
+**Ví dụ 4** Chứng minh: $\frac{2024}{2023} > \frac{2025}{2024}$.
+
+> **Giải**
+>
+> Do $\frac{1}{2023} > \frac{1}{2024}$ nên $\frac{1}{2023} + 1 > \frac{1}{2024} + 1$.
+> Hay $\frac{2024}{2023} > \frac{2025}{2024}$.
+
+**2. Liên hệ giữa thứ tự và phép nhân**
+
+*   Khi nhân cả hai vế của bất đẳng thức với cùng một số **dương**, ta được bất đẳng thức mới **cùng chiều** với bất đẳng thức đã cho.
+    Với ba số $a, b, c$ mà $c > 0$, ta có:
+    *   Nếu $a > b$ thì $ac > bc$.
+    *   Nếu $a < b$ thì $ac < bc$.
+
+*   Khi nhân cả hai vế của bất đẳng thức với cùng một số **âm**, ta được bất đẳng thức mới **ngược chiều** với bất đẳng thức đã cho.
+    Với ba số $a, b, c$ mà $c < 0$, ta có:
+    *   Nếu $a > b$ thì $ac < bc$.
+    *   Nếu $a < b$ thì $ac > bc$.
+
+**3. Tính chất bắc cầu**
+
+Nếu $a > b$ và $b > c$ thì $a > c$.
+
+**Ví dụ 8** Cho $a > b$ và $c > d$. Chứng minh $a+c > b+d$.
+
+> **Giải**
+>
+> Do $a > b$ nên $a+c > b+c$.
+> Lại do $c > d$ nên $b+c > b+d$.
+> Vậy $a+c > b+d$.
+
+### BÀI TẬP
+
+1.  Chứng minh:
+    a) $\sqrt{29} - \sqrt{6} > \sqrt{28} - \sqrt{6}$
+    b) $26,2 < 26,21$
+    c) $-5,13 > -5,131$
+
+2.  Cho $m > n$. Chứng minh:
+    a) $m+2 > n+2$
+    b) $m-5 > n-5$
+    c) $-3m < -3n$
+    d) $2m+3 > 2n+3$
+
+3.  a) Cho $a > b > 0$. Chứng minh: $\frac{1}{a} < \frac{1}{b}$.
+    b) Áp dụng, so sánh: $\frac{2022}{2023}$ và $\frac{2023}{2024}$.
+
+---
+
+## §2. BẤT PHƯƠNG TRÌNH BẬC NHẤT MỘT ẨN
+
+### I. MỞ ĐẦU VỀ BẤT PHƯƠNG TRÌNH MỘT ẨN
+
+Xét hệ thức $3x+4 > x+6$. Ta nói rằng hệ thức này là một **bất phương trình** với ẩn $x$.
+Giá trị $x=5$ là một **nghiệm** của bất phương trình đó vì $3 \cdot 5 + 4 > 5+6$ (tức $19 > 11$) là một khẳng định đúng.
+
+Một bất phương trình với ẩn $x$ có dạng $A(x) > B(x)$ (hoặc $A(x) < B(x), A(x) \geq B(x), A(x) \leq B(x)$), trong đó $A(x)$ và $B(x)$ là hai biểu thức của cùng một biến $x$.
+
+### II. BẤT PHƯƠNG TRÌNH BẬC NHẤT MỘT ẨN
+
+**1. Định nghĩa**
+
+**Bất phương trình bậc nhất một ẩn** có dạng $ax+b > 0$ (hoặc $ax+b < 0, ax+b \geq 0, ax+b \leq 0$), trong đó $a, b$ là hai số đã cho và $a \neq 0$.
+
+**2. Cách giải**
+
+Giải bất phương trình $ax+b > 0$ (với $a>0$) được giải như sau:
+$$
+ax+b > 0 \\
+ax > -b \\
+x > -\frac{b}{a}
+$$
+Vậy nghiệm của bất phương trình đã cho là $x > -\frac{b}{a}$.
+
+Giải bất phương trình $ax+b > 0$ (với $a<0$) được giải như sau:
+$$
+ax+b > 0 \\
+ax > -b \\
+x < -\frac{b}{a}
+$$
+Vậy nghiệm của bất phương trình đã cho là $x < -\frac{b}{a}$.
+
+**Ví dụ 3** Giải các bất phương trình:
+a) $-0,3x + 12 > 0$
+b) $\frac{3}{4}x - 6 \leq 0$
+
+> **Giải**
+>
+> a) $-0,3x + 12 > 0 \implies -0,3x > -12 \implies x < \frac{-12}{-0,3} \implies x < 40$.
+> Vậy nghiệm của bất phương trình đã cho là $x < 40$.
+>
+> b) $\frac{3}{4}x - 6 \leq 0 \implies \frac{3}{4}x \leq 6 \implies x \leq 6 \cdot \frac{4}{3} \implies x \leq 8$.
+> Vậy nghiệm của bất phương trình đã cho là $x \leq 8$.
+
+**Ví dụ 5** Giải bất phương trình: $3x-5-2x > 25+4x$.
+
+> **Giải**
+>
+> $$
+> 3x-5-2x > 25+4x \\
+> x-5 > 25+4x \\
+> x-4x > 25+5 \\
+> -3x > 30 \\
+> x < \frac{30}{-3} \\
+> x < -10
+> $$
+> Vậy nghiệm của bất phương trình đã cho là $x < -10$.
+
+### BÀI TẬP
+
+1.  Kiểm tra xem số nào là nghiệm của mỗi bất phương trình tương ứng sau đây:
+    a) $x^2 - 3x + 2 > 0$ với $x=-3; x=1,5$.
+    b) $2-2x < 3x+1$ với $x=0,5; x=\frac{1}{5}$.
+
+2.  Giải các bất phương trình:
+    a) $x-5 \geq 0$
+    b) $0,6x+2 > 6x+9$
+    c) $1,7x+4 \geq 2+1,5x$
+
+3.  Giải các bất phương trình:
+    a) $\frac{8-3x}{2} - x < 0$
+    b) $3(2x-1) - \frac{x+3}{2} \leq 1$
+    c) $0,7x + \frac{2x-4}{3} - \frac{x}{6} > 1$
+
+4.  Tìm $x>0$ sao cho chu vi của hình tam giác lớn hơn chu vi của hình chữ nhật (Hình 2).
+
+5.  Một kho chứa 100 tấn xi măng, mỗi ngày đều xuất đi 20 tấn xi măng. Gọi $x$ là số ngày xuất xi măng của kho đó. Tìm $x$ sao cho khối lượng xi măng còn lại trong kho ít nhất là 10 tấn sau $x$ ngày xuất hàng.
+
+---
+# BÀI TẬP CUỐI CHƯƠNG II
+
+1.  Cho bất đẳng thức $a > b$. Kết luận nào sau đây là không đúng?
+    A. $2a > 2b$
+    B. $-a < -b$
+    C. $a-3 > b-3$
+    D. $a+1 < b+1$
+
+2.  Trong các phát biểu sau, phát biểu nào đúng, phát biểu nào sai?
+    a) Bất phương trình $ax+b > 0$ có nghiệm là $x > -\frac{b}{a}$
+    b) Bất phương trình $ax+b < 0$ với $a>0$ có nghiệm là $x < -\frac{b}{a}$
+    c) Bất phương trình $ax+b \geq 0$ với $a<0$ có nghiệm là $x \leq -\frac{b}{a}$
+    d) Bất phương trình $ax+b \leq 0$ với $a<0$ có nghiệm là $x \geq -\frac{b}{a}$
+
+3.  Chứng minh:
+    a) Nếu $a>5$ thì $\frac{a-1}{2} > 2$
+    b) Nếu $b>7$ thì $4 - \frac{b+3}{5} < 0$
+
+4.  Giải các bất phương trình:
+    a) $2x-1 > 0$
+    b) $5-x \leq 0$
+    c) $2x-9 < 9+4x$
+    d) $\frac{3x+5}{2} + \frac{x}{5} - 0,2x \geq 4$
+    e) $2x - \frac{x-7}{3} < 1$
+
+5.  Tìm $x$ sao cho:
+    a) Giá trị của biểu thức $2x-5$ không âm.
+    b) Giá trị của biểu thức $-3x$ không lớn hơn giá trị của biểu thức $-7x+5$.
+
+6.  Một hãng taxi có giá mở cửa là 15 000 đồng và giá 12 000 đồng cho mỗi kilômét tiếp theo.
+    a) Viết biểu thức tính số tiền $y$ (đồng) mà khách hàng phải trả khi đi $x$ (km).
+    b) Một khách hàng có 200 000 đồng. Hỏi khách hàng đó có thể đi được quãng đường tối đa là bao nhiêu kilômét?
+
+---
+# CHƯƠNG III: CĂN THỨC
+
+### §1. CĂN BẬC HAI VÀ CĂN BẬC BA CỦA SỐ THỰC
+
+### I. CĂN BẬC HAI
+
+**Căn bậc hai** của một số thực không âm $a$ là số thực $x$ sao cho $x^2 = a$.
+*   Số dương $a$ có đúng hai căn bậc hai là hai số đối nhau: số dương kí hiệu là $\sqrt{a}$; số âm kí hiệu là $-\sqrt{a}$. Ta gọi $\sqrt{a}$ là **căn bậc hai số học** của $a$.
+*   Căn bậc hai của số $0$ bằng 0.
+*   Số âm không có căn bậc hai.
+
+**Ví dụ 2**
+a) Số 8 và -8 có phải là căn bậc hai của 64 hay không?
+b) Từ đó, hãy sử dụng kí hiệu căn bậc hai để biểu thị giá trị 8 và giá trị -8.
+
+> **Giải**
+>
+> a) Ta thấy: $8^2 = 64$ và $(-8)^2 = 64$ nên số 8 và -8 là căn bậc hai của 64.
+> b) Ta có: $\sqrt{64} = 8$ và $-\sqrt{64} = -8$.
+
+**Ví dụ 5** So sánh:
+a) $\sqrt{3}$ và $\sqrt{5}$
+b) $3$ và $\sqrt{10}$
+
+> **Giải**
+>
+> a) Do $3 < 5$ nên $\sqrt{3} < \sqrt{5}$.
+> b) Ta có $3 = \sqrt{9}$. Do $9 < 10$ nên $\sqrt{9} < \sqrt{10}$, hay $3 < \sqrt{10}$.
+
+### II. CĂN BẬC BA
+
+**Căn bậc ba** của một số thực $a$ là số thực $x$ sao cho $x^3 = a$.
+Căn bậc ba của số thực $a$ được kí hiệu là $\sqrt[3]{a}$.
+Ta có: $(\sqrt[3]{a})^3 = a$.
+
+**Chú ý:** Mỗi số thực $a$ đều có duy nhất một căn bậc ba.
+
+**Ví dụ 8** Tìm giá trị của:
+a) $\sqrt[3]{1000}$
+b) $\sqrt[3]{-0,064}$
+c) $\sqrt[3]{\frac{1}{125}}$
+
+> **Giải**
+>
+> a) $\sqrt[3]{1000} = 10$
+> b) $\sqrt[3]{-0,064} = -0,4$
+> c) $\sqrt[3]{\frac{1}{125}} = \frac{1}{5}$
+
+Với hai số $a, b$ ta có: Nếu $a < b$ thì $\sqrt[3]{a} < \sqrt[3]{b}$.
+
+---
+## §2. MỘT SỐ PHÉP TÍNH VỀ CĂN BẬC HAI CỦA SỐ THỰC
+
+### I. CĂN BẬC HAI CỦA MỘT TÍCH
+
+Với $a \geq 0, b \geq 0$ ta có: $\sqrt{ab} = \sqrt{a} \cdot \sqrt{b}$.
+
+### II. CĂN BẬC HAI CỦA MỘT THƯƠNG
+
+Với $a \geq 0, b > 0$ ta có: $\sqrt{\frac{a}{b}} = \frac{\sqrt{a}}{\sqrt{b}}$.
+
+### III. ĐƯA THỪA SỐ RA NGOÀI DẤU CĂN BẬC HAI
+
+Cho hai số $a, b$ với $b \geq 0$. Khi đó $\sqrt{a^2 b} = |a|\sqrt{b}$.
+Cụ thể, ta có:
+*   Nếu $a \geq 0$ thì $\sqrt{a^2 b} = a\sqrt{b}$.
+*   Nếu $a < 0$ thì $\sqrt{a^2 b} = -a\sqrt{b}$.
+
+### IV. ĐƯA THỪA SỐ VÀO TRONG DẤU CĂN BẬC HAI
+
+*   Với $a \geq 0, b \geq 0$, ta có $a\sqrt{b} = \sqrt{a^2 b}$.
+*   Với $a < 0, b \geq 0$, ta có $a\sqrt{b} = -\sqrt{a^2 b}$.
+
+---
+## §3. CĂN THỨC BẬC HAI VÀ CĂN THỨC BẬC BA CỦA BIỂU THỨC ĐẠI SỐ
+
+### I. CĂN THỨC BẬC HAI
+
+Với $A$ là một biểu thức đại số, người ta gọi $\sqrt{A}$ là **căn thức bậc hai** của $A$. $A$ được gọi là biểu thức lấy căn hay biểu thức dưới dấu căn.
+$\sqrt{A}$ xác định (hay có nghĩa) khi $A$ lấy giá trị không âm.
+
+**Ví dụ 1** Biểu thức $\sqrt{3x-12}$ có nghĩa khi nào?
+
+> **Giải**
+>
+> Biểu thức $\sqrt{3x-12}$ có nghĩa khi $3x-12 \geq 0$, tức là $3x \geq 12$ hay $x \geq 4$.
+
+**Hằng đẳng thức $\sqrt{A^2} = |A|$**
+Với mọi biểu thức $A$, ta có $\sqrt{A^2} = |A|$.
+Cụ thể:
+*   $\sqrt{A^2} = A$ nếu $A \geq 0$.
+*   $\sqrt{A^2} = -A$ nếu $A < 0$.
+
+### II. CĂN THỨC BẬC BA
+
+Với $A$ là một biểu thức đại số, người ta gọi $\sqrt[3]{A}$ là **căn thức bậc ba** của $A$.
+Căn thức bậc ba $\sqrt[3]{A}$ xác định với mọi giá trị của các biến trong $A$.
+
+---
+## §4. MỘT SỐ PHÉP BIẾN ĐỔI CĂN THỨC BẬC HAI CỦA BIỂU THỨC ĐẠI SỐ
+
+### I. CĂN THỨC BẬC HAI CỦA MỘT TÍCH
+
+Với hai biểu thức $A, B$ không âm, ta có $\sqrt{A \cdot B} = \sqrt{A} \cdot \sqrt{B}$.
+
+### II. CĂN THỨC BẬC HAI CỦA MỘT THƯƠNG
+
+Với biểu thức $A$ không âm và biểu thức $B$ dương, ta có $\sqrt{\frac{A}{B}} = \frac{\sqrt{A}}{\sqrt{B}}$.
+
+### III. TRỤC CĂN THỨC Ở MẪU
+
+Phép biến đổi làm mất căn thức bậc hai ở mẫu thức của một biểu thức được gọi là **trục căn thức ở mẫu** của biểu thức đó.
+
+*   Với các biểu thức $A, B$ mà $B > 0$, ta có: $\frac{A}{\sqrt{B}} = \frac{A\sqrt{B}}{B}$.
+*   Với các biểu thức $A, B, C$ mà $B \geq 0$ và $A^2 \neq B$, ta có:
+    $\frac{C}{A+\sqrt{B}} = \frac{C(A-\sqrt{B})}{A^2-B}$
+    $\frac{C}{A-\sqrt{B}} = \frac{C(A+\sqrt{B})}{A^2-B}$
+*   Với các biểu thức $A, B, C$ mà $A \geq 0, B \geq 0$ và $A \neq B$, ta có:
+    $\frac{C}{\sqrt{A}+\sqrt{B}} = \frac{C(\sqrt{A}-\sqrt{B})}{A-B}$
+    $\frac{C}{\sqrt{A}-\sqrt{B}} = \frac{C(\sqrt{A}+\sqrt{B})}{A-B}$
+
+---
+# BÀI TẬP CUỐI CHƯƠNG III
+
+1.  Căn bậc hai của 16 là:
+    A. 4
+    B. 4 và -4
+    C. 256
+    D. 256 và -256
+
+2.  Nếu $\sqrt{x}=9$ thì $x$ bằng:
+    A. 3
+    B. 3 hoặc -3
+    C. 81
+    D. 81 hoặc -81
+
+3.  Rút gọn biểu thức:
+    a) $A = \sqrt{40^2 - 24^2}$
+    b) $B = (\sqrt{12} + 2\sqrt{3} - \sqrt{27}) \cdot \sqrt{3}$
+    c) $C = \frac{\sqrt{63^3+1}}{\sqrt{63^2-62}}$
+    d) $D = \sqrt{60} - 5\sqrt{\frac{3}{5}} - 3\sqrt{\frac{5}{3}}$
+
+4.  Trục căn thức ở mẫu:
+    a) $\frac{1}{\sqrt{x+1}}$ với $x > -1$
+    b) $\frac{3}{\sqrt{x}-2}$ với $x>0, x \neq 4$
+    c) $\frac{x-5}{\sqrt{x}-\sqrt{5}}$ với $x>0, x \neq 5$
+    d) $\frac{x^2-9}{\sqrt{x}-\sqrt{3}}$ với $x>0, x \neq 3$
+
+5.  So sánh:
+    a) $2\sqrt{3}$ và $3\sqrt{2}$
+    b) $7\sqrt{\frac{3}{7}}$ và $\sqrt{21}$
+    c) $\frac{2}{\sqrt{5}}$ và $\frac{6}{\sqrt{10}}$
+
+6.  Cho biểu thức: $M = \frac{a\sqrt{a} + b\sqrt{b}}{\sqrt{a} + \sqrt{b}}$ với $a>0, b>0$.
+    a) Rút gọn biểu thức $M$.
+    b) Tính giá trị của biểu thức tại $a=2, b=8$.
+
+7.  Cho biểu thức: $N = \frac{x\sqrt{x}+8}{x-4} - \frac{x+4}{\sqrt{x}-2}$ với $x \geq 0$ và $x \neq 4$.
+    a) Rút gọn biểu thức $N$.
+    b) Tính giá trị của biểu thức tại $x=9$.
+
+8.  Tốc độ con sóng thần $v (\text{m/s})$ và chiều sâu đại dương $d (\text{m})$ liên hệ bởi công thức $v = \sqrt{dg}$, trong đó $g=9,81 \text{ m/s}^2$.
+    a) Hãy tính tốc độ con sóng thần xuất phát từ Thái Bình Dương, ở độ sâu trung bình $4000 \text{ m}$.
+    b) Theo tính toán, tốc độ con sóng thần ngày 28/9/2018 là $800 \text{ km/h}$, hãy tính chiều sâu đại dương của nơi tâm chấn động đất gây ra sóng thần.
+
+---
+# CHƯƠNG IV: HỆ THỨC LƯỢNG TRONG TAM GIÁC VUÔNG
+
+### §1. TỈ SỐ LƯỢNG GIÁC CỦA GÓC NHỌN
+
+Cho góc nhọn $\alpha$. Xét tam giác $ABC$ vuông tại $A$ có $\widehat{B} = \alpha$.
+*   Tỉ số giữa cạnh đối và cạnh huyền được gọi là **sin** của góc $\alpha$, kí hiệu $\sin\alpha$.
+*   Tỉ số giữa cạnh kề và cạnh huyền được gọi là **côsin** của góc $\alpha$, kí hiệu $\cos\alpha$.
+*   Tỉ số giữa cạnh đối và cạnh kề được gọi là **tang** của góc $\alpha$, kí hiệu $\tan\alpha$.
+*   Tỉ số giữa cạnh kề và cạnh đối được gọi là **côtang** của góc $\alpha$, kí hiệu $\cot\alpha$.
+
+Trong $\triangle ABC$ vuông tại $A$:
+$\sin B = \frac{AC}{BC}$; $\cos B = \frac{AB}{BC}$; $\tan B = \frac{AC}{AB}$; $\cot B = \frac{AB}{AC}$.
+
+**Tính chất:**
+Nếu hai góc phụ nhau ($\alpha + \beta = 90^\circ$) thì:
+$\sin\alpha = \cos\beta$; $\cos\alpha = \sin\beta$; $\tan\alpha = \cot\beta$; $\cot\alpha = \tan\beta$.
+
+Với mọi góc nhọn $\alpha$, ta có:
+*   $0 < \sin\alpha < 1$; $0 < \cos\alpha < 1$
+*   $\sin^2\alpha + \cos^2\alpha = 1$
+*   $\tan\alpha = \frac{\sin\alpha}{\cos\alpha}$; $\cot\alpha = \frac{\cos\alpha}{\sin\alpha}$; $\tan\alpha \cdot \cot\alpha = 1$
+
+---
+## §2. MỘT SỐ HỆ THỨC VỀ CẠNH VÀ GÓC TRONG TAM GIÁC VUÔNG
+
+Trong một tam giác vuông, mỗi cạnh góc vuông bằng:
+*   Cạnh huyền nhân với sin góc đối hoặc nhân với côsin góc kề.
+*   Cạnh góc vuông kia nhân với tang góc đối hoặc nhân với côtang góc kề.
+
+**Giải tam giác vuông** là tìm tất cả các cạnh và các góc còn lại của tam giác vuông khi biết trước hai yếu tố (trong đó có ít nhất một yếu tố về cạnh).
+
+---
+## §3. ỨNG DỤNG CỦA TỈ SỐ LƯỢNG GIÁC CỦA GÓC NHỌN
+
+(Phần này chủ yếu là các bài toán thực tế áp dụng các hệ thức đã học)
+
+---
+# BÀI TẬP CUỐI CHƯƠNG IV
+(Bao gồm các bài tập tổng hợp về tỉ số lượng giác và giải tam giác vuông)
+
+---
+# CHƯƠNG V: ĐƯỜNG TRÒN
+
+### §1. ĐƯỜNG TRÒN. VỊ TRÍ TƯƠNG ĐỐI CỦA HAI ĐƯỜNG TRÒN
+
+**Đường tròn** tâm $O$, bán kính $R$ (kí hiệu $(O; R)$) là tập hợp các điểm trong mặt phẳng cách điểm $O$ một khoảng bằng $R$.
+
+**Vị trí tương đối của hai đường tròn**
+Cho hai đường tròn $(O; R)$ và $(O'; r)$ với $d = OO'$.
+*   **Cắt nhau** (2 điểm chung): $|R-r| < d < R+r$
+*   **Tiếp xúc nhau** (1 điểm chung):
+    *   Tiếp xúc ngoài: $d = R+r$
+    *   Tiếp xúc trong: $d = |R-r|$ ($R \neq r$)
+*   **Không giao nhau** (0 điểm chung):
+    *   Ở ngoài nhau: $d > R+r$
+    *   Đựng nhau: $d < |R-r|$ ($R \neq r$)
+
+### §2. VỊ TRÍ TƯƠNG ĐỐI CỦA ĐƯỜNG THẲNG VÀ ĐƯỜNG TRÒN
+
+Cho đường thẳng $a$ và đường tròn $(O; R)$. Gọi $d$ là khoảng cách từ $O$ đến $a$.
+*   **Cắt nhau** (2 điểm chung): $d < R$
+*   **Tiếp xúc nhau** (1 điểm chung): $d = R$. Đường thẳng $a$ được gọi là **tiếp tuyến**, điểm chung được gọi là **tiếp điểm**.
+*   **Không giao nhau** (0 điểm chung): $d > R$
+
+### §3. TIẾP TUYẾN CỦA ĐƯỜNG TRÒN
+
+**Tính chất:**
+*   Nếu một đường thẳng là tiếp tuyến của một đường tròn thì nó vuông góc với bán kính đi qua tiếp điểm.
+*   Nếu một đường thẳng đi qua một điểm của đường tròn và vuông góc với bán kính đi qua điểm đó thì đường thẳng ấy là một tiếp tuyến của đường tròn.
+
+**Tính chất của hai tiếp tuyến cắt nhau:**
+Nếu hai tiếp tuyến của một đường tròn cắt nhau tại một điểm thì:
+*   Điểm đó cách đều hai tiếp điểm.
+*   Tia kẻ từ điểm đó đi qua tâm là tia phân giác của góc tạo bởi hai tiếp tuyến.
+*   Tia kẻ từ tâm đi qua điểm đó là tia phân giác của góc tạo bởi hai bán kính đi qua các tiếp điểm.
+
+### §4. GÓC Ở TÂM. GÓC NỘI TIẾP
+
+*   **Góc ở tâm:** Góc có đỉnh trùng với tâm đường tròn.
+*   **Số đo cung nhỏ** bằng số đo của góc ở tâm chắn cung đó.
+*   **Số đo cung lớn** bằng $360^\circ$ trừ đi số đo cung nhỏ (có chung hai mút).
+*   **Góc nội tiếp:** Góc có đỉnh nằm trên đường tròn và hai cạnh chứa hai dây cung của đường tròn đó.
+*   Trong một đường tròn, số đo của góc nội tiếp bằng nửa số đo của cung bị chắn.
+
+### §5. ĐỘ DÀI CUNG TRÒN, DIỆN TÍCH HÌNH QUẠT TRÒN, DIỆN TÍCH HÌNH VÀNH KHUYÊN
+
+Trên đường tròn bán kính $R$, độ dài $l$ của một cung $n^\circ$ được tính theo công thức:
+$l = \frac{\pi R n}{180}$
+
+Diện tích $S$ của hình quạt tròn bán kính $R$, cung $n^\circ$ được tính theo công thức:
+$S = \frac{\pi R^2 n}{360}$ hoặc $S = \frac{lR}{2}$
+
+**Hình vành khuyên** là phần hình phẳng giới hạn bởi hai đường tròn đồng tâm $(O; R)$ và $(O; r)$ với $R > r$.
+Diện tích hình vành khuyên: $S = \pi(R^2 - r^2)$.
+
+---
+# BÀI TẬP CUỐI CHƯƠNG V
+
+1.  Trong Hình 92, cho các điểm A,B, C,D, E thuộc đường tròn $(O)$.
+    a) Số đo góc BOC là...
+    b) Số đo góc BDC là...
+    c) Số đo góc BEC là...
+
+2.  a) Độ dài cung tròn có số đo $30^\circ$ của đường tròn bán kính $R$ là:
+    A. $\frac{\pi R}{180}$
+    B. $\frac{\pi R}{360}$
+    C. $30\pi R$
+    D. $\frac{\pi R}{6}$
+    b) Diện tích của hình quạt tròn tâm O, bán kính R, cung có số đo $45^\circ$ là:
+    A. $\frac{\pi R^2}{45}$
+    B. $\frac{\pi R^2}{4}$
+    C. $\frac{\pi R^2}{8}$
+    D. $\frac{\pi R^2}{16}$
+
+3.  Cho hình vuông ABCD cạnh $r$ và đường tròn $(C; r)$. Giả sử $M$ là một điểm nằm trên đường tròn $(C; r)$ sao cho điểm $M$ nằm trong hình vuông $ABCD$. Tiếp tuyến của đường tròn $(C; r)$ tại tiếp điểm $M$ cắt các đoạn thẳng $AB, AD$ lần lượt tại $N$ và $P$. Chứng minh:
+    a) Các đường thẳng NB, $PD$ là các tiếp tuyến của đường tròn $(C; r)$.
+    b) $\widehat{NCP} = \widehat{NCB} + \widehat{PCD} = 45^\circ$.
+
+4.  Chứng minh trong một đường tròn:
+    a) Đường kính vuông góc với một dây thì đi qua trung điểm của dây ấy.
+    b) Đường kính đi qua trung điểm của một dây không đi qua tâm thì vuông góc với dây ấy.
+    c) Hai dây bằng nhau thì cách đều tâm.
+    d) Hai dây cách đều tâm thì bằng nhau.
+
+5.  Mặt đĩa CD có dạng hình vành khuyên giới hạn bởi hai đường tròn có bán kính lần lượt là 1,5 cm và 6 cm. Hình vành khuyên đó có diện tích bằng bao nhiêu centimét vuông?
+
+6.  Logo có dạng một hình quạt tròn bán kính 8 cm và góc ở tâm bằng $60^\circ$. Tính diện tích mỗi hình sau:
+    a) Toàn bộ logo.
+    b) Phần logo màu đỏ có dạng hình viên phân.
+
+---
+### BẢNG GIẢI THÍCH THUẬT NGỮ
+
+| THUẬT NGỮ | GIẢI THÍCH | TRANG |
+| :--- | :--- | :--- |
+| **Bất đẳng thức** | Hệ thức dạng $a < b$ (hay $a > b, a \leq b, a \geq b$). | 29 |
+| **Bất phương trình bậc nhất một ẩn** | Bất phương trình dạng $ax+b > 0$ (hoặc $ax+b < 0, ax+b \geq 0, ax+b \leq 0$) với $a, b$ là hai số đã cho và $a \neq 0$. | 36 |
+| **Căn thức bậc ba** | Với A là một biểu thức đại số, người ta gọi $\sqrt[3]{A}$ là căn thức bậc ba của A. | 63 |
+| **Căn thức bậc hai** | Với A là một biểu thức đại số, người ta gọi $\sqrt{A}$ là căn thức bậc hai của A. | 61 |
+| **Đường tròn (O; R)** | Tập hợp các điểm trong mặt phẳng cách điểm O một khoảng bằng R. | 93 |
+| **Góc nội tiếp** | Góc có đỉnh thuộc đường tròn và hai cạnh chứa hai dây cung của đường tròn đó. | 115 |
+| **Góc ở tâm** | Góc có đỉnh trùng với tâm đường tròn. | 111 |
+| **Hệ hai phương trình bậc nhất hai ẩn** | Hệ phương trình có dạng $\begin{cases} ax + by = c \\ a'x + b'y = c' \end{cases}$ trong đó mỗi phương trình đều là phương trình bậc nhất hai ẩn. | 16 |
+| **Phương trình bậc nhất hai ẩn** | Phương trình có dạng $ax+by=c$, trong đó $a, b, c$ là những số cho trước, $a \neq 0$ hoặc $b \neq 0$. | 12 |
+| **Hình quạt tròn** | Một phần hình tròn giới hạn bởi một cung tròn và hai bán kính đi qua hai mút của cung. | 120 |
+| **Hình vành khuyên** | Hình giới hạn bởi hai đường tròn cùng tâm. | 122 |
+| **Tỉ số lượng giác của góc nhọn** | Cho góc nhọn $\alpha$. Xét tam giác ABC vuông tại A có $\widehat{B} = \alpha$. Tỉ số giữa cạnh đối và cạnh huyền được gọi là sin của góc $\alpha$, kí hiệu $\sin\alpha$. Tỉ số giữa cạnh kề và cạnh huyền được gọi là côsin của góc $\alpha$, kí hiệu $\cos\alpha$. Tỉ số giữa cạnh đối và cạnh kề được gọi là tang của góc $\alpha$, kí hiệu $\tan\alpha$. Tỉ số giữa cạnh kề và cạnh đối được gọi là côtang của góc $\alpha$, kí hiệu $\cot\alpha$. | 75 |
+| **Hai góc phụ nhau (tỉ số lượng giác)** | Nếu hai góc phụ nhau thì sin góc này bằng côsin góc kia, tang góc này bằng côtang góc kia. | 77 |
+| **Tiếp tuyến của đường tròn** | Đường thẳng đi qua một điểm của đường tròn và vuông góc với bán kính đi qua điểm đó. | 107 |
+
+---
+### BẢNG TRA CỨU TỪ NGỮ
+
+| TỪ NGỮ | TRANG |
+| :--- | :--- |
+| Bảo hiểm xã hội | 44 |
+| Bảo hiểm y tế | 45 |
+| Bất đẳng thức Cauchy | 71 |
+| Bất phương trình một ẩn | 35 |
+| Căn bậc ba | 51 |
+| Căn bậc hai | 48 |
+| Căn bậc hai của một tích | 56 |
+| Căn thức bậc hai của một bình phương | 67 |
+| Căn thức bậc hai của một thương | 68 |
+| Cung (hay cung tròn) | 112 |
+| Dây (hay dây cung) | 94 |
+| Diện tích hình quạt tròn | 119 |
+| Diện tích hình vành khuyên | 122 |
+| Độ dài cung tròn | 118 |
+| Đưa thừa số ra ngoài dấu căn bậc hai | 57 |
+| Đưa thừa số vào trong dấu căn bậc hai | 58 |
+| Đường thẳng và đường tròn cắt nhau | 101 |
+| Đường thẳng và đường tròn không giao nhau | 103 |
+| Đường thẳng và đường tròn tiếp xúc nhau | 102 |
+| Giải bất phương trình | 35 |
+| Giải hệ hai phương trình bậc nhất | 19 |
+| Giải hệ phương trình bằng phương pháp cộng đại số | 21 |
+| Giải hệ phương trình bằng phương pháp thế | 19 |
+| Giải tam giác vuông | 84 |
+| Hai đường tròn cắt nhau | 96 |
+| Hai đường tròn không giao nhau | 98 |
+| Hai đường tròn tiếp xúc nhau | 97 |
+| Phương trình chứa ẩn ở mẫu | 8 |
+| Phương trình tích | 5 |
+| Số đo của cung | 112 |
+| Thứ tự trong tập hợp số thực | 28 |
+| Tiếp điểm | 97 |
+| Tính chất hai tiếp tuyến cắt nhau | 108 |
+| Tính đối xứng của đường tròn | 95 |
+| Trục căn thức ở mẫu | 69 |
+| Ước lượng chiều cao | 89 |
+
+
+# Sách Giáo Khoa Toán 9 - Tập 2 (Cánh Diều)
+
+**ĐỖ ĐỨC THÁI** (Tổng Chủ biên kiêm Chủ biên)
+LÊ TUẤN ANH - ĐỖ TIẾN ĐẠT - NGUYỄN SƠN HÀ
+NGUYỄN THỊ PHƯƠNG LOAN - PHẠM SỸ NAM - PHẠM ĐỨC QUANG
+
+---
+
+# MỤC LỤC
+
+| Chương | Nội dung | Trang |
+| :--- | :--- | :--- |
+| **VI** | **MỘT SỐ YẾU TỐ THỐNG KÊ VÀ XÁC SUẤT** | 3 |
+| | §1. Mô tả và biểu diễn dữ liệu trên các bảng, biểu đồ | 3 |
+| | §2. Tần số. Tần số tương đối | 16 |
+| | §3. Tần số ghép nhóm. Tần số tương đối ghép nhóm | 24 |
+| | §4. Phép thử ngẫu nhiên và không gian mẫu. Xác suất của biến cố | 35 |
+| | Bài tập cuối chương VI | 40 |
+| | **HOẠT ĐỘNG THỰC HÀNH VÀ TRẢI NGHIỆM** (Chủ đề 2. Mật độ dân số) | 43 |
+| **VII** | **HÀM SỐ $y=ax^2 (a \neq 0)$. PHƯƠNG TRÌNH BẬC HAI MỘT ẨN** | 46 |
+| | §1. Hàm số $y=ax^2 (a \neq 0)$ | 46 |
+| | §2. Phương trình bậc hai một ẩn | 52 |
+| | §3. Định lí Viète | 61 |
+| | Bài tập cuối chương VII | 66 |
+| **VIII** | **ĐƯỜNG TRÒN NGOẠI TIẾP VÀ ĐƯỜNG TRÒN NỘI TIẾP** | 68 |
+| | §1. Đường tròn ngoại tiếp tam giác. Đường tròn nội tiếp tam giác | 68 |
+| | §2. Tứ giác nội tiếp đường tròn | 75 |
+| | Bài tập cuối chương VIII | 79 |
+| **IX** | **ĐA GIÁC ĐỀU** | 80 |
+| | §1. Đa giác đều. Hình đa giác đều trong thực tiễn | 80 |
+| | §2. Phép quay | 86 |
+| | Bài tập cuối chương IX | 90 |
+| **X** | **HÌNH HỌC TRỰC QUAN** | 92 |
+| | §1. Hình trụ | 92 |
+| | §2. Hình nón | 98 |
+| | §3. Hình cầu | 104 |
+| | Bài tập cuối chương X | 109 |
+| | **HOẠT ĐỘNG THỰC HÀNH VÀ TRẢI NGHIỆM** (Chủ đề 3. Tạo đồ dùng dạng hình nón, hình trụ) | 111 |
+| | **THỰC HÀNH PHẦN MỀM GEOGEBRA** | 114 |
+| | **BẢNG GIẢI THÍCH THUẬT NGỮ** | 116 |
+| | **BẢNG TRA CỨU TỪ NGỮ** | 117 |
+
+---
+
+# CHƯƠNG VI: MỘT SỐ YẾU TỐ THỐNG KÊ VÀ XÁC SUẤT
+
+Trong chương này, chúng ta sẽ tìm hiểu những nội dung sau: mô tả và biểu diễn dữ liệu trên các bảng, biểu đồ; tần số, tần số tương đối; tần số ghép nhóm, tần số tương đối ghép nhóm; phép thử ngẫu nhiên và không gian mẫu, xác suất của biến cố trong một số trò chơi đơn giản.
+
+## §1. MÔ TẢ VÀ BIỂU DIỄN DỮ LIỆU TRÊN CÁC BẢNG, BIỂU ĐỒ
+
+Ở các lớp dưới, chúng ta đã làm quen với việc biểu diễn, phân tích và xử lí dữ liệu thu được dạng bảng, biểu đồ thống kê.
+
+### I. BIỂU DIỄN DỮ LIỆU TRÊN BẢNG THỐNG KÊ, BIỂU ĐỒ TRANH
+
+**Hoạt động 1** Một trường trung học cơ sở cho học sinh khối lớp 9 đăng kí tham gia các câu lạc bộ: Thể thao; Nghệ thuật; Tin học. Thống kê số lượng học sinh của từng lớp đăng kí tham gia các câu lạc bộ đó được cho trong bảng sau:
+
+| Lớp \ Câu lạc bộ | Thể thao | Nghệ thuật | Tin học |
+| :--- | :--- | :--- | :--- |
+| 9A | 15 | 10 | 15 |
+| 9B | 20 | 5 | 15 |
+| 9C | 15 | 15 | 10 |
+| 9D | 20 | 10 | 10 |
+
+Quan sát Bảng 1 và cho biết:
+a) Bảng 1 có bao nhiêu dòng và bao nhiêu cột?
+b) Cột đầu tiên, dòng đầu tiên lần lượt cho biết những dữ liệu thống kê nào?
+c) Các cột còn lại lần lượt cho biết những dữ liệu thống kê nào?
+
+Để biểu diễn dữ liệu trên bảng thống kê, ta có thể làm như sau:
+*   **Bước 1.** Các đối tượng thống kê lần lượt được biểu diễn ở cột đầu tiên, trong khi các tiêu chí thống kê lần lượt được biểu diễn ở dòng đầu tiên hoặc ngược lại.
+*   **Bước 2.** Các số liệu thống kê theo tiêu chí của mỗi đối tượng thống kê lần lượt được biểu diễn ở dòng (hoặc cột) tương ứng.
+
+**Ví dụ 1** Trị giá xuất khẩu hải sản (đơn vị: nghìn đô la Mỹ) của Việt Nam sang Cộng đồng các nước châu Âu (EU) trong các tháng 9, 10, 11, 12 của năm 2022 lần lượt như sau: 90 154; 89 412; 72 134; 81 904. (Nguồn: https://www.gso.gov.vn)
+Lập bảng thống kê biểu diễn các số liệu đó.
+
+> **Giải**
+>
+> Bảng thống kê biểu diễn các số liệu đó như sau (Bảng 2):
+>
+> **Bảng 2**
+>
+> | Tháng | 9 | 10 | 11 | 12 |
+> | :--- | :--- | :--- | :--- | :--- |
+> | Trị giá xuất khẩu hải sản (nghìn đô la Mỹ) | 90 154 | 89 412 | 72 134 | 81 904 |
+
+**Ví dụ 2** Bảng 3 thống kê khối lượng thanh long bán được trong các tháng 6, 7, 8, 9 năm 2022 của một hệ thống siêu thị.
+
+**Bảng 3**
+
+| Tháng | 6 | 7 | 8 | 9 |
+| :--- | :--- | :--- | :--- | :--- |
+| Khối lượng thanh long bán được (tạ) | 10 | 30 | 40 | 25 |
+
+Vẽ biểu đồ tranh biểu diễn các số liệu đó.
+
+> **Giải**
+>
+> Biểu đồ tranh biểu diễn các số liệu Bảng 3 được cho trong Hình 1.
+>
+> | Tháng 6 | 🍈 |
+> | :--- | :--- |
+> | Tháng 7 | 🍈🍈🍈 |
+> | Tháng 8 | 🍈🍈🍈🍈 |
+> | Tháng 9 | 🍈🍈 (nửa quả) |
+>
+> (Mỗi 🍈 biểu thị 10 tạ)
+
+Để biểu diễn dữ liệu trên biểu đồ tranh, ta có thể làm như sau:
+*   **Bước 1.** Các đối tượng thống kê được biểu diễn ở cột đầu tiên của bảng thống kê.
+*   **Bước 2.** Chọn biểu tượng để biểu diễn số liệu thống kê. Các biểu tượng đó được trình bày ở dòng cuối cùng trong bảng thống kê.
+*   **Bước 3.** Số liệu thống kê theo tiêu chí của mỗi đối tượng thống kê được biểu diễn bằng các biểu tượng ở dòng tương ứng trong bảng thống kê.
+
+### II. BIỂU DIỄN DỮ LIỆU TRÊN BIỂU ĐỒ CỘT, BIỂU ĐỒ CỘT KÉP
+
+**Hoạt động 2** Biểu đồ Hình 2 biểu diễn lượng mưa tại trạm khí tượng Huế trong sáu tháng cuối năm dương lịch.
+a) Nêu các đối tượng thống kê và cho biết các đối tượng này lần lượt được biểu diễn ở trục nào.
+b) Nêu tiêu chí thống kê và cho biết tiêu chí đó được biểu diễn ở trục nào.
+c) Số liệu thống kê theo tiêu chí của mỗi đối tượng thống kê lần lượt được biểu diễn ở đâu?
+d) Lập bảng thống kê biểu diễn các dữ liệu thống kê nêu trong biểu đồ cột ở Hình 2.
+
+Để biểu diễn dữ liệu trên biểu đồ cột, ta có thể làm như sau:
+*   **Bước 1.** Vẽ hai trục vuông góc với nhau. Trên trục nằm ngang: biểu diễn các đối tượng thống kê. Trên trục thẳng đứng: xác định độ dài đơn vị để biểu diễn số liệu thống kê và cần chọn độ dài đơn vị thích hợp với số liệu.
+*   **Bước 2.** Tại vị trí các đối tượng thống kê trên trục nằm ngang, vẽ những cột hình chữ nhật: cách đều nhau; có cùng chiều rộng; có chiều cao thể hiện số liệu thống kê theo tiêu chí của mỗi đối tượng thống kê.
+*   **Bước 3.** Hoàn thiện biểu đồ: ghi tên các trục và ghi số liệu tương ứng trên mỗi cột (nếu cần).
+
+**Ví dụ 3** Dựa theo Báo cáo của Tổ chức Y tế Thế giới, bạn An thống kê tuổi thọ trung bình của người dân Indonesia, Myanmar, Thái Lan, Việt Nam lần lượt là: 71,3 năm; 69,1 năm; 932,4 tháng; 75,4 năm.
+a) Nếu vẽ biểu đồ cột biểu diễn các số liệu đó thì số liệu nào được viết chưa hợp lí?
+b) Viết lại dãy số liệu thống kê đó rồi lập bảng thống kê và vẽ biểu đồ cột biểu diễn các số liệu đó.
+
+> **Giải**
+>
+> a) Để vẽ biểu đồ cột biểu diễn các số liệu, các số liệu đó cần được tính theo cùng một đơn vị. Nếu các số liệu đó được tính theo đơn vị năm thì số liệu 932,4 tháng được viết chưa hợp lí.
+> b) $932,4 \text{ tháng} = 932,4 / 12 = 77,7 \text{ năm}$.
+> Tuổi thọ trung bình (đơn vị: năm) của người dân Indonesia, Myanmar, Thái Lan, Việt Nam lần lượt là: 71,3; 69,1; 77,7; 75,4.
+>
+> **Bảng 4**
+>
+> | Nước | Indonesia | Myanmar | Thái Lan | Việt Nam |
+> | :--- | :--- | :--- | :--- | :--- |
+> | Tuổi thọ trung bình (năm) | 71,3 | 69,1 | 77,7 | 75,4 |
+
+**Hoạt động 3** Biểu đồ cột kép Hình 4 thống kê tổng sản phẩm trong nước (GDP) theo giá hiện hành của Việt Nam và Singapore trong các năm 2016, 2017, 2018, 2019.
+a) Nêu các đối tượng thống kê và cho biết các đối tượng này lần lượt được biểu diễn ở trục nào.
+b) Nêu tiêu chí thống kê và cho biết tiêu chí đó được biểu diễn ở trục nào.
+c) Số liệu thống kê theo tiêu chí của mỗi đối tượng thống kê lần lượt được biểu diễn ở đâu?
+d) Lập bảng thống kê biểu diễn các dữ liệu thống kê nêu trong biểu đồ cột kép Hình 4.
+
+**Nhận xét:**
+Cách vẽ biểu đồ cột kép tương tự như cách vẽ biểu đồ cột. Nhưng tại vị trí ghi mỗi đối tượng trên trục ngang, ta vẽ hai cột sát nhau thể hiện hai loại số liệu của đối tượng đó. Các cột thể hiện số liệu theo cùng một tiêu chí thống kê của các đối tượng thường được tô cùng màu để thuận tiện cho việc đọc biểu đồ.
+
+### III. BIỂU DIỄN DỮ LIỆU TRÊN BIỂU ĐỒ ĐOẠN THẲNG
+
+**Hoạt động 4** Biểu đồ đoạn thẳng Hình 6 biểu diễn lượng mưa trung bình sáu tháng cuối năm 2019 tại Thành phố Hồ Chí Minh.
+a) Nêu các đối tượng thống kê và cho biết các đối tượng này được biểu diễn ở trục nào.
+b) Nêu tiêu chí thống kê và cho biết tiêu chí đó được biểu diễn ở trục nào.
+c) Số liệu thống kê theo tiêu chí của mỗi đối tượng thống kê được biểu diễn ở đâu?
+d) Vẽ biểu đồ cột biểu diễn các dữ liệu thống kê nêu trong biểu đồ đoạn thẳng Hình 6.
+
+Để biểu diễn dữ liệu trên biểu đồ đoạn thẳng, ta có thể làm như sau:
+*   **Bước 1.** Vẽ hai trục vuông góc với nhau tại điểm O.
+    *   Trên trục nằm ngang: mỗi đối tượng thống kê được đánh dấu bằng một điểm và các điểm này thường được vẽ cách đều nhau.
+    *   Trên trục thẳng đứng: xác định độ dài đơn vị để biểu diễn số liệu thống kê và cần chọn độ dài đơn vị thích hợp với số liệu, đánh dấu điểm theo tiêu chí của đối tượng thống kê tương ứng.
+*   **Bước 2.** Với mỗi đối tượng thống kê, ta tiếp tục:
+    *   Xác định điểm A đánh dấu số liệu thống kê trên trục thẳng đứng của đối tượng thống kê đó.
+    *   Kẻ bằng nét đứt một đoạn thẳng có độ dài bằng OA, vuông góc với trục nằm ngang và đi qua điểm đánh dấu đối tượng thống kê đó trên trục nằm ngang. Đầu mút trên của đoạn thẳng đó là điểm mốc của đối tượng thống kê.
+*   **Bước 3.** Vẽ đường gấp khúc gồm các đoạn thẳng nối liền liên tiếp các điểm mốc.
+*   **Bước 4.** Hoàn thiện biểu đồ: ghi tên các trục và ghi số liệu tương ứng trên mỗi điểm mốc (nếu cần).
+
+Như vậy, mỗi điểm mốc được xác định bởi hai "tọa độ", trong đó "hoành độ" là điểm đánh dấu đối tượng thống kê, "tung độ" là số liệu thống kê theo tiêu chí của đối tượng đó.
+
+---
+# CHƯƠNG VII: HÀM SỐ $y=ax^2 (a \neq 0)$. PHƯƠNG TRÌNH BẬC HAI MỘT ẨN
+
+## §1. HÀM SỐ $y=ax^2 (a \neq 0)$
+
+### I. HÀM SỐ $y=ax^2 (a \neq 0)$
+
+**Ví dụ 1** Một vật rơi tự do từ độ cao $100 \text{ m}$ so với mặt đất. Quãng đường chuyển động $s$ (mét) của vật phụ thuộc vào thời gian $t$ (giây) bởi công thức $s = 5t^2$.
+a) Tính quãng đường vật chuyển động được sau 1 giây, 2 giây, 3 giây.
+b) Sau bao lâu thì vật chạm đất?
+
+> **Giải**
+>
+> a) Sau 1 giây: $s = 5 \cdot 1^2 = 5 \text{ m}$.
+> Sau 2 giây: $s = 5 \cdot 2^2 = 20 \text{ m}$.
+> Sau 3 giây: $s = 5 \cdot 3^2 = 45 \text{ m}$.
+>
+> b) Khi vật chạm đất, $s=100$. Ta có $100 = 5t^2 \implies t^2 = 20 \implies t = \sqrt{20} \approx 4,47$ (giây).
+
+**Tính chất:**
+Hàm số $y=ax^2 (a \neq 0)$ xác định với mọi $x \in \mathbb{R}$.
+*   Nếu $a>0$ thì hàm số đồng biến khi $x>0$ và nghịch biến khi $x<0$.
+*   Nếu $a<0$ thì hàm số đồng biến khi $x<0$ và nghịch biến khi $x>0$.
+
+### II. ĐỒ THỊ CỦA HÀM SỐ $y=ax^2 (a \neq 0)$
+
+Đồ thị của hàm số $y=ax^2 (a \neq 0)$ là một đường cong đi qua gốc toạ độ và nhận trục $Oy$ làm trục đối xứng. Đường cong đó được gọi là một **parabol** với đỉnh $O$.
+*   Nếu $a>0$ thì đồ thị nằm phía trên trục hoành, $O$ là điểm thấp nhất của đồ thị.
+*   Nếu $a<0$ thì đồ thị nằm phía dưới trục hoành, $O$ là điểm cao nhất của đồ thị.
+
+---
+## §2. PHƯƠNG TRÌNH BẬC HAI MỘT ẨN
+
+### I. ĐỊNH NGHĨA
+
+**Phương trình bậc hai một ẩn** (nói gọn là phương trình bậc hai) là phương trình có dạng $ax^2+bx+c=0$, trong đó $x$ là ẩn; $a, b, c$ là những số cho trước gọi là các hệ số và $a \neq 0$.
+
+### II. GIẢI PHƯƠNG TRÌNH
+
+**Công thức nghiệm:**
+Đối với phương trình $ax^2+bx+c=0 (a \neq 0)$, ta có biệt thức $\Delta = b^2-4ac$.
+*   Nếu $\Delta > 0$ thì phương trình có hai nghiệm phân biệt: $x_{1,2} = \frac{-b \pm \sqrt{\Delta}}{2a}$.
+*   Nếu $\Delta = 0$ thì phương trình có nghiệm kép: $x_1 = x_2 = -\frac{b}{2a}$.
+*   Nếu $\Delta < 0$ thì phương trình vô nghiệm.
+
+**Công thức nghiệm thu gọn:**
+Đối với phương trình $ax^2+bx+c=0 (a \neq 0)$ và $b=2b'$, ta có biệt thức thu gọn $\Delta' = (b')^2-ac$.
+*   Nếu $\Delta' > 0$ thì phương trình có hai nghiệm phân biệt: $x_{1,2} = \frac{-b' \pm \sqrt{\Delta'}}{a}$.
+*   Nếu $\Delta' = 0$ thì phương trình có nghiệm kép: $x_1 = x_2 = -\frac{b'}{a}$.
+*   Nếu $\Delta' < 0$ thì phương trình vô nghiệm.
+
+---
+## §3. ĐỊNH LÍ VIÈTE
+
+### I. ĐỊNH LÍ VIÈTE
+
+Nếu $x_1, x_2$ là hai nghiệm của phương trình $ax^2+bx+c=0 (a \neq 0)$ thì:
+$$
+\begin{cases}
+x_1 + x_2 = -\frac{b}{a} \\
+x_1 x_2 = \frac{c}{a}
+\end{cases}
+$$
+
+**Nhận xét:**
+*   Nếu phương trình $ax^2+bx+c=0 (a \neq 0)$ có $a+b+c=0$ thì phương trình có một nghiệm là $x_1=1$ và nghiệm còn lại là $x_2 = \frac{c}{a}$.
+*   Nếu phương trình $ax^2+bx+c=0 (a \neq 0)$ có $a-b+c=0$ thì phương trình có một nghiệm là $x_1=-1$ và nghiệm còn lại là $x_2 = -\frac{c}{a}$.
+
+### II. TÌM HAI SỐ KHI BIẾT TỔNG VÀ TÍCH
+
+Nếu hai số có tổng bằng $S$ và tích bằng $P$ thì hai số đó là nghiệm của phương trình $x^2 - Sx + P = 0$.
+(Điều kiện để có hai số đó là $S^2 - 4P \ge 0$).
+
+---
+# CHƯƠNG VIII: ĐƯỜNG TRÒN NGOẠI TIẾP VÀ ĐƯỜNG TRÒN NỘI TIẾP
+
+## §1. ĐƯỜNG TRÒN NGOẠI TIẾP TAM GIÁC. ĐƯỜNG TRÒN NỘI TIẾP TAM GIÁC
+
+### I. ĐƯỜNG TRÒN NGOẠI TIẾP TAM GIÁC
+
+**Đường tròn ngoại tiếp tam giác** là đường tròn đi qua ba đỉnh của tam giác đó.
+*   Tâm đường tròn ngoại tiếp tam giác là giao điểm ba đường trung trực của tam giác đó.
+*   Tâm đường tròn ngoại tiếp tam giác vuông là trung điểm của cạnh huyền.
+*   Trong một tam giác đều, trọng tâm của tam giác đồng thời là tâm đường tròn ngoại tiếp. Bán kính đường tròn ngoại tiếp tam giác đều cạnh $a$ là $R = \frac{a\sqrt{3}}{3}$.
+
+### II. ĐƯỜNG TRÒN NỘI TIẾP TAM GIÁC
+
+**Đường tròn nội tiếp tam giác** là đường tròn tiếp xúc với ba cạnh của tam giác đó.
+*   Tâm đường tròn nội tiếp tam giác là giao điểm ba đường phân giác của tam giác đó.
+*   Trong một tam giác đều, trọng tâm của tam giác đồng thời là tâm đường tròn nội tiếp. Bán kính đường tròn nội tiếp tam giác đều cạnh $a$ là $r = \frac{a\sqrt{3}}{6}$.
+
+---
+## §2. TỨ GIÁC NỘI TIẾP ĐƯỜNG TRÒN
+
+### I. ĐỊNH NGHĨA
+
+**Tứ giác nội tiếp đường tròn** (hay tứ giác nội tiếp) là tứ giác có bốn đỉnh thuộc một đường tròn.
+
+### II. TÍNH CHẤT
+
+Trong một tứ giác nội tiếp đường tròn, tổng số đo hai góc đối bằng $180^\circ$.
+
+### III. HÌNH CHỮ NHẬT, HÌNH VUÔNG NỘI TIẾP ĐƯỜNG TRÒN
+
+*   Mọi hình chữ nhật là một tứ giác nội tiếp đường tròn. Tâm của đường tròn ngoại tiếp hình chữ nhật là giao điểm của hai đường chéo.
+*   Mọi hình vuông là một tứ giác nội tiếp đường tròn. Bán kính của đường tròn ngoại tiếp hình vuông cạnh $a$ là $R = \frac{a\sqrt{2}}{2}$.
+
+---
+# CHƯƠNG IX: ĐA GIÁC ĐỀU
+
+## §1. ĐA GIÁC ĐỀU. HÌNH ĐA GIÁC ĐỀU TRONG THỰC TIỄN
+
+**Đa giác đều** là đa giác có tất cả các cạnh bằng nhau và tất cả các góc bằng nhau.
+
+---
+## §2. PHÉP QUAY
+
+**Phép quay** thuận chiều $\alpha^\circ$ ($0^\circ < \alpha^\circ < 360^\circ$) tâm $O$ giữ nguyên điểm $O$, biến điểm $M$ (khác $O$) thành điểm $M'$ thuộc đường tròn $(O; OM)$ sao cho tia $OM$ quay thuận chiều kim đồng hồ đến tia $OM'$ thì điểm $M$ tạo nên cung $MM'$ có số đo $\alpha^\circ$.
+
+Phép quay giữ nguyên hình đa giác đều $A_1A_2...A_n$ là phép quay tâm $O$ (tâm của đa giác đều) biến mỗi đỉnh của hình đa giác đều thành một đỉnh của hình đa giác đều đó.
+
+---
+# CHƯƠNG X: HÌNH HỌC TRỰC QUAN
+
+## §1. HÌNH TRỤ
+
+Hình được tạo ra khi quay một hình chữ nhật một vòng xung quanh đường thẳng cố định chứa một cạnh của nó là **hình trụ**.
+*   Diện tích xung quanh: $S_{xq} = 2\pi rh$
+*   Diện tích toàn phần: $S_{tp} = 2\pi rh + 2\pi r^2$
+*   Thể tích: $V = \pi r^2 h$
+(Với $r$ là bán kính đáy, $h$ là chiều cao)
+
+## §2. HÌNH NÓN
+
+Hình được tạo ra khi quay một hình tam giác vuông một vòng xung quanh đường thẳng cố định chứa một cạnh góc vuông của tam giác đó là **hình nón**.
+*   Hệ thức: $l^2 = h^2 + r^2$
+*   Diện tích xung quanh: $S_{xq} = \pi rl$
+*   Diện tích toàn phần: $S_{tp} = \pi rl + \pi r^2$
+*   Thể tích: $V = \frac{1}{3}\pi r^2 h$
+(Với $r$ là bán kính đáy, $h$ là chiều cao, $l$ là độ dài đường sinh)
+
+## §3. HÌNH CẦU
+
+Hình được tạo ra khi quay một nửa hình tròn một vòng xung quanh đường thẳng cố định chứa đường kính của nó là **hình cầu**.
+*   Diện tích mặt cầu: $S = 4\pi R^2$
+*   Thể tích hình cầu: $V = \frac{4}{3}\pi R^3$
+(Với $R$ là bán kính của hình cầu)
+
+---
+### BẢNG GIẢI THÍCH THUẬT NGỮ
+
+| THUẬT NGỮ | GIẢI THÍCH | TRANG |
+| :--- | :--- | :--- |
+| **Đa giác đều** | Đa giác có tất cả các cạnh bằng nhau và tất cả các góc bằng nhau. | 82 |
+| **Đa giác lồi** | Đa giác luôn nằm về một phía của đường thẳng chứa một cạnh bất kì của đa giác đó. | 81 |
+| **Đường tròn ngoại tiếp tam giác** | Đường tròn đi qua ba đỉnh của tam giác. | 68 |
+| **Đường tròn nội tiếp tam giác** | Đường tròn tiếp xúc với ba cạnh của tam giác. | 71 |
+| **Hình cầu** | Hình được tạo ra khi quay một nửa hình tròn một vòng xung quanh đường thẳng cố định chứa đường kính của nó. | 104 |
+| **Hình nón** | Hình được tạo ra khi quay một hình tam giác vuông một vòng xung quanh đường thẳng cố định chứa một cạnh góc vuông của tam giác đó. | 98 |
+| **Hình trụ** | Hình được tạo ra khi quay một hình chữ nhật một vòng xung quanh đường thẳng cố định chứa một cạnh của nó. | 92 |
+| **Không gian mẫu** | Tập hợp gồm các kết quả có thể xảy ra của một phép thử. | 35 |
+| **Phương trình bậc hai một ẩn** | Phương trình có dạng $ax^2+bx+c=0$, trong đó $x$ là ẩn; $a, b, c$ là những số cho trước gọi là các hệ số và $a \neq 0$. | 52 |
+| **Tần số của giá trị $x_i$** | Số lần xuất hiện của giá trị $x_i$ trong mẫu dữ liệu thống kê. | 17 |
+| **Tần số ghép nhóm của một nhóm** | Số số liệu trong mẫu số liệu thuộc vào nhóm. | 26 |
+| **Tần số tương đối của $x_i$** | Tỉ số giữa tần số $n_i$ của giá trị $x_i$ và số lượng $N$ các dữ liệu trong mẫu dữ liệu thống kê. | 20 |
+| **Tần số tương đối ghép nhóm của một nhóm** | Tỉ số giữa tần số $n_i$ của nhóm và số lượng $N$ các số liệu trong mẫu dữ liệu thống kê. | 29 |
+| **Tứ giác nội tiếp** | Tứ giác có bốn đỉnh cùng thuộc một đường tròn. | 75 |
+
+---
+### BẢNG TRA CỨU TỪ NGỮ
+
+| TỪ NGỮ | TRANG |
+| :--- | :--- |
+| Bảng tần số | 16 |
+| Bảng tần số ghép nhóm | 26 |
+| Bảng tần số tương đối | 19 |
+| Bảng tần số tương đối ghép nhóm | 29 |
+| Biểu diễn dữ liệu trên bảng thống kê, biểu đồ tranh | 3 |
+| Biểu diễn dữ liệu trên biểu đồ cột, biểu đồ cột kép | 5 |
+| Biểu diễn dữ liệu trên biểu đồ đoạn thẳng | 8 |
+| Biểu diễn dữ liệu trên biểu đồ hình quạt tròn | 10 |
+| Biểu đồ tần số | 18 |
+| Biểu đồ tần số ghép nhóm | 26 |
+| Biểu đồ tần số tương đối | 21 |
+| Biểu đồ tần số tương đối ghép nhóm | 30 |
+| Diện tích mặt cầu | 105 |
+| Diện tích xung quanh của hình nón | 100 |
+| Diện tích xung quanh của hình trụ | 94 |
+| Đa giác | 80 |
+| Định lí Viète | 61 |
+| Đồ thị của hàm số $y=ax^2 (a \neq 0)$ | 47 |
+| Giải bài toán bằng cách lập phương trình bậc hai | 57 |
+| Giải phương trình bậc hai | 54 |
+| Hàm số $y=ax^2 (a \neq 0)$ | 46 |
+| Mẫu số liệu ghép nhóm | 24 |
+| Nửa khoảng | 25 |
+| Phép quay | 86 |
+| Phép thử ngẫu nhiên | 35 |
+| Phương trình bậc hai một ẩn | 52 |
+| Tạo đồ dùng dạng hình nón, hình trụ | 111 |
+| Tạo lập hình cầu | 105 |
+| Tạo lập hình nón | 99 |
+| Tạo lập hình trụ | 93 |
+| Tần số | 16 |
+| Tần số ghép nhóm | 26 |
+| Tần số tương đối | 19 |
+| Tần số tương đối ghép nhóm | 29 |
+| Thể tích của hình cầu | 107 |
+| Thể tích của hình nón | 102 |
+| Thể tích của hình trụ | 96 |
