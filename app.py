@@ -249,6 +249,11 @@ if "GOOGLE_API_KEY" not in os.environ:
     st.error("⚠️ Không tìm thấy API key. Vui lòng cấu hình biến môi trường.")
     st.stop()
 
+query_params = st.query_params
+if "healthcheck" in query_params:
+    st.write("ok ✅")
+    st.stop()
+
 @st.cache_resource
 def load_resources():
     """Load và khởi tạo tất cả tài nguyên của hệ thống"""
@@ -582,7 +587,7 @@ def show_typing_indicator():
     """Hiển thị indicator khi bot đang suy nghĩ"""
     return st.markdown('''
         <div class="typing-indicator">
-            <span style="margin-right: 10px;">🤖 Đang suy nghĩ</span>
+            <span style="margin-right: 10px;">🤖 Đang suy nghĩ ...</span>
             <div class="typing-dots">
                 <div class="typing-dot"></div>
                 <div class="typing-dot"></div>
@@ -756,7 +761,7 @@ def main():
         st.session_state.messages = []
         # Thêm tin nhắn chào mừng đầu tiên
         welcome_msg = "Xin chào! Tôi là gia sư AI của bạn 😊. Hôm nay chúng ta cùng học Toán nhé!"
-        st.session_state.messages.append({"role": "assistant", "content": welcome_msg})
+        st.session_state.messages.append({"role": "assistant", "content": welcome_msg, "intent": "greeting_social"})
 
     # Container để chứa các tin nhắn chat
     chat_placeholder = st.container()
@@ -769,7 +774,7 @@ def main():
     # Input của người dùng được đặt ở dưới cùng
     if user_input := st.chat_input("Nhập câu hỏi của bạn..."):
         # Thêm và hiển thị tin nhắn của người dùng
-        st.session_state.messages.append({"role": "user", "content": user_input})
+        st.session_state.messages.append({"role": "user", "content": user_input, "intent": "unknown"})
         with chat_placeholder:
              render_chat_message(user_input, is_user=True, key=f"user_{len(st.session_state.messages)}")
         
