@@ -249,11 +249,6 @@ if "GOOGLE_API_KEY" not in os.environ:
     st.error("⚠️ Không tìm thấy API key. Vui lòng cấu hình biến môi trường.")
     st.stop()
 
-query_params = st.query_params
-if "healthcheck" in query_params:
-    st.write("ok ✅")
-    st.stop()
-
 @st.cache_resource
 def load_resources():
     """Load và khởi tạo tất cả tài nguyên của hệ thống"""
@@ -418,12 +413,12 @@ Chỉ trả về MỘT từ duy nhất từ danh sách trên:"""
         print(f"DEBUG - Intent classification error: {e}")
         return 'greeting_social'
 
-def informer_agent(query: str, conversation_history: str, resources: Dict) -> str:
+def informer_agent(query: str, conversation_history_str: str, resources: Dict) -> str:
     """Agent giải toán dựa trên RAG"""
     try:
         result = resources["informer_pipeline"].run({
             "text_embedder": {"text": query},
-            "prompt_builder": {"query": query, "conversation_history": conversation_history}
+            "prompt_builder": {"query": query, "conversation_history": conversation_history_str}
         })
         return result["generator"]["replies"][0]
     except:
@@ -468,7 +463,7 @@ def practice_agent(student_weakness: str, resources: Dict) -> str:
     except:
         return "Xin lỗi, tôi không thể tạo bài tập lúc này."
 
-def problem_solving_engine(query: str, conversation_history: str, resources: Dict) -> str:
+def problem_solving_engine(query: str, conversation_history_str: str, resources: Dict) -> str:
     """
     Đây là "cỗ máy" con, kết hợp Informer và Verifier.
     Nó nhận một câu hỏi và trả về một câu trả lời cuối cùng đã được xác thực.
@@ -476,7 +471,7 @@ def problem_solving_engine(query: str, conversation_history: str, resources: Dic
     print("DEBUG: Problem-Solving Engine activated.")
     
     # 1. Informer Agent tạo ra bản nháp
-    informer_answer = informer_agent(query, conversation_history, resources) 
+    informer_answer = informer_agent(query, conversation_history_str, resources) 
     
     # 2. Verifier Agent kiểm tra bản nháp đó
     verification = verifier_agent(query, informer_answer, resources)
@@ -490,16 +485,8 @@ def problem_solving_engine(query: str, conversation_history: str, resources: Dic
         return f"🔍 Tôi đã xem xét lại và thấy có một chút chưa chính xác. {correction} Tôi sẽ cần tìm hiểu thêm về vấn đề này để có câu trả lời tốt hơn."
 
 
-def tutor_agent_response(user_input: str, conversation_history: List, resources: Dict, supabase: Client, user_id: str, display_name: str) -> str:
+def tutor_agent_response(user_input: str, conversation_history_str: str, intent: str, resources: Dict, supabase: Client, user_id: str, display_name: str) -> str:
     """Agent chính điều phối các agent khác"""
-    
-    # Tạo lịch sử để phân tích
-    history_str = "\n".join([f"{'User' if i%2==0 else 'Bot'}: {msg}" 
-                            for i, msg in enumerate(conversation_history[-10:])])
-    history_str += f"\nUser: {user_input}"
-    
-    # Phân loại ý định
-    intent = classify_intent(history_str, resources)
     
     # Xử lý theo ý định
     if intent == "greeting_social":
@@ -513,11 +500,11 @@ def tutor_agent_response(user_input: str, conversation_history: List, resources:
     
     elif intent == "math_question":
         print("DEBUG: Tutor Agent is calling the Problem-Solving Engine.")
-        return problem_solving_engine(user_input, conversation_history, resources)
+        return problem_solving_engine(user_input, conversation_history_str, resources)
     
     elif intent == "request_for_practice":
         # Tạo bài tập
-        insights = insight_agent(history_str, resources)
+        insights = insight_agent(conversation_history_str, resources)
         
         if insights["misunderstood_concepts"]:
             weakness = insights["misunderstood_concepts"][0]
@@ -561,26 +548,38 @@ def render_chat_message(message: str, is_user: bool, key: str):
     css_class = "user-message" if is_user else "bot-message"
     st.markdown(f'<div class="{css_class}">{message}</div>', unsafe_allow_html=True)
 
-def should_trigger_proactive_practice(conversation_history: List) -> bool:
+def should_trigger_proactive_practice(conversation_history: List[Dict[str, str]]) -> bool:
     """
     Kiểm tra xem có nên kích hoạt luồng luyện tập chủ động không
-    (sau mỗi 3-4 lượt chat về toán)
+    bằng cách đếm số lượng intent 'math_question' đã được lưu.
     """
-    if len(conversation_history) < 6:  # Ít nhất 3 lượt hỏi đáp
+    print("\n--- DEBUG: [should_trigger_proactive_practice] Bắt đầu kiểm tra điều kiện ---")
+
+    # Cần ít nhất 3 cặp hỏi-đáp (6 tin nhắn)
+    if len(conversation_history) < 6:
+        print("DEBUG: Kích hoạt = False. Lý do: Lịch sử chat quá ngắn.")
         return False
     
-    # Đếm số lượt chat về toán trong 8 tin nhắn gần nhất
-    recent_messages = conversation_history[-8:]
-    math_count = 0
+    # Lấy ra intent của 3 tin nhắn gần nhất của người dùng
+    user_intents = [msg['intent'] for msg in conversation_history if msg['role'] == 'user'][-3:]
     
-    for i in range(0, len(recent_messages), 2):  # Chỉ đếm tin nhắn của user
-        if i < len(recent_messages):
-            # Đơn giản hóa: giả sử tin nhắn chứa số hoặc dấu = là câu hỏi toán
-            user_msg = recent_messages[i]
-            if any(char in user_msg for char in "0123456789=+-*/()"):
-                math_count += 1
+    if len(user_intents) < 3:
+        print("DEBUG: Kích hoạt = False. Lý do: Không có đủ 3 lượt tương tác từ người dùng.")
+        return False
+
+    print(f"DEBUG: Phân tích 3 intent gần nhất của người dùng: {user_intents}")
     
-    return math_count >= 3
+    # Đếm xem có bao nhiêu trong số đó là 'math_question'
+    math_question_count = user_intents.count('math_question')
+    
+    # Kích hoạt nếu có ít nhất 2 câu hỏi toán
+    should_trigger = math_question_count >= 2
+
+    print(f"DEBUG: Tổng số intent 'math_question': {math_question_count}/3.")
+    print(f"DEBUG: Kích hoạt = {should_trigger}.")
+    print("--- KẾT THÚC KIỂM TRA ---")
+    
+    return should_trigger
 
 
 def show_typing_indicator():
@@ -772,41 +771,64 @@ def main():
             render_chat_message(msg_data["content"], is_user, key=f"msg_{i}")
 
     # Input của người dùng được đặt ở dưới cùng
+    # XÓA TOÀN BỘ KHỐI if user_input: CŨ VÀ THAY BẰNG KHỐI NÀY
+
     if user_input := st.chat_input("Nhập câu hỏi của bạn..."):
-        # Thêm và hiển thị tin nhắn của người dùng
+        
+        # --- BƯỚC 1: LƯU VÀ HIỂN THỊ TIN NHẮN CỦA USER ---
+        # Lưu tin nhắn với cấu trúc mới, intent ban đầu là 'unknown'
         st.session_state.messages.append({"role": "user", "content": user_input, "intent": "unknown"})
+        # Hiển thị tin nhắn của người dùng ngay lập tức
         with chat_placeholder:
-             render_chat_message(user_input, is_user=True, key=f"user_{len(st.session_state.messages)}")
+            render_chat_message(user_input, is_user=True, key=f"user_{len(st.session_state.messages)}")
+
+        # --- BƯỚC 2: PHÂN LOẠI INTENT VÀ CẬP NHẬT LẠI STATE ---
+        # Tạo chuỗi lịch sử để gửi cho LLM
+        history_str = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state.messages[-10:]])
+        
+        # Gọi hàm classify_intent MỘT LẦN DUY NHẤT và lưu kết quả
+        detected_intent = classify_intent(history_str, resources)
+        
+        # Cập nhật lại intent cho tin nhắn cuối cùng của người dùng trong session_state
+        # Đây là bước "ghi nhớ" intent
+        st.session_state.messages[-1]["intent"] = detected_intent
         
         # Hiển thị indicator "đang suy nghĩ"
         with chat_placeholder:
             typing_indicator_placeholder = show_typing_indicator()
-        
-        # Xử lý bằng Tutor Agent
+
+        # --- BƯỚC 3: GỌI TUTOR AGENT VỚI INTENT ĐÃ BIẾT ---
+        # Sửa lại hàm tutor_agent_response để nhận intent làm tham số
         bot_response = tutor_agent_response(
-            user_input, 
-            [msg["content"] for msg in st.session_state.messages], 
-            resources, 
-            supabase, 
-            user_id,
+            user_input=user_input, 
+            intent=detected_intent, # <-- Truyền intent đã được phân loại vào
+            conversation_history_str=history_str,
+            resources=resources,
+            supabase=supabase,
+            user_id=user_id,
             display_name=display_name
         )
         
-        # Xóa indicator và thêm phản hồi của bot
+        # Xóa indicator và chuẩn bị hiển thị câu trả lời
         typing_indicator_placeholder.empty()
-        st.session_state.messages.append({"role": "assistant", "content": bot_response})
+
+        # --- BƯỚC 4: LƯU VÀ HIỂN THỊ TIN NHẮN CỦA BOT ---
+        # Lưu tin nhắn của bot với intent tương ứng để tiện phân tích sau này
+        st.session_state.messages.append({"role": "assistant", "content": bot_response, "intent": detected_intent})
+        # Hiển thị tin nhắn của bot
         with chat_placeholder:
             render_chat_message(bot_response, is_user=False, key=f"bot_{len(st.session_state.messages)}")
 
-        # Kiểm tra luồng luyện tập chủ động
-        if should_trigger_proactive_practice([msg["content"] for msg in st.session_state.messages]):
+        # --- BƯỚC 5: KIỂM TRA PROACTIVE VỚI HÀM MỚI THÔNG MINH ---
+        # Hàm mới này sẽ đọc intent trực tiếp từ st.session_state.messages
+        if should_trigger_proactive_practice(st.session_state.messages):
             with chat_placeholder:
                 proactive_typing_placeholder = show_typing_indicator()
             
-            # Lấy hồ sơ người dùng để đề xuất bài tập
             try:
-                history_str = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state.messages[-10:]])
-                insights = insight_agent(history_str, resources)
+                # Logic proactive giữ nguyên, nhưng giờ nó sẽ chạy đúng hơn
+                history_str_for_insight = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state.messages[-10:]])
+                insights = insight_agent(history_str_for_insight, resources)
                 
                 if insights and insights.get("misunderstood_concepts"):
                     weakness = insights["misunderstood_concepts"][0]
@@ -814,16 +836,16 @@ def main():
                     proactive_msg = f"💡 **Tôi nhận thấy bạn có thể cần luyện tập thêm về *{weakness}*. Đây là một số gợi ý:**\n\n{practice_response}"
                     
                     proactive_typing_placeholder.empty()
-                    st.session_state.messages.append({"role": "assistant", "content": proactive_msg})
+                    st.session_state.messages.append({"role": "assistant", "content": proactive_msg, "intent": "proactive_suggestion"})
                     with chat_placeholder:
                         render_chat_message(proactive_msg, is_user=False, key=f"proactive_{len(st.session_state.messages)}")
                 else:
-                    proactive_typing_placeholder.empty() # Xóa indicator nếu không có gì để đề xuất
+                    proactive_typing_placeholder.empty()
             except Exception as e:
                 proactive_typing_placeholder.empty()
                 st.warning(f"Không thể tạo đề xuất chủ động: {str(e)}")
         
-        # Rerun để cuộn xuống tin nhắn mới nhất
+        # Rerun để cập nhật giao diện và cuộn xuống tin nhắn mới nhất
         st.rerun()
 
     # Sidebar với thông tin khi đã đăng nhập
