@@ -14,6 +14,8 @@ from datetime import datetime
 from supabase_utils import init_supabase_client, update_user_profile
 from supabase import Client
 from sympy import Rem
+from PIL import Image
+import io
 
 load_dotenv()
 
@@ -73,18 +75,29 @@ class CustomGoogleAIGenerator:
         return default_from_dict(cls, data)
 
     @component.output_types(replies=List[str])
-    def run(self, prompt: str):
+    def run(self, prompt_parts: List[Any]): # <-- THAY ĐỔI 1: Thay đổi đầu vào
         """
-        Gửi prompt đến API Gemini và trả về kết quả.
+        Gửi một prompt đa phương thức (văn bản và hình ảnh) đến API Gemini.
         """
         try:
-            # Lời gọi API bây giờ sẽ sử dụng các cấu hình đã được thiết lập ở trên
-            response = self.model.generate_content(prompt)
-            # Thêm một dòng debug để xem phản hồi thô từ Gemini
+            # --- THAY ĐỔI 2: Xử lý hình ảnh ---
+            # Chuyển đổi dữ liệu bytes của ảnh thành đối tượng PIL Image
+            processed_parts = []
+            for part in prompt_parts:
+                if isinstance(part, bytes): # Kiểm tra xem có phải là dữ liệu ảnh không
+                    try:
+                        img = Image.open(io.BytesIO(part))
+                        processed_parts.append(img)
+                    except Exception as e:
+                        print(f"Lỗi khi xử lý ảnh: {e}")
+                else:
+                    processed_parts.append(part) # Giữ nguyên nếu là text
+            # --- KẾT THÚC THAY ĐỔI 2 ---
+
+            response = self.model.generate_content(processed_parts)
             print(f"DEBUG: [Generator] Raw response from Gemini: {response.text}")
             return {"replies": [response.text]}
         except Exception as e:
-            # In ra lỗi để biết chính xác vấn đề
             print(f"ERROR: [Generator] Lỗi trong lúc gọi API: {e}")
             return {"replies": [f"Xin lỗi, đã có lỗi xảy ra khi kết nối với mô hình AI."]}
 
@@ -541,20 +554,8 @@ def load_resources():
     # Create generator
     generator = CustomGoogleAIGenerator(api_key=os.getenv("GOOGLE_API_KEY"))
     
-    # Create RAG pipeline
-    informer_pipeline = Pipeline()
-    informer_pipeline.add_component("text_embedder", text_embedder)
-    informer_pipeline.add_component("retriever", retriever)
-    informer_pipeline.add_component("prompt_builder", informer_prompt_builder)
-    informer_pipeline.add_component("generator", generator)
-    
-    # Connect components
-    informer_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
-    informer_pipeline.connect("retriever.documents", "prompt_builder.documents")
-    informer_pipeline.connect("prompt_builder.prompt", "generator.prompt")
-    
     return {
-        "informer_pipeline": informer_pipeline,
+        "informer_prompt_builder": informer_prompt_builder,
         "generator": generator,
         "practice_prompt_builder": practice_prompt_builder,
         "insight_prompt_builder": insight_prompt_builder,
@@ -566,7 +567,9 @@ def load_resources():
         "greeting_prompt_builder": greeting_prompt_builder,
         "stress_prompt_builder": stress_prompt_builder,
         "support_prompt_builder": support_prompt_builder,
-        "off_topic_prompt_builder": off_topic_prompt_builder
+        "off_topic_prompt_builder": off_topic_prompt_builder,
+        "retriever": retriever,
+        "text_embedder": text_embedder
     }
 
 def classify_intent(conversation_history: str, resources: Dict) -> str:
@@ -578,21 +581,21 @@ def classify_intent(conversation_history: str, resources: Dict) -> str:
         prompt_builder = resources["intent_prompt_builder"]
         
         # 2. Sử dụng công cụ đó để tạo prompt cuối cùng
-        prompt = prompt_builder.run(conversation_history=conversation_history)["prompt"]
+        prompt_text = prompt_builder.run(conversation_history=conversation_history)["prompt"]
         
-        # 3. Gửi prompt đi và nhận kết quả
-        result = resources["generator"].run(prompt=prompt)
+        # --- SỬA LỖI: GÓI PROMPT VĂN BẢN VÀO MỘT DANH SÁCH ---
+        result = resources["generator"].run(prompt_parts=[prompt_text])
         intent = result["replies"][0].strip().lower()
         
         # Debug: In ra intent để kiểm tra
         # Sửa logic trích xuất user input từ conversation history
         user_input_debug = "N/A"
-        if 'user: ' in conversation_history:
+        if 'User: ' in conversation_history:  # Sửa thành chữ hoa 'User: '
             # Tìm tin nhắn user cuối cùng
             lines = conversation_history.split('\n')
             for line in reversed(lines):
-                if line.strip().startswith('user: '):
-                    user_input_debug = line.replace('user: ', '').strip()
+                if line.strip().startswith('User: '):  # Sửa thành chữ hoa 'User: '
+                    user_input_debug = line.replace('User: ', '').strip()
                     break
         
         print(f"DEBUG - User input: {user_input_debug}")
@@ -606,11 +609,11 @@ def classify_intent(conversation_history: str, resources: Dict) -> str:
             
             # Sử dụng logic trích xuất user input đã sửa
             user_input_for_fallback = "N/A"
-            if 'user: ' in conversation_history:
+            if 'User: ' in conversation_history:
                 lines = conversation_history.split('\n')
                 for line in reversed(lines):
-                    if line.strip().startswith('user: '):
-                        user_input_for_fallback = line.replace('user: ', '').strip()
+                    if line.strip().startswith('User: '):
+                        user_input_for_fallback = line.replace('User: ', '').strip()
                         break
             
             if any(keyword in user_input_for_fallback.lower() for keyword in math_keywords):
@@ -637,24 +640,32 @@ def informer_agent(query: str, conversation_history_str: str, resources: Dict) -
 def verifier_agent(query: str, informer_answer: str, resources: Dict) -> Dict:
     """Agent kiểm tra tính đúng đắn"""
     try:
-        prompt = resources["verifier_prompt_builder"].run(query=query, informer_answer=informer_answer)
-        result = resources["generator"].run(prompt=prompt["prompt"])
-        return json.loads(result["replies"][0])
-    except:
+        prompt_text = resources["verifier_prompt_builder"].run(query=query, informer_answer=informer_answer)["prompt"]
+        result = resources["generator"].run(prompt_parts=[prompt_text])
+        # Logic trích xuất JSON từ Markdown (quan trọng)
+        llm_reply_string = result["replies"][0]
+
+        json_match = re.search(r"\{.*\}", llm_reply_string, re.DOTALL)
+        if json_match:
+            return json.loads(json_match.group(0))
+        else:
+            return {"is_correct": True, "correction_suggestion": "Lỗi parse verifier"}
+    except Exception as e:
+        print(f"ERROR: [Verifier Agent] Lỗi: {e}")
         return {"is_correct": True, "correction_suggestion": ""}
 
 def insight_agent(conversation_history: str, resources: Dict) -> Dict:
     """Agent phân tích điểm yếu, với logic trích xuất JSON thông minh."""
     try:
         prompt_builder = resources["insight_prompt_builder"]
-        prompt = prompt_builder.run(conversation_history=conversation_history)["prompt"]
+        prompt_text = prompt_builder.run(conversation_history=conversation_history)["prompt"]
         
         print("\n" + "="*50)
         print("DEBUG: [Insight Agent] PROMPT CUỐI CÙNG GỬI ĐẾN GEMINI:")
-        print(prompt)
+        print(prompt_text)
         print("="*50 + "\n")
 
-        result = resources["generator"].run(prompt=prompt)
+        result = resources["generator"].run(prompt_parts=[prompt_text])
         llm_reply = result["replies"][0]
 
         # --- LOGIC TRÍCH XUẤT JSON TỪ MARKDOWN ---
@@ -691,89 +702,184 @@ def practice_agent(student_weakness: str, resources: Dict) -> str:
             })
         
         video_json = json.dumps(video_cheatsheet, ensure_ascii=False)
-        prompt = resources["practice_prompt_builder"].run(
+        prompt_text = resources["practice_prompt_builder"].run(
             student_weakness=student_weakness,
             video_cheatsheet_json=video_json
-        )
-        result = resources["generator"].run(prompt=prompt["prompt"])
+        )["prompt"]
+        
+        result = resources["generator"].run(prompt_parts=[prompt_text])
         return result["replies"][0]
     except:
         return "Xin lỗi, tôi không thể tạo bài tập lúc này."
 
-def problem_solving_engine(query: str, conversation_history_str: str, resources: Dict) -> str:
+def problem_solving_engine(
+    query_text: str, 
+    query_image: bytes, 
+    conversation_history_str: str, 
+    resources: Dict
+) -> str:
     """
-    Đây là "cỗ máy" con, kết hợp Informer và Verifier.
-    Nó nhận một câu hỏi và trả về một câu trả lời cuối cùng đã được xác thực.
+    Cỗ máy giải quyết vấn đề đa năng, TÁI SỬ DỤNG informer_prompt_builder.
     """
-    print("DEBUG: Problem-Solving Engine activated.")
+    print("DEBUG: Multimodal Problem-Solving Engine activated.")
     
-    # 1. Informer Agent tạo ra bản nháp
-    informer_answer = informer_agent(query, conversation_history_str, resources) 
-    
-    # 2. Verifier Agent kiểm tra bản nháp đó
-    verification = verifier_agent(query, informer_answer, resources)
-    
-    # 3. Trả về kết quả cuối cùng dựa trên sự xác thực
-    if verification.get("is_correct", True): # Mặc định là True nếu có lỗi
-        return informer_answer
-    else:
-        correction = verification.get("correction_suggestion", "")
-        # Tạo một câu trả lời an toàn, thừa nhận sự không chắc chắn
-        return f"🔍 Tôi đã xem xét lại và thấy có một chút chưa chính xác. {correction} Tôi sẽ cần tìm hiểu thêm về vấn đề này để có câu trả lời tốt hơn."
+    try:
+        # --- GIAI ĐOẠN 1: TRÍCH XUẤT NGỮ CẢNH TỪ ẢNH (NẾU CÓ) ---
+        extracted_text_from_image = ""
+        if query_image:
+            print("DEBUG: [Stage 1] Image detected. Calling Gemini for OCR...")
+            try:
+                ocr_prompt_parts = [
+                    "Bạn là một hệ thống OCR toán học siêu chính xác. Hãy đọc và trích xuất toàn bộ văn bản từ hình ảnh sau đây. Chỉ trả về phần văn bản được trích xuất.", 
+                    query_image
+                ]
+                ocr_result = resources["generator"].run(prompt_parts=ocr_prompt_parts)
+                extracted_text_from_image = ocr_result["replies"][0]
+                print(f"DEBUG: [Stage 1] Text extracted from image: '{extracted_text_from_image}'")
+            except Exception as e:
+                print(f"ERROR: [Stage 1] OCR failed: {e}")
+                extracted_text_from_image = "Không thể đọc được nội dung từ hình ảnh."
+
+        full_query_text = (query_text + " " + extracted_text_from_image).strip()
+        print(f"DEBUG: [Stage 1.5] Full query text: '{full_query_text}'")
+
+        # --- GIAI ĐOẠN 2: RAG DỰA TRÊN NGỮ CẢNH ĐẦY ĐỦ ---
+        context_docs = []
+        if full_query_text:
+            try:
+                print("DEBUG: [Stage 2] Starting RAG retrieval...")
+                embedding = resources["text_embedder"].run(text=full_query_text)["embedding"]
+                print("DEBUG: [Stage 2] Embedding created successfully")
+                context_docs = resources["retriever"].run(query_embedding=embedding)["documents"]
+                print(f"DEBUG: [Stage 2] Retrieved {len(context_docs)} documents")
+            except Exception as e:
+                print(f"ERROR: [Stage 2] RAG retrieval failed: {e}")
+                context_docs = []
+
+        # --- GIAI ĐOẠN 3: XÂY DỰNG PROMPT BẰNG CÁCH KẾT HỢP ---
+        print("DEBUG: [Stage 3] Building final prompt...")
+        
+        try:
+            # 3a. Sử dụng PromptBuilder để tạo phần văn bản của prompt
+            informer_prompt_builder = resources["informer_prompt_builder"]
+            print("DEBUG: [Stage 3a] Got informer_prompt_builder")
+            
+            text_prompt_result = informer_prompt_builder.run(
+                query=query_text if query_text else "Giải bài toán trong hình.",
+                conversation_history=conversation_history_str,
+                documents=context_docs
+            )
+            print("DEBUG: [Stage 3a] Prompt builder ran successfully")
+            
+            text_part = text_prompt_result["prompt"]
+            print(f"DEBUG: [Stage 3a] Generated text prompt length: {len(text_part)} chars")
+            
+        except Exception as e:
+            print(f"ERROR: [Stage 3a] Prompt building failed: {e}")
+            # Fallback to simple prompt
+            text_part = f"""Bạn là gia sư toán AI. Hãy giải bài toán sau:
+
+Câu hỏi: {query_text if query_text else "Giải bài toán trong hình"}
+Nội dung từ hình: {extracted_text_from_image}
+
+Lịch sử: {conversation_history_str}
+
+Hãy trả lời chi tiết bằng tiếng Việt:"""
+
+        # 3b. Xây dựng prompt_parts cuối cùng
+        final_prompt_parts = [text_part] # Phần đầu tiên là toàn bộ prompt văn bản
+        
+        if query_image:
+            # Thêm hình ảnh vào cuối
+            final_prompt_parts.append("\n**Hình ảnh đính kèm:**")
+            final_prompt_parts.append(query_image)
+            
+        print(f"DEBUG: [Stage 3b] Final prompt parts count: {len(final_prompt_parts)}")
+            
+        # --- GIAI ĐOẠN 4: GỌI GENERATOR VÀ VERIFIER ---
+        print("DEBUG: [Stage 4] Calling Gemini for final answer...")
+        try:
+            final_result = resources["generator"].run(prompt_parts=final_prompt_parts)
+            informer_answer = final_result["replies"][0]
+            print(f"DEBUG: [Stage 4] Got answer, length: {len(informer_answer)} chars")
+        except Exception as e:
+            print(f"ERROR: [Stage 4] Gemini call failed: {e}")
+            return f"Xin lỗi, tôi không thể xử lý câu hỏi này lúc này. Lỗi: {str(e)}"
+
+        # --- BƯỚC XÁC THỰC (VERIFIER) ---
+        try:
+            print("DEBUG: [Stage 5] Starting verification...")
+            verification_query = full_query_text if full_query_text else "Phân tích bài toán trong hình ảnh"
+            verification = verifier_agent(verification_query, informer_answer, resources)
+            print(f"DEBUG: [Stage 5] Verification result: {verification}")
+            
+            if verification.get("is_correct", True):
+                return informer_answer
+            else:
+                correction = verification.get("correction_suggestion", "")
+                return f"🔍 Tôi đã xem xét lại và thấy có một chút chưa chính xác. {correction}"
+        except Exception as e:
+            print(f"ERROR: [Stage 5] Verification failed: {e}")
+            # Trả về kết quả không qua verification
+            return informer_answer
+
+    except Exception as e:
+        print(f"ERROR: [Problem-Solving Engine] Critical error: {str(e)}")
+        import traceback
+        print(f"ERROR: [Problem-Solving Engine] Traceback: {traceback.format_exc()}")
+        return f"Xin lỗi, đã có lỗi nghiêm trọng khi xử lý yêu cầu: {str(e)}"
 
 
 def tutor_agent_response(user_input: str, intent: str, conversation_history_str: str, resources: Dict, supabase: Client, user_id: str, display_name: str) -> str:
     """
-    Agent chính, bây giờ sử dụng LLM cho tất cả các intent để có phản hồi linh hoạt.
+    Agent chính, bây giờ CHỈ xử lý các intent giao tiếp.
+    Các câu hỏi toán học đã được xử lý bởi problem_solving_engine.
     """
+    print(f"DEBUG: Tutor Agent is handling a communication intent: '{intent}'")
     
-    # Các intent phức tạp vẫn gọi các hàm/engine chuyên biệt
-    if intent == "math_question":
-        print("DEBUG: Tutor Agent is calling the Problem-Solving Engine.")
-        return problem_solving_engine(user_input, conversation_history_str, resources)
-    
+    # Chọn đúng prompt builder dựa trên intent
+    if intent == "greeting_social":
+        prompt_builder = resources["greeting_prompt_builder"]
+    elif intent == "expression_of_stress":
+        prompt_builder = resources["stress_prompt_builder"]
+    elif intent == "study_support":
+        prompt_builder = resources["support_prompt_builder"]
     elif intent == "request_for_practice":
+        # request_for_practice cũng là một dạng giao tiếp
         print("DEBUG: Tutor Agent is triggering the Practice Flow.")
         insights = insight_agent(conversation_history_str, resources)
-        
         if insights and insights.get("misunderstood_concepts"):
             weakness = insights["misunderstood_concepts"][0]
             return practice_agent(weakness, resources)
         else:
-            # Nếu không tìm thấy điểm yếu, vẫn yêu cầu tạo bài tập chung
             return practice_agent("các chủ đề toán lớp 9 tổng quát", resources)
-            
-    # Các intent giao tiếp bây giờ sẽ được xử lý bởi LLM
-    else:
-        print(f"DEBUG: Tutor Agent is handling a communication intent: '{intent}'")
+    else: # Mặc định là off_topic
+        prompt_builder = resources["off_topic_prompt_builder"]
         
-        # Chọn đúng prompt builder dựa trên intent
-        if intent == "greeting_social":
-            prompt_builder = resources["greeting_prompt_builder"]
-        elif intent == "expression_of_stress":
-            prompt_builder = resources["stress_prompt_builder"]
-        elif intent == "study_support":
-            prompt_builder = resources["support_prompt_builder"]
-        else: # Mặc định là off_topic
-            prompt_builder = resources["off_topic_prompt_builder"]
-            
-        try:
-            # Xây dựng và chạy prompt
-            prompt = prompt_builder.run(
-                master_prompt=resources["tutor_master_prompt"],
-                conversation_history=conversation_history_str
-            )["prompt"]
-            
-            result = resources["generator"].run(prompt=prompt)
-            return result["replies"][0]
-        except Exception as e:
-            print(f"ERROR: Could not generate response for intent '{intent}': {e}")
-            return "Rất xin lỗi, tôi đang gặp một chút sự cố. Bạn có thể hỏi lại sau được không?"
+    try:
+        # Xây dựng và chạy prompt
+        prompt_text = prompt_builder.run(
+            master_prompt=resources["tutor_master_prompt"],
+            conversation_history=conversation_history_str
+        )["prompt"]
+        
+        result = resources["generator"].run(prompt_parts=[prompt_text])
+        return result["replies"][0]
+    except Exception as e:
+        print(f"ERROR: Could not generate response for intent '{intent}': {e}")
+        return "Rất xin lỗi, tôi đang gặp một chút sự cố."
 
-def render_chat_message(message: str, is_user: bool, key: str):
-    """Render tin nhắn chat với animation"""
+def render_chat_message(content: str, is_user: bool, key: str, image: bytes = None):
+    """Render tin nhắn chat, có thể kèm ảnh."""
     css_class = "user-message" if is_user else "bot-message"
-    st.markdown(f'<div class="{css_class}">{message}</div>', unsafe_allow_html=True)
+    
+    # Nếu có ảnh, hiển thị nó trước
+    if image:
+        st.image(image, width=250)
+        
+    # Hiển thị nội dung text
+    if content:
+        st.markdown(f'<div class="{css_class}">{content}</div>', unsafe_allow_html=True)
 
 def should_trigger_proactive_practice(conversation_history: List[Dict[str, str]]) -> bool:
     """
@@ -1000,46 +1106,80 @@ def main():
     # Input của người dùng được đặt ở dưới cùng
     # XÓA TOÀN BỘ KHỐI if user_input: CŨ VÀ THAY BẰNG KHỐI NÀY
 
-    if user_input := st.chat_input("Nhập câu hỏi của bạn..."):
-    
-        # --- BƯỚC 1: CẬP NHẬT STATE VÀ GIAO DIỆN NGAY LẬP TỨC ---
-        # Thêm tin nhắn của người dùng vào state với intent ban đầu là 'unknown'
-        st.session_state.messages.append({"role": "user", "content": user_input, "intent": "unknown"})
-        # Hiển thị tin nhắn của người dùng ngay lập tức
-        with chat_placeholder:
-            render_chat_message(user_input, is_user=True, key=f"user_{len(st.session_state.messages)}")
+    with st.form(key="chat_form", clear_on_submit=True):
+        # Chia layout thành 2 cột: 1 cho ảnh, 1 cho text và nút gửi
+        col1, col2 = st.columns([1, 4])
+        
+        with col1:
+            uploaded_image = st.file_uploader(
+                "Đính kèm ảnh", 
+                type=["png", "jpg", "jpeg"],
+                label_visibility="collapsed"
+            )
 
-        # --- BƯỚC 2: TẠO DỮ LIỆU ĐẦU VÀO CHO CÁC AGENT (MỘT LẦN DUY NHẤT) ---
-        # Tạo chuỗi lịch sử để gửi cho LLM. BƯỚC NÀY RẤT QUAN TRỌNG, nó diễn ra SAU KHI tin nhắn mới đã được thêm vào.
-        history_str_for_llm = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state.messages[-10:]])
+        with col2:
+            user_text = st.text_input(
+                "Nhập câu hỏi của bạn...",
+                placeholder="Nhập câu hỏi hoặc mô tả cho ảnh...",
+                label_visibility="collapsed"
+            )
         
-        # --- BƯỚC 3: PHÂN LOẠI INTENT VÀ CẬP NHẬT LẠI STATE ---
-        # Gọi hàm classify_intent MỘT LẦN DUY NHẤT và lưu kết quả
+        # Nút gửi chung cho cả form, đặt ở ngoài layout cột để nó chiếm toàn bộ chiều rộng
+        submit_button = st.form_submit_button(label="Gửi")
+
+    # --- XỬ LÝ SAU KHI NGƯỜI DÙNG NHẤN NÚT GỬI ---
+    if submit_button and (user_text or uploaded_image):
+        
+        # Đọc dữ liệu ảnh nếu có
+        image_data = uploaded_image.getvalue() if uploaded_image else None
+        
+        # BƯỚC 1: LƯU VÀ HIỂN THỊ TIN NHẮN CỦA USER
+        st.session_state.messages.append({
+            "role": "user", 
+            "content": user_text, 
+            "image": image_data, # Lưu dữ liệu bytes của ảnh
+            "intent": "unknown"
+        })
+        with chat_placeholder:
+             # Nhớ đảm bảo hàm render_chat_message của bạn đã được cập nhật để nhận tham số 'image'
+             render_chat_message(user_text, is_user=True, image=image_data, key=f"user_{len(st.session_state.messages)}")
+
+        # BƯỚC 2: PHÂN LOẠI INTENT (DỰA TRÊN PHẦN TEXT)
+        history_str_for_llm = "\n".join([f"{msg['role'].capitalize()}: {msg['content']}" for msg in st.session_state.messages[-10:] if msg['content']])
+    
+        # Phân loại intent (vẫn dựa trên text)
         detected_intent = classify_intent(history_str_for_llm, resources)
-        
-        # Cập nhật lại intent cho tin nhắn cuối cùng của người dùng trong session_state
         st.session_state.messages[-1]["intent"] = detected_intent
         
         # Hiển thị indicator "đang suy nghĩ"
         with chat_placeholder:
             typing_indicator_placeholder = show_typing_indicator()
 
-        # --- BƯỚC 4: GỌI TUTOR AGENT VỚI DỮ LIỆU ĐÃ ĐƯỢC CHUẨN BỊ ---
-        bot_response = tutor_agent_response(
-            user_input=user_input, 
-            intent=detected_intent,
-            conversation_history_str=history_str_for_llm, # <-- Truyền chuỗi đã tạo
-            resources=resources,
-            supabase=supabase,
-            user_id=user_id,
-            display_name=display_name
-        )
+        # --- LOGIC ĐIỀU PHỐI MỚI ---
+        # Nếu có ảnh, hoặc nếu intent là câu hỏi toán, hãy gọi cỗ máy đa năng
+        if uploaded_image or detected_intent == "math_question":
+            bot_response = problem_solving_engine(
+                query_text=user_text,
+                query_image=image_data,
+                conversation_history_str=history_str_for_llm,
+                resources=resources
+            )
+        else:
+            # Các intent giao tiếp khác chỉ xử lý text
+            bot_response = tutor_agent_response(
+                user_input=user_text, 
+                intent=detected_intent,
+                conversation_history_str=history_str_for_llm,
+                resources=resources,
+                supabase=supabase,
+                user_id=user_id,
+                display_name=display_name
+            )
         
-        # Xóa indicator
         typing_indicator_placeholder.empty()
 
-        # --- BƯỚC 5: LƯU VÀ HIỂN THỊ KẾT QUẢ ---
-        st.session_state.messages.append({"role": "assistant", "content": bot_response, "intent": detected_intent})
+        # BƯỚC 4: LƯU VÀ HIỂN THỊ PHẢN HỒI CỦA BOT
+        st.session_state.messages.append({"role": "assistant", "content": bot_response, "intent": detected_intent, "image": None})
         with chat_placeholder:
             render_chat_message(bot_response, is_user=False, key=f"bot_{len(st.session_state.messages)}")
 
