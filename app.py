@@ -1,14 +1,19 @@
+from altair import Bin
+from numpy import tri
 import streamlit as st
 import pickle
 import json
 import os
 import random
 import time
+import re
 from typing import List, Dict, Any
 from streamlit_chat import message
 from dotenv import load_dotenv
-from supabase import create_client, Client
 from datetime import datetime
+from supabase_utils import init_supabase_client, update_user_profile
+from supabase import Client
+from sympy import Rem
 
 load_dotenv()
 
@@ -32,7 +37,33 @@ class CustomGoogleAIGenerator:
         self.api_key = api_key
         self.model_name = model_name
         genai.configure(api_key=self.api_key)
-        self.model = genai.GenerativeModel(self.model_name)
+        
+        # --- THAY ĐỔI 1: ĐỊNH NGHĨA CẤU HÌNH AN TOÀN ---
+        # Tạm thời vô hiệu hóa các bộ lọc an toàn để gỡ lỗi.
+        # Điều này giúp xác định xem có phải lỗi do bị chặn hay không.
+        # Lưu ý: Chỉ nên dùng mức độ này để debug, không nên dùng trong sản phẩm thực tế.
+        self.safety_settings = [
+            {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
+            {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
+            {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
+            {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"},
+        ]
+
+        # --- THAY ĐỔI 2: ĐỊNH NGHĨA CẤU HÌNH SINH VĂN BẢN ---
+        self.generation_config = genai.types.GenerationConfig(
+            # Đặt nhiệt độ rất thấp để mô hình trả lời một cách máy móc, bám sát prompt
+            temperature=0.1,
+            # Đảm bảo mô hình có đủ không gian để tạo ra JSON
+            max_output_tokens=1024 
+        )
+
+        # Khởi tạo model với các cấu hình mới
+        self.model = genai.GenerativeModel(
+            self.model_name,
+            generation_config=self.generation_config,
+            safety_settings=self.safety_settings # <-- Áp dụng cấu hình an toàn
+        )
+
 
     def to_dict(self):
         return default_to_dict(self, api_key=self.api_key, model_name=self.model_name)
@@ -43,11 +74,19 @@ class CustomGoogleAIGenerator:
 
     @component.output_types(replies=List[str])
     def run(self, prompt: str):
+        """
+        Gửi prompt đến API Gemini và trả về kết quả.
+        """
         try:
+            # Lời gọi API bây giờ sẽ sử dụng các cấu hình đã được thiết lập ở trên
             response = self.model.generate_content(prompt)
+            # Thêm một dòng debug để xem phản hồi thô từ Gemini
+            print(f"DEBUG: [Generator] Raw response from Gemini: {response.text}")
             return {"replies": [response.text]}
         except Exception as e:
-            return {"replies": [f"Xin lỗi, đã có lỗi xảy ra: {e}"]}
+            # In ra lỗi để biết chính xác vấn đề
+            print(f"ERROR: [Generator] Lỗi trong lúc gọi API: {e}")
+            return {"replies": [f"Xin lỗi, đã có lỗi xảy ra khi kết nối với mô hình AI."]}
 
 # Thiết lập page config với theme hiện đại
 st.set_page_config(
@@ -280,56 +319,212 @@ def load_resources():
     )
     
     # Templates
-    informer_template = """Bạn là một gia sư toán AI. Dựa vào lịch sử trò chuyện gần đây và thông tin từ sách giáo khoa, hãy trả lời câu hỏi của học sinh.
+    informer_template = """
+        Bạn là một Gia sư Toán AI chuyên nghiệp. Vai trò của bạn là cung cấp một lời giải hoặc một lời giải thích chi tiết, chính xác và dễ hiểu cho học sinh lớp 9.
 
---- LỊCH SỬ TRÒ CHUYỆN GẦN ĐÂY ---
-{{ conversation_history }}
----
+        **QUY TRÌNH CỦA BẠN:**
+        1.  **Đọc Lịch sử Trò chuyện:** Hiểu rõ bối cảnh và câu hỏi trước đó của học sinh.
+        2.  **Nghiên cứu Tài liệu:** Tham khảo kỹ các thông tin từ sách giáo khoa được cung cấp.
+        3.  **Trả lời câu hỏi cuối cùng:** Dựa vào cả lịch sử và tài liệu, hãy trả lời câu hỏi cuối cùng của học sinh.
 
---- THÔNG TIN SÁCH GIÁO KHOA (TỪ RAG) ---
-{% for doc in documents %}
-  {{ doc.content }}
-{% endfor %}
----
+        **YÊU CẦU TRÌNH BÀY:**
+        -   Sử dụng ngôn ngữ sư phạm, rõ ràng, từng bước một.
+        -   Sử dụng Markdown để định dạng các công thức toán học, các đề mục và nhấn mạnh các điểm quan trọng.
+        -   Luôn trả lời bằng tiếng Việt.
 
-Dựa vào cả hai nguồn thông tin trên, hãy trả lời câu hỏi cuối cùng của người dùng một cách chính xác và đúng ngữ cảnh.
+        ---
+        **LỊCH SỬ TRÒ CHUYỆN GẦN ĐÂY:**
+        {{ conversation_history }}
+        ---
+        **THÔNG TIN SÁCH GIÁO KHOA (TỪ RAG):**
+        {% for doc in documents %}
+        {{ doc.content }}
+        {% endfor %}
+        ---
 
-Câu hỏi cuối cùng: {{ query }}
+        **Câu hỏi cuối cùng của học sinh:** {{ query }}
 
-Hãy trả lời bằng tiếng Việt, giải thích rõ ràng từng bước:"""
+        **Lời giải chi tiết của bạn:**
+        """
 
-    practice_template = """Bạn là gia sư toán sáng tạo. Học sinh cần luyện tập: '{{ student_weakness }}'.
+    practice_template = """
+        Bạn là một chuyên gia ra đề thi và tư vấn học liệu môn Toán.
 
-Hãy tạo 2 bài tập mới và đề xuất 1 video phù hợp từ danh sách:
-{{ video_cheatsheet_json }}
+        **NHIỆM VỤ:**
+        Dựa trên **chủ đề yếu** của học sinh và **danh sách video** được cung cấp, hãy thực hiện 2 việc:
 
-Trả lời theo format:
-### 🎯 BÀI TẬP LUYỆN TẬP
-1. [Bài tập 1]
-2. [Bài tập 2]
+        1.  **Tạo 2 Bài tập Mới:**
+            -   Các bài tập phải liên quan trực tiếp đến chủ đề yếu.
+            -   Độ khó tương đương chương trình lớp 9.
+            -   Bài tập phải hoàn toàn mới, không được trùng lặp với các ví dụ phổ biến.
+        2.  **Đề xuất 1 Video Phù hợp nhất:**
+            -   Chọn ra MỘT video từ danh sách có nội dung liên quan chặt chẽ nhất đến chủ đề yếu.
 
-### 📹 VIDEO ĐỀ XUẤT
-**[Tên video]**
-🎬 Link: https://www.youtube.com/playlist?list=PL5q2T2FxzK7XY4s9FqDi6KCFEpGr2LX2D"""
+        **THÔNG TIN ĐẦU VÀO:**
+        -   **Chủ đề yếu của học sinh:** '{{ student_weakness }}'
+        -   **Danh sách video có sẵn (JSON):** {{ video_cheatsheet_json }}
 
-    insight_template = """Phân tích hội thoại và trả về JSON:
+        **YÊU CẦU OUTPUT:**
+        Chỉ trả lời theo định dạng Markdown dưới đây, không thêm bất kỳ lời dẫn hay giải thích nào khác.
 
-{{ conversation_history }}
+        ### 🎯 BÀI TẬP CỦNG CỐ
+        1.  **Bài 1:** [Nội dung câu hỏi bài tập 1]
+        2.  **Bài 2:** [Nội dung câu hỏi bài tập 2]
 
-Output: {"misunderstood_concepts": ["concept1", "concept2"], "sentiment": "emotion"}"""
 
-    verifier_template = """Kiểm tra tính chính xác của lời giải:
+        ### 📹 VIDEO ĐỀ XUẤT
+        **[Tên video]**
+        🎬 Link: https://www.youtube.com/playlist?list=PL5q2T2FxzK7XY4s9FqDi6KCFEpGr2LX2D"""
 
-Câu hỏi: {{ query }}
-Lời giải: {{ informer_answer }}
+    insight_template = """
+        Bạn là một chuyên gia phân tích giáo dục. Nhiệm vụ của bạn là đọc kỹ đoạn hội thoại và xác định chính xác những khái niệm toán học mà học sinh đang hiểu sai.
 
-Output: {"is_correct": true/false, "correction_suggestion": "gợi ý nếu sai"}"""
+        **HƯỚNG DẪN:**
+        - Đọc kỹ toàn bộ hội thoại.
+        - Tập trung vào những câu hỏi hoặc nhận định của 'User' thể hiện sự nhầm lẫn hoặc thiếu kiến thức.
+        - Dựa trên sự nhầm lẫn đó, xác định khái niệm toán học cốt lõi bị hiểu sai.
+        - Chỉ trả lời bằng một đối tượng JSON duy nhất theo định dạng sau. Không thêm bất kỳ giải thích hay văn bản nào khác.
 
-    intent_template = """Phân loại ý định từ hội thoại:
+        **VÍ DỤ:**
+        ---
+        Hội thoại:
+        User: hệ thức Vi-ét dùng để làm gì?
+        Assistant: ...
+        User: vậy nếu phương trình vô nghiệm thì vẫn tính tổng và tích các nghiệm được đúng không?
+        ---
+        JSON Output:
+        {"misunderstood_concepts": ["điều kiện áp dụng hệ thức Vi-ét"], "sentiment": "confused"}
+        ---
 
-{{ conversation_history }}
+        **BÂY GIỜ, HÃY PHÂN TÍCH HỘI THOẠI SAU:**
 
-Chọn một trong: greeting_social, math_question, request_for_practice, expression_of_stress, off_topic"""
+        **Hội thoại:**
+        {{ conversation_history }}
+
+        **JSON Output:**
+        """
+
+    verifier_template = """Bin là một người kiểm định chất lượng toán học cực kỳ khó tính và chính xác.
+        Nhiệm vụ của bạn là kiểm tra xem lời giải được đề xuất có hoàn toàn đúng về mặt toán học và logic hay không.
+
+        **Câu hỏi của học sinh:** {{ query }}
+
+        **Lời giải được đề xuất:** {{ informer_answer }}
+
+        **YÊU CẦU:**
+        Hãy kiểm tra từng bước, từng công thức và kết quả cuối cùng. Sau đó, chỉ trả lời bằng một đối tượng JSON duy nhất theo định dạng sau.
+
+        **JSON Output:**
+        {"is_correct": [true hoặc false], "correction_suggestion": "[Nếu sai, hãy giải thích ngắn gọn và chính xác lỗi sai nằm ở đâu. Nếu đúng, để trống chuỗi này.]"}
+        """
+
+    intent_template = """
+        Bạn là một hệ thống phân loại ý định cực kỳ chính xác. Dựa vào câu hỏi cuối cùng của người dùng, hãy phân loại nó vào MỘT trong các loại sau.
+
+        **ĐỊNH NGHĨA CÁC LOẠI:**
+        - 'greeting_social': Chào hỏi, xã giao, cảm ơn, tạm biệt.
+        - 'math_question': Bất kỳ câu hỏi nào liên quan trực tiếp đến kiến thức toán học, bao gồm giải bài tập, tính toán, hỏi định nghĩa, hỏi công thức, hỏi tính chất.
+        - 'request_for_practice': Yêu cầu bài tập luyện tập, muốn thực hành.
+        - 'expression_of_stress': Biểu hiện căng thẳng, mệt mỏi, nản lòng.
+        - 'study_support': Hỏi về phương pháp học chung, cách để tiến bộ, tìm kiếm động lực.
+        - 'off_topic': Chủ đề hoàn toàn không liên quan đến học tập.
+
+        **VÍ DỤ:**
+        ---
+        User: Chào bạn
+        Phân loại: greeting_social
+        ---
+        User: Giải giúp mình phương trình x^2 + 5x - 6 = 0
+        Phân loại: math_question
+        ---
+        User: hệ thức Vi-ét dùng để làm gì?  <-- VÍ DỤ MỚI QUAN TRỌNG
+        Phân loại: math_question
+        ---
+        User: Bài này khó quá, mình nản thật
+        Phân loại: expression_of_stress
+        ---
+        User: Có bài nào tương tự để mình luyện tập thêm không?
+        Phân loại: request_for_practice
+        ---
+        User: Làm sao để học tốt môn hình học không gian?
+        Phân loại: study_support
+        ---
+        User: Giá vàng hôm nay bao nhiêu?
+        Phân loại: off_topic
+        ---
+
+        **Bây giờ, hãy phân loại lịch sử chat sau. Chỉ trả về MỘT từ duy nhất.**
+
+        **Lịch sử chat:**
+        {{ conversation_history }}
+
+        **Phân loại:**
+        """
+
+    # --- TEMPLATES CHO TUTOR AGENT ---
+
+    # Prompt tổng quát định hình vai trò và tính cách
+    tutor_master_prompt = """
+    Bạn là một Gia sư Toán AI, một người bạn đồng hành học tập thông minh, thấu cảm và chuyên nghiệp.
+    Vai trò của bạn là phản hồi lại học sinh một cách phù hợp nhất dựa trên ý định của họ.
+    Luôn sử dụng ngôn ngữ tích cực, khuyến khích và thân thiện. Luôn trả lời bằng tiếng Việt.
+    """
+
+    # Prompt cho intent 'greeting_social'
+    greeting_template = """
+    {{ master_prompt }}
+
+    **Bối cảnh:** Học sinh đang bắt đầu cuộc trò chuyện hoặc nói những câu xã giao (chào hỏi, cảm ơn).
+    **Nhiệm vụ:** Hãy phản hồi lại một cách thân thiện, tự nhiên và mời gọi họ bắt đầu buổi học.
+
+    **Lịch sử chat gần đây:**
+    {{ conversation_history }}
+
+    **Lời chào thân thiện của bạn:**
+    """
+
+    # Prompt cho intent 'expression_of_stress'
+    stress_template = """
+    {{ master_prompt }}
+
+    **Bối cảnh:** Học sinh đang thể hiện sự căng thẳng, mệt mỏi hoặc nản lòng về việc học.
+    **NHIỆM VỤ CỰC KỲ QUAN TRỌNG:**
+    1.  **Đồng cảm:** Thể hiện rằng bạn hiểu cảm giác của họ.
+    2.  **Bình thường hóa:** Cho họ biết rằng cảm giác này là bình thường.
+    3.  **Gợi ý giải pháp AN TOÀN:** Đề xuất những hành động đơn giản như nghỉ ngơi, hít thở sâu.
+    4.  **TUYỆT ĐỐI KHÔNG:** Đóng vai chuyên gia tâm lý, không đưa ra lời khuyên phức tạp.
+
+    **Lịch sử chat gần đây:**
+    {{ conversation_history }}
+
+    **Lời động viên an toàn và thấu cảm của bạn:**
+    """
+
+    # Prompt cho intent 'study_support'
+    support_template = """
+    {{ master_prompt }}
+
+    **Bối cảnh:** Học sinh đang hỏi về phương pháp học tập, cách để tiến bộ hoặc tìm kiếm động lực.
+    **Nhiệm vụ:** Hãy đưa ra những lời khuyên chung, hữu ích và mang tính động viên về việc học Toán. Bạn có thể gợi ý về các chức năng của mình (giải bài tập, tạo luyện tập,...).
+
+    **Lịch sử chat gần đây:**
+    {{ conversation_history }}
+
+    **Lời khuyên và hỗ trợ của bạn:**
+    """
+
+    # Prompt cho intent 'off_topic'
+    off_topic_template = """
+    {{ master_prompt }}
+
+    **Bối cảnh:** Học sinh đang hỏi một câu hoàn toàn không liên quan đến toán học hoặc học tập.
+    **Nhiệm vụ:** Hãy lịch sự từ chối trả lời và nhẹ nhàng hướng cuộc trò chuyện quay trở lại chủ đề chính là học Toán.
+
+    **Lịch sử chat gần đây:**
+    {{ conversation_history }}
+
+    **Lời từ chối khéo léo của bạn:**
+    """
 
     # Create prompt builders
     informer_prompt_builder = PromptBuilder(template=informer_template, required_variables=["documents", "query", "conversation_history"])
@@ -337,6 +532,11 @@ Chọn một trong: greeting_social, math_question, request_for_practice, expres
     insight_prompt_builder = PromptBuilder(template=insight_template, required_variables=["conversation_history"])
     verifier_prompt_builder = PromptBuilder(template=verifier_template, required_variables=["query", "informer_answer"])
     intent_prompt_builder = PromptBuilder(template=intent_template, required_variables=["conversation_history"])
+    
+    greeting_prompt_builder = PromptBuilder(template=greeting_template, required_variables=["master_prompt", "conversation_history"])
+    stress_prompt_builder = PromptBuilder(template=stress_template, required_variables=["master_prompt", "conversation_history"])
+    support_prompt_builder = PromptBuilder(template=support_template, required_variables=["master_prompt", "conversation_history"])
+    off_topic_prompt_builder = PromptBuilder(template=off_topic_template, required_variables=["master_prompt", "conversation_history"])
     
     # Create generator
     generator = CustomGoogleAIGenerator(api_key=os.getenv("GOOGLE_API_KEY"))
@@ -361,49 +561,59 @@ Chọn một trong: greeting_social, math_question, request_for_practice, expres
         "verifier_prompt_builder": verifier_prompt_builder,
         "intent_prompt_builder": intent_prompt_builder,
         "videos_data": videos_data,
-        "document_store": document_store
+        "document_store": document_store,
+        "tutor_master_prompt": tutor_master_prompt,
+        "greeting_prompt_builder": greeting_prompt_builder,
+        "stress_prompt_builder": stress_prompt_builder,
+        "support_prompt_builder": support_prompt_builder,
+        "off_topic_prompt_builder": off_topic_prompt_builder
     }
 
 def classify_intent(conversation_history: str, resources: Dict) -> str:
     """Phân loại ý định người dùng"""
+    valid_intents = ['greeting_social', 'math_question', 'request_for_practice', 'expression_of_stress', 'study_support', 'off_topic']
+    
     try:
-        # Cải thiện prompt để phân loại chính xác hơn
-        improved_intent_template = """Phân loại ý định từ hội thoại sau:
-
-{{ conversation_history }}
-
-Phân loại thành một trong các loại sau:
-- 'greeting_social': Chào hỏi, xã giao, cảm ơn, tạm biệt
-- 'math_question': Câu hỏi về toán học, yêu cầu giải bài tập, tính toán
-- 'request_for_practice': Yêu cầu bài tập luyện tập, muốn thực hành
-- 'expression_of_stress': Biểu hiện căng thẳng, mệt mỏi, nản lòng
-- 'off_topic': Chủ đề hoàn toàn không liên quan đến học tập
-
-Chỉ trả về MỘT từ duy nhất từ danh sách trên:"""
-
-        # Tạo prompt builder mới với template cải thiện
-        intent_prompt_builder = PromptBuilder(
-            template=improved_intent_template, 
-            required_variables=["conversation_history"]
-        )
+        # 1. Lấy công cụ đã được chuẩn bị sẵn
+        prompt_builder = resources["intent_prompt_builder"]
         
-        prompt = intent_prompt_builder.run(conversation_history=conversation_history)
-        result = resources["generator"].run(prompt=prompt["prompt"])
+        # 2. Sử dụng công cụ đó để tạo prompt cuối cùng
+        prompt = prompt_builder.run(conversation_history=conversation_history)["prompt"]
+        
+        # 3. Gửi prompt đi và nhận kết quả
+        result = resources["generator"].run(prompt=prompt)
         intent = result["replies"][0].strip().lower()
         
         # Debug: In ra intent để kiểm tra
-        print(f"DEBUG - User input: {conversation_history.split('User: ')[-1] if 'User: ' in conversation_history else 'N/A'}")
-        print(f"DEBUG - Classified intent: {intent}")
+        # Sửa logic trích xuất user input từ conversation history
+        user_input_debug = "N/A"
+        if 'user: ' in conversation_history:
+            # Tìm tin nhắn user cuối cùng
+            lines = conversation_history.split('\n')
+            for line in reversed(lines):
+                if line.strip().startswith('user: '):
+                    user_input_debug = line.replace('user: ', '').strip()
+                    break
         
-        valid_intents = ['greeting_social', 'math_question', 'request_for_practice', 'expression_of_stress', 'off_topic']
+        print(f"DEBUG - User input: {user_input_debug}")
+        print(f"DEBUG - Classified intent: {intent}")
+        print(f"DEBUG - Conversation history format: {conversation_history[:200]}...")  # In ra 200 ký tự đầu để debug
         
         # Nếu intent không hợp lệ, thử phân loại thủ công
         if intent not in valid_intents:
             # Kiểm tra từ khóa toán học
             math_keywords = ['giải', 'tính', 'phương trình', 'bài tập', 'toán', 'xác suất', 'thống kê', 'hình học', 'đại số']
-            user_input = conversation_history.split('User: ')[-1] if 'User: ' in conversation_history else ''
             
-            if any(keyword in user_input.lower() for keyword in math_keywords):
+            # Sử dụng logic trích xuất user input đã sửa
+            user_input_for_fallback = "N/A"
+            if 'user: ' in conversation_history:
+                lines = conversation_history.split('\n')
+                for line in reversed(lines):
+                    if line.strip().startswith('user: '):
+                        user_input_for_fallback = line.replace('user: ', '').strip()
+                        break
+            
+            if any(keyword in user_input_for_fallback.lower() for keyword in math_keywords):
                 intent = 'math_question'
             else:
                 intent = 'greeting_social'
@@ -434,12 +644,39 @@ def verifier_agent(query: str, informer_answer: str, resources: Dict) -> Dict:
         return {"is_correct": True, "correction_suggestion": ""}
 
 def insight_agent(conversation_history: str, resources: Dict) -> Dict:
-    """Agent phân tích điểm yếu"""
+    """Agent phân tích điểm yếu, với logic trích xuất JSON thông minh."""
     try:
-        prompt = resources["insight_prompt_builder"].run(conversation_history=conversation_history)
-        result = resources["generator"].run(prompt=prompt["prompt"])
-        return json.loads(result["replies"][0])
-    except:
+        prompt_builder = resources["insight_prompt_builder"]
+        prompt = prompt_builder.run(conversation_history=conversation_history)["prompt"]
+        
+        print("\n" + "="*50)
+        print("DEBUG: [Insight Agent] PROMPT CUỐI CÙNG GỬI ĐẾN GEMINI:")
+        print(prompt)
+        print("="*50 + "\n")
+
+        result = resources["generator"].run(prompt=prompt)
+        llm_reply = result["replies"][0]
+
+        # --- LOGIC TRÍCH XUẤT JSON TỪ MARKDOWN ---
+        # Sử dụng regex để tìm chuỗi bắt đầu bằng { và kết thúc bằng }
+        # re.DOTALL cho phép . khớp với cả ký tự xuống dòng
+        json_match = re.search(r"\{.*\}", llm_reply, re.DOTALL)
+        
+        if json_match:
+            json_string = json_match.group(0)
+            print(f"DEBUG: [Insight Agent] Đã trích xuất chuỗi JSON: {json_string}")
+            # Bây giờ mới parse chuỗi JSON đã được làm sạch
+            return json.loads(json_string)
+        else:
+            # Nếu không tìm thấy JSON nào, ghi nhận lỗi và trả về mặc định
+            print(f"ERROR: [Insight Agent] Không tìm thấy chuỗi JSON hợp lệ trong phản hồi của LLM: {llm_reply}")
+            return {"misunderstood_concepts": [], "sentiment": "neutral"}
+
+    except json.JSONDecodeError as e:
+        print(f"ERROR: [Insight Agent] Lỗi khi parse JSON đã trích xuất: {e}")
+        return {"misunderstood_concepts": [], "sentiment": "neutral"}
+    except Exception as e:
+        print(f"ERROR: [Insight Agent] Đã xảy ra lỗi không xác định: {e}")
         return {"misunderstood_concepts": [], "sentiment": "neutral"}
 
 def practice_agent(student_weakness: str, resources: Dict) -> str:
@@ -485,63 +722,53 @@ def problem_solving_engine(query: str, conversation_history_str: str, resources:
         return f"🔍 Tôi đã xem xét lại và thấy có một chút chưa chính xác. {correction} Tôi sẽ cần tìm hiểu thêm về vấn đề này để có câu trả lời tốt hơn."
 
 
-def tutor_agent_response(user_input: str, conversation_history_str: str, intent: str, resources: Dict, supabase: Client, user_id: str, display_name: str) -> str:
-    """Agent chính điều phối các agent khác"""
+def tutor_agent_response(user_input: str, intent: str, conversation_history_str: str, resources: Dict, supabase: Client, user_id: str, display_name: str) -> str:
+    """
+    Agent chính, bây giờ sử dụng LLM cho tất cả các intent để có phản hồi linh hoạt.
+    """
     
-    # Xử lý theo ý định
-    if intent == "greeting_social":
-        responses = [
-            "Xin chào! Tôi là gia sư AI của bạn 😊 Hôm nay chúng ta học gì nhé?",
-            "Chào bạn! Tôi sẵn sàng giúp bạn giải toán 📚 Có câu hỏi gì không?",
-            "Hi! Cảm ơn bạn đã tin tưởng tôi 💪 Bắt đầu thôi!",
-            "Chào bạn thân mến! Toán học thú vị lắm đó ✨ Hãy hỏi tôi nhé!"
-        ]
-        return random.choice(responses)
-    
-    elif intent == "math_question":
+    # Các intent phức tạp vẫn gọi các hàm/engine chuyên biệt
+    if intent == "math_question":
         print("DEBUG: Tutor Agent is calling the Problem-Solving Engine.")
         return problem_solving_engine(user_input, conversation_history_str, resources)
     
     elif intent == "request_for_practice":
-        # Tạo bài tập
+        print("DEBUG: Tutor Agent is triggering the Practice Flow.")
         insights = insight_agent(conversation_history_str, resources)
         
-        if insights["misunderstood_concepts"]:
+        if insights and insights.get("misunderstood_concepts"):
             weakness = insights["misunderstood_concepts"][0]
-            practice_response = practice_agent(weakness, resources)
-            return f"🎯 Tôi thấy bạn cần luyện tập **{weakness}**:\n\n{practice_response}"
+            return practice_agent(weakness, resources)
         else:
-            practice_response = practice_agent("phương trình bậc nhất", resources)
-            return f"📝 **Bài tập luyện tập:**\n\n{practice_response}"
-    
-    elif intent == "expression_of_stress":
-        stress_responses = [
-            "Tôi hiểu cảm giác của bạn 😊 Hãy nghỉ ngơi 5 phút rồi quay lại nhé!",
-            "Đừng lo lắng! Toán học cần thời gian 💪 Chúng ta từ từ thôi!",
-            "Thở sâu nhé! Mọi vấn đề đều có lời giải 🌟 Tôi sẽ giúp bạn!"
-        ]
-        return random.choice(stress_responses)
-    
-    else:  # off_topic
-        return """🤖 **Tôi chuyên về Toán học:**
-
-📐 Giải bài tập lớp 9
-📝 Tạo bài luyện tập  
-🎥 Đề xuất video học
-💪 Hỗ trợ tinh thần
-
-Bạn có câu hỏi Toán nào không? 😊"""
-
-def init_supabase_client():
-    """Khởi tạo Supabase client"""
-    supabase_url = os.getenv("SUPABASE_URL")
-    supabase_key = os.getenv("SUPABASE_KEY")
-    
-    if not supabase_url or not supabase_key:
-        st.error("❌ Thiếu thông tin Supabase. Vui lòng cấu hình biến môi trường.")
-        st.stop()
-    
-    return create_client(supabase_url, supabase_key)
+            # Nếu không tìm thấy điểm yếu, vẫn yêu cầu tạo bài tập chung
+            return practice_agent("các chủ đề toán lớp 9 tổng quát", resources)
+            
+    # Các intent giao tiếp bây giờ sẽ được xử lý bởi LLM
+    else:
+        print(f"DEBUG: Tutor Agent is handling a communication intent: '{intent}'")
+        
+        # Chọn đúng prompt builder dựa trên intent
+        if intent == "greeting_social":
+            prompt_builder = resources["greeting_prompt_builder"]
+        elif intent == "expression_of_stress":
+            prompt_builder = resources["stress_prompt_builder"]
+        elif intent == "study_support":
+            prompt_builder = resources["support_prompt_builder"]
+        else: # Mặc định là off_topic
+            prompt_builder = resources["off_topic_prompt_builder"]
+            
+        try:
+            # Xây dựng và chạy prompt
+            prompt = prompt_builder.run(
+                master_prompt=resources["tutor_master_prompt"],
+                conversation_history=conversation_history_str
+            )["prompt"]
+            
+            result = resources["generator"].run(prompt=prompt)
+            return result["replies"][0]
+        except Exception as e:
+            print(f"ERROR: Could not generate response for intent '{intent}': {e}")
+            return "Rất xin lỗi, tôi đang gặp một chút sự cố. Bạn có thể hỏi lại sau được không?"
 
 def render_chat_message(message: str, is_user: bool, key: str):
     """Render tin nhắn chat với animation"""
@@ -774,78 +1001,119 @@ def main():
     # XÓA TOÀN BỘ KHỐI if user_input: CŨ VÀ THAY BẰNG KHỐI NÀY
 
     if user_input := st.chat_input("Nhập câu hỏi của bạn..."):
-        
-        # --- BƯỚC 1: LƯU VÀ HIỂN THỊ TIN NHẮN CỦA USER ---
-        # Lưu tin nhắn với cấu trúc mới, intent ban đầu là 'unknown'
+    
+        # --- BƯỚC 1: CẬP NHẬT STATE VÀ GIAO DIỆN NGAY LẬP TỨC ---
+        # Thêm tin nhắn của người dùng vào state với intent ban đầu là 'unknown'
         st.session_state.messages.append({"role": "user", "content": user_input, "intent": "unknown"})
         # Hiển thị tin nhắn của người dùng ngay lập tức
         with chat_placeholder:
             render_chat_message(user_input, is_user=True, key=f"user_{len(st.session_state.messages)}")
 
-        # --- BƯỚC 2: PHÂN LOẠI INTENT VÀ CẬP NHẬT LẠI STATE ---
-        # Tạo chuỗi lịch sử để gửi cho LLM
-        history_str = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state.messages[-10:]])
+        # --- BƯỚC 2: TẠO DỮ LIỆU ĐẦU VÀO CHO CÁC AGENT (MỘT LẦN DUY NHẤT) ---
+        # Tạo chuỗi lịch sử để gửi cho LLM. BƯỚC NÀY RẤT QUAN TRỌNG, nó diễn ra SAU KHI tin nhắn mới đã được thêm vào.
+        history_str_for_llm = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state.messages[-10:]])
         
+        # --- BƯỚC 3: PHÂN LOẠI INTENT VÀ CẬP NHẬT LẠI STATE ---
         # Gọi hàm classify_intent MỘT LẦN DUY NHẤT và lưu kết quả
-        detected_intent = classify_intent(history_str, resources)
+        detected_intent = classify_intent(history_str_for_llm, resources)
         
         # Cập nhật lại intent cho tin nhắn cuối cùng của người dùng trong session_state
-        # Đây là bước "ghi nhớ" intent
         st.session_state.messages[-1]["intent"] = detected_intent
         
         # Hiển thị indicator "đang suy nghĩ"
         with chat_placeholder:
             typing_indicator_placeholder = show_typing_indicator()
 
-        # --- BƯỚC 3: GỌI TUTOR AGENT VỚI INTENT ĐÃ BIẾT ---
-        # Sửa lại hàm tutor_agent_response để nhận intent làm tham số
+        # --- BƯỚC 4: GỌI TUTOR AGENT VỚI DỮ LIỆU ĐÃ ĐƯỢC CHUẨN BỊ ---
         bot_response = tutor_agent_response(
             user_input=user_input, 
-            intent=detected_intent, # <-- Truyền intent đã được phân loại vào
-            conversation_history_str=history_str,
+            intent=detected_intent,
+            conversation_history_str=history_str_for_llm, # <-- Truyền chuỗi đã tạo
             resources=resources,
             supabase=supabase,
             user_id=user_id,
             display_name=display_name
         )
         
-        # Xóa indicator và chuẩn bị hiển thị câu trả lời
+        # Xóa indicator
         typing_indicator_placeholder.empty()
 
-        # --- BƯỚC 4: LƯU VÀ HIỂN THỊ TIN NHẮN CỦA BOT ---
-        # Lưu tin nhắn của bot với intent tương ứng để tiện phân tích sau này
+        # --- BƯỚC 5: LƯU VÀ HIỂN THỊ KẾT QUẢ ---
         st.session_state.messages.append({"role": "assistant", "content": bot_response, "intent": detected_intent})
-        # Hiển thị tin nhắn của bot
         with chat_placeholder:
             render_chat_message(bot_response, is_user=False, key=f"bot_{len(st.session_state.messages)}")
 
         # --- BƯỚC 5: KIỂM TRA PROACTIVE VỚI HÀM MỚI THÔNG MINH ---
         # Hàm mới này sẽ đọc intent trực tiếp từ st.session_state.messages
         if should_trigger_proactive_practice(st.session_state.messages):
+    
+            # Hiển thị indicator trên giao diện để người dùng biết hệ thống đang làm thêm việc
             with chat_placeholder:
                 proactive_typing_placeholder = show_typing_indicator()
             
             try:
-                # Logic proactive giữ nguyên, nhưng giờ nó sẽ chạy đúng hơn
-                history_str_for_insight = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state.messages[-10:]])
-                insights = insight_agent(history_str_for_insight, resources)
+                # --- DEBUG: Thông báo bắt đầu luồng proactive ---
+                print("\n--- DEBUG: [Proactive Flow] Bắt đầu luồng phân tích và đề xuất ---")
                 
-                if insights and insights.get("misunderstood_concepts"):
-                    weakness = insights["misunderstood_concepts"][0]
-                    practice_response = practice_agent(weakness, resources)
-                    proactive_msg = f"💡 **Tôi nhận thấy bạn có thể cần luyện tập thêm về *{weakness}*. Đây là một số gợi ý:**\n\n{practice_response}"
+                # Tạo history_str để gửi cho Insight Agent
+                history_str_for_insight = "\n".join([f"{msg['role'].capitalize()}: {msg['content']}" for msg in st.session_state.messages[-10:]])
+                
+                # Gọi Insight Agent
+                print("DEBUG: [Proactive Flow] Gọi Insight Agent...")
+                insights = insight_agent(history_str_for_insight, resources)
+                print(f"DEBUG: [Proactive Flow] Insight Agent trả về: {insights}")
+                
+                # --- LOGIC XỬ LÝ KẾT QUẢ CỦA INSIGHT ---
+                # Kiểm tra xem insight có hợp lệ và có chứa khái niệm bị hiểu sai không
+                if insights and isinstance(insights, dict) and insights.get("misunderstood_concepts"):
                     
+                    concepts = insights["misunderstood_concepts"]
+                    last_weakness = concepts[0]
+                    user_email = user.email
+                    
+                    profile_data_to_save = {
+                        "email": user_email, 
+                        "misunderstood_concepts": concepts,
+                        "last_weakness": last_weakness,
+                        "updated_at": datetime.now().isoformat()
+                    }
+                    
+                    print(f"DEBUG: [Proactive Flow] Chuẩn bị cập nhật profile cho user_id: {user_id}")
+                    
+                    # GỌI HÀM UPDATE ĐÃ ĐƯỢC IMPORT
+                    update_user_profile(supabase, user_id, profile_data_to_save)
+                    
+                    st.toast("✅ Đã phân tích và cập nhật hồ sơ học tập!", icon="🧠")
+                    print(f"DEBUG: [Proactive Flow] Phát hiện điểm yếu: '{last_weakness}'. Gọi Practice Agent...")
+                    
+                    # Gọi Practice Agent để tạo bài tập
+                    practice_response = practice_agent(last_weakness, resources)
+                    
+                    # Tạo tin nhắn đề xuất
+                    proactive_msg = f"💡 **Phân tích nhanh:** Dựa trên các câu hỏi vừa rồi, tôi nhận thấy bạn có thể cần luyện tập thêm về chủ đề **'{last_weakness}'**. Đây là một số gợi ý cho bạn:\n\n{practice_response}"
+                    
+                    # Xóa indicator và thêm tin nhắn mới vào state
                     proactive_typing_placeholder.empty()
                     st.session_state.messages.append({"role": "assistant", "content": proactive_msg, "intent": "proactive_suggestion"})
+                    
+                    # Hiển thị tin nhắn proactive
                     with chat_placeholder:
                         render_chat_message(proactive_msg, is_user=False, key=f"proactive_{len(st.session_state.messages)}")
+                
                 else:
+                    # --- DEBUG: Trường hợp không có gì để đề xuất ---
+                    print("DEBUG: [Proactive Flow] Insight Agent không tìm thấy điểm yếu nào cụ thể. Bỏ qua đề xuất.")
+                    # Xóa indicator một cách thầm lặng, không làm gì thêm
                     proactive_typing_placeholder.empty()
+
             except Exception as e:
+                # --- DEBUG: Bắt lỗi trong luồng proactive ---
+                print(f"ERROR: [Proactive Flow] Đã xảy ra lỗi: {str(e)}")
                 proactive_typing_placeholder.empty()
-                st.warning(f"Không thể tạo đề xuất chủ động: {str(e)}")
-        
-        # Rerun để cập nhật giao diện và cuộn xuống tin nhắn mới nhất
+                # Có thể hiển thị một cảnh báo nhỏ trên UI nếu cần
+                # st.warning("Không thể tạo đề xuất chủ động lúc này.")
+
+        # Rerun để cập nhật giao diện
         st.rerun()
 
     # Sidebar với thông tin khi đã đăng nhập
