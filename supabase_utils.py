@@ -1,9 +1,8 @@
 import os
 from supabase import create_client, Client
 from datetime import datetime
-import streamlit as st # Cần import để dùng st.error
+import streamlit as st 
 
-# Hàm này có thể được cache ở đây hoặc ở nơi gọi nó
 @st.cache_resource
 def init_supabase_client() -> Client:
     """Khởi tạo và trả về Supabase client."""
@@ -18,9 +17,10 @@ def get_user_profile(supabase: Client, user_id: str) -> dict:
     """Lấy hồ sơ người dùng từ database. Nếu chưa có, tạo một hồ sơ mặc định."""
     try:
         response = supabase.table("user_profiles").select("*").eq("id", user_id).single().execute()
+        print(f"DEBUG: [Supabase] Retrieved profile: {response.data}")
+        print(f"DEBUG: [Supabase] updated_at value: {response.data.get('updated_at')} (type: {type(response.data.get('updated_at'))})")
         return response.data
     except Exception:
-        # Nếu .single() thất bại (không tìm thấy dòng nào), tạo hồ sơ mới
         try:
             default_profile = {
                 "id": user_id,
@@ -29,13 +29,14 @@ def get_user_profile(supabase: Client, user_id: str) -> dict:
                 "created_at": datetime.now().isoformat(),
                 "updated_at": datetime.now().isoformat()
             }
+            print(f"DEBUG: [Supabase] Creating default profile with updated_at: {default_profile['updated_at']}")
             response = supabase.table("user_profiles").insert(default_profile).execute()
+            print(f"DEBUG: [Supabase] Created profile: {response.data[0]}")
             return response.data[0]
         except Exception as e:
             st.error(f"Không thể tạo hồ sơ mặc định: {e}")
             return {}
 
-# --- HÀM QUAN TRỌNG MÀ BẠN CẦN ---
 def update_user_profile(supabase: Client, user_id: str, profile_data: dict):
     """
     Cập nhật (hoặc chèn nếu chưa có) hồ sơ người dùng trong database.
@@ -45,7 +46,6 @@ def update_user_profile(supabase: Client, user_id: str, profile_data: dict):
         return
 
     try:
-        # Upsert sẽ tự động chèn nếu chưa có, hoặc cập nhật nếu đã có
         response = supabase.table("user_profiles").upsert({
             "id": user_id,
             **profile_data

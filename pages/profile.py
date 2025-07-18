@@ -1,6 +1,7 @@
 import streamlit as st
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from supabase_utils import init_supabase_client, get_user_profile
+import time
 
 # Thiết lập page config
 st.set_page_config(
@@ -50,10 +51,64 @@ def display_header(user_email: str, user_id: str, profile: dict):
         updated_time = "Chưa có dữ liệu"
         if profile.get("updated_at"):
             try:
-                updated_dt = datetime.fromisoformat(profile["updated_at"].replace("Z", "+00:00"))
-                updated_time = updated_dt.strftime('%d/%m/%Y %H:%M:%S')
-            except:
-                updated_time = "Không xác định"
+                updated_at_str = str(profile["updated_at"])
+                updated_dt = None
+                
+                try:
+                    if 'T' in updated_at_str and '+00:00' in updated_at_str:
+                        if '.' in updated_at_str:
+                            dt_part, tz_part = updated_at_str.split('+')
+                            if '.' in dt_part:
+                                main_dt, microsec = dt_part.split('.')
+                                microsec = microsec[:6].ljust(6, '0')
+                                clean_dt_str = f"{main_dt}.{microsec}+{tz_part}"
+                            else:
+                                clean_dt_str = f"{dt_part}+{tz_part}"
+                        else:
+                            clean_dt_str = updated_at_str
+                        updated_dt = datetime.fromisoformat(clean_dt_str)
+                    elif updated_at_str.endswith('Z'):
+                        updated_dt = datetime.fromisoformat(updated_at_str.replace("Z", "+00:00"))
+                    elif '+' in updated_at_str and ':' in updated_at_str[-6:]:
+                        updated_dt = datetime.fromisoformat(updated_at_str)
+                    
+                    elif '+' in updated_at_str:
+                       
+                        updated_dt = datetime.strptime(updated_at_str.split('+')[0], '%Y-%m-%d %H:%M:%S')
+                    
+                    else:
+                        updated_dt = datetime.fromisoformat(updated_at_str)
+                except ValueError as ve:
+                    print(f"DEBUG: [Profile] ISO parsing failed: {ve}")
+                   
+                    try:
+                        # Format: "2024-01-01 12:00:00"
+                        updated_dt = datetime.strptime(updated_at_str, '%Y-%m-%d %H:%M:%S')
+                    except ValueError:
+                        # Format: "2024-01-01T12:00:00"
+                        updated_dt = datetime.strptime(updated_at_str, '%Y-%m-%dT%H:%M:%S')
+                
+                if updated_dt:
+                    # Chuyển đổi từ UTC sang múi giờ Việt Nam (UTC+7)
+                    if updated_dt.tzinfo is not None:
+                        # Nếu có timezone info, chuyển sang UTC+7
+                        vietnam_tz = timezone(timedelta(hours=7))
+                        vietnam_time = updated_dt.astimezone(vietnam_tz)
+                        updated_time = vietnam_time.strftime('%d/%m/%Y %H:%M:%S')
+                    else:
+                        # Nếu không có timezone info, giả sử đây là UTC và thêm 7 giờ
+                        vietnam_time = updated_dt + timedelta(hours=7)
+                        updated_time = vietnam_time.strftime('%d/%m/%Y %H:%M:%S')
+                    
+                    print(f"DEBUG: [Profile] Original UTC: {updated_dt}")
+                    print(f"DEBUG: [Profile] Vietnam time: {updated_time}")
+                else:
+                    updated_time = "Không thể parse"
+                
+            except Exception as e:
+                print(f"DEBUG: [Profile] Failed to parse updated_at: {e}")
+                # Fallback: Hiển thị raw value
+                updated_time = f"Raw: {str(profile['updated_at'])[:19]}"
         
         st.markdown(f"""
         <div style='background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); 
@@ -377,7 +432,13 @@ def main():
     
     # Lấy hồ sơ học tập
     with st.spinner("Đang tải hồ sơ học tập..."):
+        # Thêm timestamp để force refresh data mỗi lần load trang
+        current_time = int(time.time())
         profile = get_user_profile(supabase, user_id)
+        
+        # Debug: In ra toàn bộ profile để kiểm tra
+        print(f"DEBUG: [Profile Page] Full profile data: {profile}")
+        print(f"DEBUG: [Profile Page] Current timestamp: {current_time}")
 
     # Kiểm tra xem profile có dữ liệu không
     if not profile:
