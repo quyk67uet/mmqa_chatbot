@@ -432,13 +432,7 @@ def main():
     
     # Lấy hồ sơ học tập
     with st.spinner("Đang tải hồ sơ học tập..."):
-        # Thêm timestamp để force refresh data mỗi lần load trang
-        current_time = int(time.time())
         profile = get_user_profile(supabase, user_id)
-        
-        # Debug: In ra toàn bộ profile để kiểm tra
-        print(f"DEBUG: [Profile Page] Full profile data: {profile}")
-        print(f"DEBUG: [Profile Page] Current timestamp: {current_time}")
 
     # Kiểm tra xem profile có dữ liệu không
     if not profile:

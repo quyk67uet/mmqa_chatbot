@@ -88,10 +88,8 @@ class CustomGoogleAIGenerator:
                     processed_parts.append(part) 
 
             response = self.model.generate_content(processed_parts)
-            print(f"DEBUG: [Generator] Raw response from Gemini: {response.text}")
             return {"replies": [response.text]}
         except Exception as e:
-            print(f"ERROR: [Generator] Lỗi trong lúc gọi API: {e}")
             return {"replies": [f"Xin lỗi, đã có lỗi xảy ra khi kết nối với mô hình AI."]}
 
 st.set_page_config(
@@ -122,32 +120,32 @@ st.markdown("""
         overflow-y: auto;
         padding: 1rem;
         border-radius: 15px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #2c5f7c 0%, #546e7a 100%);
         margin-bottom: 1rem;
         box-shadow: 0 8px 32px rgba(0,0,0,0.1);
     }
     
     /* User message */
     .user-message {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
         color: white;
         padding: 12px 16px;
         border-radius: 18px 18px 4px 18px;
         margin: 8px 0;
         margin-left: 20%;
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
         animation: slideInRight 0.3s ease-out;
     }
     
     /* Bot message */
     .bot-message {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        background: linear-gradient(135deg, #607d8b 0%, #78909c 100%);
         color: white;
         padding: 12px 16px;
         border-radius: 18px 18px 18px 4px;
         margin: 8px 0;
         margin-right: 20%;
-        box-shadow: 0 4px 12px rgba(240, 147, 251, 0.3);
+        box-shadow: 0 4px 12px rgba(96, 125, 139, 0.3);
         animation: slideInLeft 0.3s ease-out;
     }
     
@@ -202,41 +200,54 @@ st.markdown("""
     
     /* Sidebar styling */
     .sidebar .sidebar-content {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #2c5f7c 0%, #546e7a 100%);
         border-radius: 15px;
         padding: 1rem;
         margin: 1rem 0;
     }
     
-    /* Input styling */
+    /* Input styling - Fix pink outline issue */
     .stTextInput > div > div > input {
-        border-radius: 25px;
-        border: 2px solid #667eea;
+        border-radius: 25px !important;
+        border: 2px solid #1976d2 !important;
         padding: 12px 20px;
         font-size: 16px;
         transition: all 0.3s ease;
+        outline: none !important;
+        box-shadow: none !important;
     }
     
     .stTextInput > div > div > input:focus {
-        border-color: #f093fb;
-        box-shadow: 0 0 20px rgba(240, 147, 251, 0.3);
+        border-color: #42a5f5 !important;
+        box-shadow: 0 0 20px rgba(66, 165, 245, 0.3) !important;
+        outline: none !important;
+    }
+    
+    /* Remove default Streamlit input container styling */
+    .stTextInput > div {
+        border: none !important;
+        background: transparent !important;
+    }
+    
+    .stTextInput {
+        background: transparent !important;
     }
     
     /* Button styling */
     .stButton > button {
         border-radius: 25px;
         border: none;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
         color: white;
         padding: 12px 24px;
         font-weight: 600;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
     }
     
     .stButton > button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        box-shadow: 0 6px 16px rgba(25, 118, 210, 0.4);
     }
     
     /* Welcome message */
@@ -628,7 +639,6 @@ def classify_intent(conversation_history: str, resources: Dict) -> str:
         
         print(f"DEBUG - User input: {user_input_debug}")
         print(f"DEBUG - Classified intent: {intent}")
-        print(f"DEBUG - Conversation history format: {conversation_history[:200]}...")
         
         if intent not in valid_intents:
             math_keywords = ['giải', 'tính', 'phương trình', 'bài tập', 'toán', 'xác suất', 'thống kê', 'hình học', 'đại số']
@@ -685,7 +695,6 @@ def insight_agent(conversation_history: str, resources: Dict) -> Dict:
         prompt_text = prompt_builder.run(conversation_history=conversation_history)["prompt"]
         
         print("\n" + "="*50)
-        print("DEBUG: [Insight Agent] PROMPT CUỐI CÙNG GỬI ĐẾN GEMINI:")
         print(prompt_text)
         print("="*50 + "\n")
 
@@ -696,17 +705,13 @@ def insight_agent(conversation_history: str, resources: Dict) -> Dict:
         
         if json_match:
             json_string = json_match.group(0)
-            print(f"DEBUG: [Insight Agent] Đã trích xuất chuỗi JSON: {json_string}")
             return json.loads(json_string)
         else:
-            print(f"ERROR: [Insight Agent] Không tìm thấy chuỗi JSON hợp lệ trong phản hồi của LLM: {llm_reply}")
             return {"misunderstood_concepts": [], "sentiment": "neutral"}
 
     except json.JSONDecodeError as e:
-        print(f"ERROR: [Insight Agent] Lỗi khi parse JSON đã trích xuất: {e}")
         return {"misunderstood_concepts": [], "sentiment": "neutral"}
     except Exception as e:
-        print(f"ERROR: [Insight Agent] Đã xảy ra lỗi không xác định: {e}")
         return {"misunderstood_concepts": [], "sentiment": "neutral"}
 
 def practice_agent(student_weakness: str, resources: Dict) -> str:
@@ -884,7 +889,41 @@ def render_chat_message(content: str, is_user: bool, key: str, image: bytes = No
         st.image(image, width=250)
         
     if content:
-        st.markdown(f'<div class="{css_class}">{content}</div>', unsafe_allow_html=True)
+        # Xử lý format text để tránh hiển thị rời rạc
+        cleaned_content = content.strip()
+        
+        # Tách thành các paragraph dựa trên line breaks kép
+        paragraphs = cleaned_content.split('\n\n')
+        formatted_paragraphs = []
+        
+        for paragraph in paragraphs:
+            if paragraph.strip():
+                # Xử lý từng paragraph
+                lines = paragraph.split('\n')
+                # Ghép các dòng trong cùng paragraph lại với nhau
+                # Chỉ thêm space nếu dòng không kết thúc bằng dấu câu
+                formatted_lines = []
+                for line in lines:
+                    line = line.strip()
+                    if line:
+                        # Nếu dòng kết thúc bằng dấu câu, không thêm space
+                        if line.endswith(('.', ',', ':', ';', '!', '?')):
+                            formatted_lines.append(line)
+                        else:
+                            # Nếu không kết thúc bằng dấu câu, thêm space để ghép với dòng tiếp theo
+                            formatted_lines.append(line + ' ')
+                
+                # Ghép các dòng trong paragraph
+                paragraph_text = ''.join(formatted_lines)
+                # Xử lý khoảng trắng thừa
+                paragraph_text = ' '.join(paragraph_text.split())
+                formatted_paragraphs.append(paragraph_text)
+        
+        # Ghép các paragraph lại với line break
+        final_content = '\n\n'.join(formatted_paragraphs)
+        
+        # Sử dụng markdown để render với format đúng
+        st.markdown(f'<div class="{css_class}">{final_content}</div>', unsafe_allow_html=True)
 
 def should_trigger_proactive_practice(conversation_history: List[Dict[str, str]]) -> bool:
     """
