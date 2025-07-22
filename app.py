@@ -375,28 +375,31 @@ def load_resources():
         **NHIỆM VỤ:**
         Dựa trên **chủ đề yếu** của học sinh và **danh sách video** được cung cấp, hãy thực hiện 2 việc:
 
-        1.  **Tạo 2 Bài tập Mới:**
-            -   Các bài tập phải liên quan trực tiếp đến chủ đề yếu.
-            -   Độ khó tương đương chương trình lớp 9.
-            -   Bài tập phải hoàn toàn mới, không được trùng lặp với các ví dụ phổ biến.
-        2.  **Đề xuất 1 Video Phù hợp nhất:**
-            -   Chọn ra MỘT video từ danh sách có nội dung liên quan chặt chẽ nhất đến chủ đề yếu.
+        1. **Tạo 2 Bài tập Mới:**
+           - Các bài tập phải liên quan trực tiếp đến chủ đề yếu.
+           - Độ khó tương đương chương trình lớp 9.
+           - Bài tập phải hoàn toàn mới, không được trùng lặp với các ví dụ phổ biến.
+        2. **Đề xuất 1 Video Phù hợp nhất:**
+           - Chọn ra MỘT video từ danh sách có nội dung liên quan chặt chẽ nhất đến chủ đề yếu.
 
         **THÔNG TIN ĐẦU VÀO:**
-        -   **Chủ đề yếu của học sinh:** '{{ student_weakness }}'
-        -   **Danh sách video có sẵn (JSON):** {{ video_cheatsheet_json }}
+        - **Chủ đề yếu của học sinh:** '{{ student_weakness }}'
+        - **Danh sách video có sẵn (JSON):** {{ video_cheatsheet_json }}
 
         **YÊU CẦU OUTPUT:**
-        Chỉ trả lời theo định dạng Markdown dưới đây, không thêm bất kỳ lời dẫn hay giải thích nào khác.
+        Trả lời theo định dạng sau (không thêm lời dẫn):
 
-        ### 🎯 BÀI TẬP CỦNG CỐ
-        1.  **Bài 1:** [Nội dung câu hỏi bài tập 1]
-        2.  **Bài 2:** [Nội dung câu hỏi bài tập 2]
+        🎯 **BÀI TẬP CỦNG CỐ**
 
+        **Bài 1:** [Nội dung câu hỏi bài tập 1]
 
-        ### 📹 VIDEO ĐỀ XUẤT
+        **Bài 2:** [Nội dung câu hỏi bài tập 2]
+
+        📹 **VIDEO ĐỀ XUẤT**
+
         **[Tên video]**
-        🎬 Link: https://www.youtube.com/playlist?list=PL5q2T2FxzK7XY4s9FqDi6KCFEpGr2LX2D"""
+        🎬 Link: https://www.youtube.com/playlist?list=PL5q2T2FxzK7XY4s9FqDi6KCFEpGr2LX2D
+        """
 
     insight_template = """
         Bạn là một chuyên gia phân tích giáo dục. Nhiệm vụ của bạn là đọc kỹ đoạn hội thoại và xác định chính xác những khái niệm toán học mà học sinh đang hiểu sai.
@@ -1099,49 +1102,6 @@ def handle_modern_auth(supabase: Client):
     
     return True
 
-def check_browser_capabilities():
-    """
-    Kiểm tra chi tiết khả năng của browser trên môi trường deployment
-    """
-    st.markdown("""
-    <script>
-    function checkBrowserCapabilities() {
-        const info = {
-            userAgent: navigator.userAgent,
-            protocol: window.location.protocol,
-            hostname: window.location.hostname,
-            isSecureContext: window.isSecureContext,
-            hasNavigator: typeof navigator !== 'undefined',
-            hasMediaDevices: typeof navigator.mediaDevices !== 'undefined',
-            hasGetUserMedia: typeof navigator.mediaDevices?.getUserMedia !== 'undefined',
-            permissions: typeof navigator.permissions !== 'undefined',
-            https: window.location.protocol === 'https:',
-            localhost: window.location.hostname === 'localhost'
-        };
-        
-        console.log('Browser Capabilities:', info);
-        
-        // Hiển thị thông tin trên page
-        const debugDiv = document.createElement('div');
-        debugDiv.innerHTML = '<pre>Browser Debug Info:\\n' + JSON.stringify(info, null, 2) + '</pre>';
-        debugDiv.style.background = '#f0f0f0';
-        debugDiv.style.padding = '10px';
-        debugDiv.style.margin = '10px 0';
-        debugDiv.style.fontSize = '12px';
-        debugDiv.style.borderRadius = '5px';
-        
-        // Thêm vào đầu page
-        const container = document.querySelector('.main .block-container');
-        if (container) {
-            container.insertBefore(debugDiv, container.firstChild);
-        }
-    }
-    
-    // Chạy sau khi page load
-    setTimeout(checkBrowserCapabilities, 1000);
-    </script>
-    """, unsafe_allow_html=True)
-
 def main():
     """Hàm chính của ứng dụng"""
     
@@ -1159,10 +1119,6 @@ def main():
     
     with st.spinner("🚀 Đang khởi tạo hệ thống AI..."):
         resources = load_resources()
-    
-    # Debug browser capabilities trên Azure
-    if os.getenv("ENVIRONMENT") != "local":
-        check_browser_capabilities()
     
     # --- Giao diện chính sau khi đăng nhập ---
     
@@ -1184,10 +1140,6 @@ def main():
     # Khởi tạo session state để theo dõi audio đã xử lý
     if "processed_audio_ids" not in st.session_state:
         st.session_state.processed_audio_ids = set()
-    
-    # Khởi tạo session state để theo dõi audio availability
-    if "audio_available" not in st.session_state:
-        st.session_state.audio_available = None
 
     # Container để chứa các tin nhắn chat
     chat_placeholder = st.container()
@@ -1197,73 +1149,17 @@ def main():
             # Sử dụng hàm render tùy chỉnh
             render_chat_message(msg_data["content"], is_user, key=f"msg_{i}")
 
-    # Audio input section with enhanced error detection
-    audio_input = None
+    # Audio input section with better error handling
+    st.markdown("#### Hoặc ghi âm giọng nói:")
     
-    # Chỉ hiển thị audio input nếu chưa test hoặc đã test thành công
-    if st.session_state.audio_available is not False:
-        st.markdown("#### 🎤 Ghi âm giọng nói:")
-        
-        # Test audio availability một lần với detailed error reporting
-        if st.session_state.audio_available is None:
-            with st.spinner("Đang kiểm tra microphone..."):
-                try:
-                    # Test nhanh xem có thể tạo audio input không
-                    test_audio = st.audio_input("🎤 Nhấn để ghi âm", help="Ghi âm câu hỏi của bạn bằng tiếng Việt", key="audio_test")
-                    st.session_state.audio_available = True
-                    audio_input = test_audio
-                    if audio_input is None:
-                        st.info("💡 Nhấn vào nút microphone phía trên để ghi âm câu hỏi của bạn!")
-                    else:
-                        st.success("✅ Microphone sẵn sàng!")
-                except Exception as e:
-                    error_msg = str(e)
-                    print(f"DEBUG: Audio not available: {error_msg}")
-                    st.session_state.audio_available = False
-                    
-                    # Detailed error analysis
-                    if "getUserMedia" in error_msg:
-                        st.error("❌ **Browser Error:** `navigator.mediaDevices.getUserMedia` không khả dụng")
-                        st.info("""
-                        🔍 **Nguyên nhân có thể:**
-                        - ⚠️ Môi trường Azure không hỗ trợ microphone API
-                        - 🔒 Browser security policy chặn media devices  
-                        - 🌐 Kết nối không đủ bảo mật (cần HTTPS với valid certificate)
-                        - 🏢 Corporate network/firewall chặn WebRTC
-                        """)
-                    elif "undefined" in error_msg:
-                        st.error("❌ **Environment Error:** Browser API không được hỗ trợ")
-                        st.info("""
-                        🔍 **Nguyên nhân có thể:**
-                        - 🐳 Azure container environment giới hạn browser APIs
-                        - 📱 Mobile browser hoặc embedded browser
-                        - 🛡️ Security sandbox restrictions
-                        """)
-                    else:
-                        st.error(f"❌ **Unknown Error:** {error_msg}")
-                    
-                    st.warning("⚠️ Microphone không khả dụng. Sử dụng text input bên dưới.")
-        else:
-            # Audio đã được test thành công, hiển thị bình thường
-            try:
-                audio_input = st.audio_input("🎤 Nhấn để ghi âm", help="Ghi âm câu hỏi của bạn bằng tiếng Việt")
-                if audio_input is None:
-                    st.info("💡 Nhấn vào nút microphone phía trên để ghi âm câu hỏi của bạn!")
-            except Exception as e:
-                print(f"DEBUG: Audio input error: {e}")
-                st.session_state.audio_available = False
-                st.error("❌ Microphone bị lỗi. Chuyển sang text input.")
-
-    # Nếu audio không khả dụng, hiển thị thông báo chi tiết
-    if st.session_state.audio_available is False:
-        st.markdown("#### ✍️ Nhập văn bản:")
-        st.info("""
-        🔧 **Tính năng ghi âm không khả dụng trên môi trường này**
-        
-        **Lý do:** Azure Web App environment không hỗ trợ `navigator.mediaDevices.getUserMedia`
-        
-        **Giải pháp:** Sử dụng form nhập text bên dưới - tất cả tính năng AI vẫn hoạt động bình thường!
-        """)
+    # Check if running in secure context for microphone access
+    audio_input = None
+    try:
+        # Use Streamlit's built-in audio_input which is more stable
+        audio_input = st.audio_input("🎤 Nhấn để ghi âm", help="Ghi âm câu hỏi của bạn bằng tiếng Việt")
+    except Exception as e:
+        st.warning("⚠️ Không thể truy cập microphone. Vui lòng sử dụng form nhập text bên dưới.")
+        print(f"DEBUG: Audio input error: {e}")
 
     # 2. Form Nhập liệu cho Text và Ảnh
     with st.form(key="chat_form", clear_on_submit=True):
@@ -1280,30 +1176,26 @@ def main():
     final_image_data = None
 
     # Handle audio input if available - với logic tránh xử lý lặp lại
-    if audio_input is not None and st.session_state.audio_available:
-        try:
-            # Tạo unique ID cho audio file
-            audio_id = f"{id(audio_input)}_{len(audio_input.getvalue())}"
-            
-            # Chỉ xử lý nếu audio này chưa được xử lý
-            if audio_id not in st.session_state.processed_audio_ids:
-                with st.spinner("🎧 Đang xử lý giọng nói..."):
-                    transcribed_text = transcribe_audio(audio_input, resources["whisper_model"])
-                    if transcribed_text and transcribed_text.strip() and len(transcribed_text.strip()) > 1:
-                        final_user_text = transcribed_text
-                        st.success(f"✅ Đã nhận diện: {transcribed_text}")
-                        # Đánh dấu audio này đã được xử lý
-                        st.session_state.processed_audio_ids.add(audio_id)
-                    else:
-                        st.warning("⚠️ Không nhận diện được nội dung. Vui lòng thử lại hoặc sử dụng text input.")
-                        # Vẫn đánh dấu để tránh xử lý lại
-                        st.session_state.processed_audio_ids.add(audio_id)
-            else:
-                # Audio đã được xử lý, không làm gì cả
-                print(f"DEBUG: Audio {audio_id} đã được xử lý trước đó, bỏ qua.")
-        except Exception as e:
-            print(f"DEBUG: Error processing audio: {e}")
-            st.error("❌ Lỗi khi xử lý audio. Vui lòng sử dụng text input.")
+    if audio_input is not None:
+        # Tạo unique ID cho audio file dựa trên file_id và size
+        audio_id = f"{audio_input.file_id}_{audio_input.size}" if hasattr(audio_input, 'file_id') and hasattr(audio_input, 'size') else f"{id(audio_input)}_{len(audio_input.getvalue())}"
+        
+        # Chỉ xử lý nếu audio này chưa được xử lý
+        if audio_id not in st.session_state.processed_audio_ids:
+            with st.spinner("🎧 Đang xử lý giọng nói..."):
+                transcribed_text = transcribe_audio(audio_input, resources["whisper_model"])
+                if transcribed_text and transcribed_text.strip() and len(transcribed_text.strip()) > 1:
+                    final_user_text = transcribed_text
+                    st.success(f"✅ Đã nhận diện: {transcribed_text}")
+                    # Đánh dấu audio này đã được xử lý
+                    st.session_state.processed_audio_ids.add(audio_id)
+                else:
+                    st.warning("⚠️ Không nhận diện được nội dung. Vui lòng thử lại hoặc sử dụng text input.")
+                    # Vẫn đánh dấu để tránh xử lý lại
+                    st.session_state.processed_audio_ids.add(audio_id)
+        else:
+            # Audio đã được xử lý, không làm gì cả
+            print(f"DEBUG: Audio {audio_id} đã được xử lý trước đó, bỏ qua.")
     
     # Handle form submission
     elif submit_button:
@@ -1421,19 +1313,10 @@ def main():
         st.header(f"👤 Chào, {display_name}")
         st.caption(f"Email: {user.email}")
         
-        # Hiển thị trạng thái audio với more details
-        if st.session_state.audio_available is True:
-            st.success("🎤 Microphone: Sẵn sàng")
-        elif st.session_state.audio_available is False:
-            st.warning("🎤 Microphone: Không khả dụng")
-            st.caption("💡 Azure environment limitation")
-        else:
-            st.info("🎤 Microphone: Đang kiểm tra...")
-        
         if st.button("Đăng xuất", use_container_width=True):
             supabase.auth.sign_out()
             # Xóa các session state liên quan đến user
-            keys_to_delete = ["user", "messages", "processed_audio_ids", "audio_available"]
+            keys_to_delete = ["user", "messages", "processed_audio_ids"]
             for key in keys_to_delete:
                 if key in st.session_state:
                     del st.session_state[key]
