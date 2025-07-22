@@ -54,7 +54,7 @@ def display_system_architecture():
 
 def display_agents():
     """
-    Hiển thị chi tiết từng Agent với giao diện hiện đại
+    Hiển thị chi tiết từng Agent với giao diện được tối ưu hóa
     """
     # Header section
     st.markdown("""
@@ -68,46 +68,21 @@ def display_agents():
     </div>
     """, unsafe_allow_html=True)
     
-    # CSS cho styling hiện đại
+    # CSS được tối ưu hóa - loại bỏ các effect phức tạp
     st.markdown("""
     <style>
     .agent-container {
         background: white;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         margin-bottom: 2rem;
         overflow: hidden;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
         border: 1px solid rgba(0,0,0,0.05);
-    }
-    
-    .agent-container:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
     }
     
     .agent-header {
         padding: 2rem;
         color: white;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .agent-header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(255,255,255,0.1);
-        backdrop-filter: blur(10px);
-        z-index: 1;
-    }
-    
-    .agent-header-content {
-        position: relative;
-        z-index: 2;
     }
     
     .agent-title {
@@ -121,16 +96,14 @@ def display_agents():
     .agent-title-icon {
         font-size: 2.5rem;
         margin-right: 1rem;
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
     }
     
     .agent-role {
         background: rgba(255,255,255,0.2);
         padding: 1rem;
-        border-radius: 12px;
+        border-radius: 10px;
         font-size: 1.1rem;
-        border: 1px solid rgba(255,255,255,0.3);
-        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255,255,255,0.2);
     }
     
     .agent-body {
@@ -140,9 +113,9 @@ def display_agents():
     
     .agent-features {
         background: white;
-        border-radius: 15px;
+        border-radius: 12px;
         padding: 1.5rem;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         border: 1px solid rgba(0,0,0,0.05);
     }
     
@@ -194,7 +167,7 @@ def display_agents():
     .image-placeholder {
         background: rgba(255,255,255,0.9);
         border: 2px dashed #ddd;
-        border-radius: 15px;
+        border-radius: 12px;
         padding: 2rem;
         text-align: center;
         height: 250px;
@@ -202,13 +175,6 @@ def display_agents():
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-    }
-    
-    .image-placeholder:hover {
-        border-color: #999;
-        background: rgba(255,255,255,0.95);
     }
     
     .placeholder-icon {
@@ -229,7 +195,7 @@ def display_agents():
         font-family: monospace;
         background: rgba(0,0,0,0.05);
         padding: 0.3rem 0.8rem;
-        border-radius: 20px;
+        border-radius: 15px;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -320,14 +286,12 @@ def display_agents():
         st.markdown(f"""
         <div class="agent-container">
             <div class="agent-header" style="background: {agent['gradient']};">
-                <div class="agent-header-content">
-                    <div class="agent-title">
-                        <span class="agent-title-icon">{agent['icon']}</span>
-                        <span>Agent {agent['number']}: {agent['name']}</span>
-                    </div>
-                    <div class="agent-role">
-                        <strong>Vai trò:</strong> {agent['role']}
-                    </div>
+                <div class="agent-title">
+                    <span class="agent-title-icon">{agent['icon']}</span>
+                    <span>Agent {agent['number']}: {agent['name']}</span>
+                </div>
+                <div class="agent-role">
+                    <strong>Vai trò:</strong> {agent['role']}
                 </div>
             </div>
         """, unsafe_allow_html=True)
@@ -373,7 +337,6 @@ def display_agents():
             """, unsafe_allow_html=True)
         
         with col2:
-            
             try:
                 st.image(agent['image'], use_container_width=True, caption=f"Agent {agent['number']}: {agent['name']}")
             except:
@@ -392,7 +355,7 @@ def display_agents():
         
         # Spacing giữa các agents
         if i < len(agents) - 1:
-            st.markdown("<div style='margin: 3rem 0;'></div>", unsafe_allow_html=True)
+            st.markdown("<div style='margin: 2rem 0;'></div>", unsafe_allow_html=True)
 
 def display_system_components():
     """
@@ -463,7 +426,7 @@ def display_system_components():
 
 def display_workflow_details():
     """
-    Hiển thị chi tiết quy trình làm việc
+    Hiển thị chi tiết quy trình làm việc - được tối ưu hóa
     """
     st.markdown("## 🔄 Quy trình Hoạt động")
     
@@ -512,21 +475,21 @@ def display_workflow_details():
         
         with col1:
             st.markdown(f"""
-            <div style='width: 80px; 
-                        height: 80px; 
+            <div style='width: 70px; 
+                        height: 70px; 
                         background: {step['color']}; 
                         border-radius: 50%; 
                         display: flex; 
                         align-items: center; 
                         justify-content: center; 
                         margin: 0 auto;'>
-                <span style='font-size: 2rem;'>{step['icon']}</span>
+                <span style='font-size: 1.8rem;'>{step['icon']}</span>
             </div>
             """, unsafe_allow_html=True)
         
         with col2:
             st.markdown(f"""
-            <div style='background: linear-gradient(135deg, {step['color']}20, {step['color']}10); 
+            <div style='background: {step['color']}20; 
                         padding: 1rem; 
                         border-radius: 10px; 
                         margin-bottom: 1rem;
@@ -544,7 +507,7 @@ def display_workflow_details():
         if i < len(workflow_steps) - 1:
             st.markdown("""
             <div style='text-align: center; margin: 1rem 0;'>
-                <span style='font-size: 2rem; color: #ccc;'>⬇️</span>
+                <span style='font-size: 1.5rem; color: #ccc;'>⬇️</span>
             </div>
             """, unsafe_allow_html=True)
 
@@ -628,7 +591,7 @@ def display_technical_features():
 
 def display_benefits():
     """
-    Hiển thị lợi ích của hệ thống
+    Hiển thị lợi ích của hệ thống - được tối ưu hóa
     """
     st.markdown("## 🌟 Lợi ích của Hệ thống")
     
@@ -679,14 +642,14 @@ def display_benefits():
             if i < len(benefits):
                 benefit = benefits[i]
                 st.markdown(f"""
-                <div style='background: linear-gradient(135deg, {benefit['color']}20, {benefit['color']}10); 
+                <div style='background: {benefit['color']}20; 
                             padding: 1.5rem; 
                             border-radius: 10px; 
                             margin-bottom: 1rem;
                             border-left: 4px solid {benefit['color']};
-                            height: 150px;'>
+                            height: 130px;'>
                     <div style='display: flex; align-items: center; margin-bottom: 0.5rem;'>
-                        <span style='font-size: 2rem; margin-right: 0.5rem;'>{benefit['icon']}</span>
+                        <span style='font-size: 1.8rem; margin-right: 0.5rem;'>{benefit['icon']}</span>
                         <h4 style='color: #333; margin: 0;'>{benefit['title']}</h4>
                     </div>
                     <p style='color: #666; margin: 0; font-size: 0.9rem;'>
@@ -699,14 +662,14 @@ def display_benefits():
             if i + 1 < len(benefits):
                 benefit = benefits[i + 1]
                 st.markdown(f"""
-                <div style='background: linear-gradient(135deg, {benefit['color']}20, {benefit['color']}10); 
+                <div style='background: {benefit['color']}20; 
                             padding: 1.5rem; 
                             border-radius: 10px; 
                             margin-bottom: 1rem;
                             border-left: 4px solid {benefit['color']};
-                            height: 150px;'>
+                            height: 130px;'>
                     <div style='display: flex; align-items: center; margin-bottom: 0.5rem;'>
-                        <span style='font-size: 2rem; margin-right: 0.5rem;'>{benefit['icon']}</span>
+                        <span style='font-size: 1.8rem; margin-right: 0.5rem;'>{benefit['icon']}</span>
                         <h4 style='color: #333; margin: 0;'>{benefit['title']}</h4>
                     </div>
                     <p style='color: #666; margin: 0; font-size: 0.9rem;'>

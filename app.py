@@ -18,7 +18,6 @@ from sympy import Rem
 from PIL import Image
 import io
 from faster_whisper import WhisperModel
-from st_audiorec import st_audiorec
 import tempfile
 
 load_dotenv()
@@ -583,16 +582,19 @@ def load_resources():
         "whisper_model": whisper_model
     }
 
-def transcribe_audio(audio_bytes: bytes, whisper_model: WhisperModel) -> str:
+def transcribe_audio(audio_file, whisper_model: WhisperModel) -> str:
     """
-    Nhận dữ liệu audio bytes, lưu vào file tạm, chuyển đổi thành văn bản bằng Faster Whisper.
-    Phiên bản này đã sửa lỗi Permission Denied trên Windows.
+    Nhận audio file từ st.audio_input và chuyển đổi thành văn bản bằng Faster Whisper.
+    Phiên bản được cập nhật cho môi trường deployment.
     """
-    if not audio_bytes:
+    if not audio_file:
         return ""
         
     tmp_file_path = ""
     try:
+        # Đọc audio file từ st.audio_input (UploadedFile object)
+        audio_bytes = audio_file.read()
+        
         with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmpfile:
             tmpfile.write(audio_bytes)
             tmp_file_path = tmpfile.name
@@ -1140,13 +1142,17 @@ def main():
             # Sử dụng hàm render tùy chỉnh
             render_chat_message(msg_data["content"], is_user, key=f"msg_{i}")
 
-
-    st.markdown("#### Hoặc nói chuyện trực tiếp với gia sư:")
-    audio_bytes = st_audiorec() # Component ghi âm
-
-    # Khởi tạo session state để theo dõi audio đã xử lý
-    if "processed_audio_hash" not in st.session_state:
-        st.session_state.processed_audio_hash = None
+    # Audio input section with better error handling
+    st.markdown("#### Hoặc ghi âm giọng nói:")
+    
+    # Check if running in secure context for microphone access
+    audio_input = None
+    try:
+        # Use Streamlit's built-in audio_input which is more stable
+        audio_input = st.audio_input("🎤 Nhấn để ghi âm", help="Ghi âm câu hỏi của bạn bằng tiếng Việt")
+    except Exception as e:
+        st.warning("⚠️ Không thể truy cập microphone. Vui lòng sử dụng form nhập text bên dưới.")
+        print(f"DEBUG: Audio input error: {e}")
 
     # 2. Form Nhập liệu cho Text và Ảnh
     with st.form(key="chat_form", clear_on_submit=True):
@@ -1159,26 +1165,20 @@ def main():
         
         submit_button = st.form_submit_button(label="Gửi")
 
-
     final_user_text = ""
     final_image_data = None
 
-    current_audio_hash = None
-    is_new_audio = False
-    
-    if audio_bytes and len(audio_bytes) > 0:
-        current_audio_hash = hashlib.md5(audio_bytes).hexdigest()
-        is_new_audio = current_audio_hash != st.session_state.processed_audio_hash
-    
-    if is_new_audio and audio_bytes:
+    # Handle audio input if available
+    if audio_input is not None:
         with st.spinner("🎧 Đang xử lý giọng nói..."):
-            transcribed_text = transcribe_audio(audio_bytes, resources["whisper_model"])
+            transcribed_text = transcribe_audio(audio_input, resources["whisper_model"])
             if transcribed_text and transcribed_text.strip() and len(transcribed_text.strip()) > 1:
                 final_user_text = transcribed_text
-                st.session_state.processed_audio_hash = current_audio_hash
+                st.success(f"✅ Đã nhận diện: {transcribed_text}")
             else:
-                st.session_state.processed_audio_hash = current_audio_hash
+                st.warning("⚠️ Không nhận diện được nội dung. Vui lòng thử lại hoặc sử dụng text input.")
     
+    # Handle form submission
     elif submit_button:
         final_user_text = user_text
         if uploaded_image:
@@ -1285,7 +1285,6 @@ def main():
             except Exception as e:
                 print(f"ERROR: [Proactive Flow] Đã xảy ra lỗi: {str(e)}")
                 proactive_typing_placeholder.empty()
-
 
         # Rerun để cập nhật giao diện
         st.rerun()
