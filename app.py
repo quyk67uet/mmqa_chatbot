@@ -1134,6 +1134,10 @@ def main():
         welcome_msg = "Xin chào! Tôi là gia sư AI của bạn 😊. Hôm nay chúng ta cùng học Toán nhé!"
         st.session_state.messages.append({"role": "assistant", "content": welcome_msg, "intent": "greeting_social"})
 
+    # Khởi tạo session state để theo dõi audio đã xử lý
+    if "processed_audio_ids" not in st.session_state:
+        st.session_state.processed_audio_ids = set()
+
     # Container để chứa các tin nhắn chat
     chat_placeholder = st.container()
     with chat_placeholder:
@@ -1168,15 +1172,27 @@ def main():
     final_user_text = ""
     final_image_data = None
 
-    # Handle audio input if available
+    # Handle audio input if available - với logic tránh xử lý lặp lại
     if audio_input is not None:
-        with st.spinner("🎧 Đang xử lý giọng nói..."):
-            transcribed_text = transcribe_audio(audio_input, resources["whisper_model"])
-            if transcribed_text and transcribed_text.strip() and len(transcribed_text.strip()) > 1:
-                final_user_text = transcribed_text
-                st.success(f"✅ Đã nhận diện: {transcribed_text}")
-            else:
-                st.warning("⚠️ Không nhận diện được nội dung. Vui lòng thử lại hoặc sử dụng text input.")
+        # Tạo unique ID cho audio file dựa trên file_id và size
+        audio_id = f"{audio_input.file_id}_{audio_input.size}" if hasattr(audio_input, 'file_id') and hasattr(audio_input, 'size') else f"{id(audio_input)}_{len(audio_input.getvalue())}"
+        
+        # Chỉ xử lý nếu audio này chưa được xử lý
+        if audio_id not in st.session_state.processed_audio_ids:
+            with st.spinner("🎧 Đang xử lý giọng nói..."):
+                transcribed_text = transcribe_audio(audio_input, resources["whisper_model"])
+                if transcribed_text and transcribed_text.strip() and len(transcribed_text.strip()) > 1:
+                    final_user_text = transcribed_text
+                    st.success(f"✅ Đã nhận diện: {transcribed_text}")
+                    # Đánh dấu audio này đã được xử lý
+                    st.session_state.processed_audio_ids.add(audio_id)
+                else:
+                    st.warning("⚠️ Không nhận diện được nội dung. Vui lòng thử lại hoặc sử dụng text input.")
+                    # Vẫn đánh dấu để tránh xử lý lại
+                    st.session_state.processed_audio_ids.add(audio_id)
+        else:
+            # Audio đã được xử lý, không làm gì cả
+            print(f"DEBUG: Audio {audio_id} đã được xử lý trước đó, bỏ qua.")
     
     # Handle form submission
     elif submit_button:
@@ -1297,7 +1313,7 @@ def main():
         if st.button("Đăng xuất", use_container_width=True):
             supabase.auth.sign_out()
             # Xóa các session state liên quan đến user
-            keys_to_delete = ["user", "messages"]
+            keys_to_delete = ["user", "messages", "processed_audio_ids"]
             for key in keys_to_delete:
                 if key in st.session_state:
                     del st.session_state[key]
@@ -1307,6 +1323,8 @@ def main():
         
         if st.button("🗑️ Xóa lịch sử chat", use_container_width=True):
             st.session_state.messages = []
+            # Cũng xóa audio đã xử lý để có thể ghi âm lại
+            st.session_state.processed_audio_ids = set()
             st.rerun()
 
 if __name__ == "__main__":
