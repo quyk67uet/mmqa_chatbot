@@ -205,6 +205,16 @@ st.markdown("""
         margin: 1rem 0;
     }
     
+    /* Style the working form */
+    .stForm {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        border: 1px solid #e5e7eb;
+        margin: 20px 0;
+    }
+    
     /* Input styling - Fix pink outline issue */
     .stTextInput > div > div > input {
         border-radius: 25px !important;
@@ -247,6 +257,17 @@ st.markdown("""
     .stButton > button:hover {
         transform: translateY(-2px);
         box-shadow: 0 6px 16px rgba(25, 118, 210, 0.4);
+    }
+    
+    .stFileUploader {
+        border: 2px dashed #d1d5db;
+        border-radius: 10px;
+        padding: 10px;
+        transition: border-color 0.3s ease;
+    }
+    
+    .stFileUploader:hover {
+        border-color: #3b82f6;
     }
     
     /* Welcome message */
@@ -331,6 +352,11 @@ def load_resources():
     text_embedder = SentenceTransformersTextEmbedder(
         model="bkai-foundation-models/vietnamese-bi-encoder"
     )
+    
+    # Warm up the text embedder to load the model
+    print("DEBUG: Warming up text embedder...")
+    text_embedder.warm_up()
+    print("DEBUG: Text embedder warmed up successfully")
 
     print("DEBUG: Loading Faster Whisper model...")
     model_size = "small" 
@@ -1102,6 +1128,53 @@ def handle_modern_auth(supabase: Client):
     
     return True
 
+def create_chat_input_interface():
+    """Tạo giao diện input đơn giản và hiệu quả"""
+    
+    # Working form - styled to be clean and functional
+    st.markdown("### 💬 Nhập tin nhắn của bạn:")
+    
+    with st.form(key="chat_form", clear_on_submit=True):
+        user_text = st.text_area(
+            "Câu hỏi:",
+            placeholder="Nhập câu hỏi hoặc mô tả cho ảnh...",
+            height=100,
+            key="user_input",
+            help="Nhấn Ctrl+Enter để gửi từ bàn phím"
+        )
+        
+        # Three columns for organized layout
+        col1, col2, col3 = st.columns([2, 2, 1])
+        
+        with col1:
+            uploaded_image = st.file_uploader(
+                "📎 Đính kèm ảnh:",
+                type=["png", "jpg", "jpeg"],
+                help="Chọn ảnh bài tập để AI giải"
+            )
+        
+        with col2:
+            # Audio input
+            audio_input = None
+            try:
+                audio_input = st.audio_input(
+                    "🎤 Ghi âm:",
+                    help="Ghi âm câu hỏi bằng tiếng Việt"
+                )
+            except Exception as e:
+                st.info("🔇 Ghi âm không khả dụng")
+        
+        with col3:
+            st.markdown("<br>", unsafe_allow_html=True)  # Spacing
+            submit_button = st.form_submit_button(
+                "🚀 Gửi", 
+                use_container_width=True,
+                type="primary", 
+                help="Gửi tin nhắn đến AI"
+            )
+    
+    return user_text, uploaded_image, audio_input, submit_button
+
 def main():
     """Hàm chính của ứng dụng"""
     
@@ -1149,35 +1222,15 @@ def main():
             # Sử dụng hàm render tùy chỉnh
             render_chat_message(msg_data["content"], is_user, key=f"msg_{i}")
 
-    # Audio input section with better error handling
-    st.markdown("#### Hoặc ghi âm giọng nói:")
-    
-    # Check if running in secure context for microphone access
-    audio_input = None
-    try:
-        # Use Streamlit's built-in audio_input which is more stable
-        audio_input = st.audio_input("🎤 Nhấn để ghi âm", help="Ghi âm câu hỏi của bạn bằng tiếng Việt")
-    except Exception as e:
-        st.warning("⚠️ Không thể truy cập microphone. Vui lòng sử dụng form nhập text bên dưới.")
-        print(f"DEBUG: Audio input error: {e}")
-
-    # 2. Form Nhập liệu cho Text và Ảnh
-    with st.form(key="chat_form", clear_on_submit=True):
-        # Chia layout
-        col1, col2 = st.columns([1, 4])
-        with col1:
-            uploaded_image = st.file_uploader("Đính kèm ảnh", type=["png", "jpg", "jpeg"], label_visibility="collapsed")
-        with col2:
-            user_text = st.text_input("Nhập câu hỏi của bạn...", placeholder="Nhập câu hỏi hoặc mô tả cho ảnh...", label_visibility="collapsed")
-        
-        submit_button = st.form_submit_button(label="Gửi")
+    # ChatGPT-style input interface
+    user_text, uploaded_image, audio_input, submit_button = create_chat_input_interface()
 
     final_user_text = ""
     final_image_data = None
 
-    # Handle audio input if available - với logic tránh xử lý lặp lại
+    # Handle audio input if available
     if audio_input is not None:
-        # Tạo unique ID cho audio file dựa trên file_id và size
+        # Tạo unique ID cho audio file
         audio_id = f"{audio_input.file_id}_{audio_input.size}" if hasattr(audio_input, 'file_id') and hasattr(audio_input, 'size') else f"{id(audio_input)}_{len(audio_input.getvalue())}"
         
         # Chỉ xử lý nếu audio này chưa được xử lý
@@ -1190,19 +1243,20 @@ def main():
                     # Đánh dấu audio này đã được xử lý
                     st.session_state.processed_audio_ids.add(audio_id)
                 else:
-                    st.warning("⚠️ Không nhận diện được nội dung. Vui lòng thử lại hoặc sử dụng text input.")
+                    st.warning("⚠️ Không nhận diện được nội dung. Vui lòng thử lại.")
                     # Vẫn đánh dấu để tránh xử lý lại
                     st.session_state.processed_audio_ids.add(audio_id)
         else:
-            # Audio đã được xử lý, không làm gì cả
             print(f"DEBUG: Audio {audio_id} đã được xử lý trước đó, bỏ qua.")
     
-    # Handle form submission
+    # Handle form submission (text input and image upload)
     elif submit_button:
-        final_user_text = user_text
+        if user_text and user_text.strip():
+            final_user_text = user_text.strip()
         if uploaded_image:
             final_image_data = uploaded_image.getvalue()
 
+    # Process the message if we have content
     if final_user_text or final_image_data:
         
         st.session_state.messages.append({
